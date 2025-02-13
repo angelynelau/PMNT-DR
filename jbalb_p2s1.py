@@ -29,14 +29,14 @@ total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
 # Display the "Machinery" title before the checkboxes
-st.markdown("### Machinery (Select if Applicable)")
+st.markdown("Machinery")
 
 # Select Machinery (Checkbox)
 machinery_list = ["Excavator", "Piling Rig", "Crane"]
 selected_machinery = []
 
 for item in machinery_list:
-    if st.checkbox(f"{item} - Select if Applicable"):
+    if st.checkbox(f"{item}"):
         number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
         selected_machinery.append(f"{item} - {number if number > 0 else 'N/A'}")
 
