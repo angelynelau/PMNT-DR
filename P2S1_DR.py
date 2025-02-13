@@ -1,22 +1,22 @@
 import streamlit as st
 from datetime import datetime
 
-st.title("Work Report Generator")
+st.title("PMNT Daily Report Generator")
 
 # TEAM Selection (Choose One)
-team = st.selectbox("Select TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
+team = st.selectbox("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
 # DATE Selection (Calendar)
-date_selected = st.date_input("Select DATE:", datetime.today())
+date_selected = st.date_input("DATE:", datetime.today())
 
 # Format Date as DD/MM/YY (DAY)
 formatted_date = date_selected.strftime("%d/%m/%y (%A)")
 
 # PIPE SIZE Selection (Choose One)
-pipe_size = st.selectbox("Select PIPE SIZE:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
+pipe_size = st.selectbox("PIPE SIZE:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
 
 # WORK ACTIVITY (Multiple Choice)
-work_activity = st.multiselect("Select WORK ACTIVITY:", ["Pipe Laying", "Pipe Jointing"])
+work_activity = st.multiselect("WORK ACTIVITY:", ["Pipe Laying", "Pipe Jointing"])
 
 # Numeric Inputs
 hours_working = st.number_input("HOURS WORKING", min_value=0, step=1)
@@ -56,13 +56,13 @@ if "Pipe Laying" in work_activity:
             chainage_diff = "(Invalid chainage format)"
 
 # FITTING input
-fitting = st.text_input("FITTING (Leave blank if not applicable)")
+fitting = st.text_input("FITTING")
 
 # DELIVERY input
-delivery = st.number_input(f"DELIVERY ({pipe_size})", min_value=0, step=1)
+delivery = st.number_input(f"NUMBER OF PIPES DELIVERED ({pipe_size})", min_value=0, step=1)
 
 # WEATHER Selection (Choose One)
-weather = st.selectbox("Select WEATHER:", ["Sunny", "Drizzling", "Rainy", "Cloudy"])
+weather = st.selectbox("WEATHER:", ["Sunny", "Drizzling", "Rainy", "Cloudy"])
 
 # REMARKS input
 remarks = st.text_area("REMARKS")
