@@ -75,10 +75,9 @@ if st.button("Generate Report"):
     output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
     output += f"{working_time}\n"
     
-    output += "**Machinery**\n"
-    for item in machinery_list:
-        if machinery[item] > 0:
-            output += f"{item} - {machinery[item]}\n"
+ output += "**Machinery**\n"
+    for item in selected_machinery:
+        output += f"{item}\n"
 
     output += "Equipment\n"
     output += f"Welding/Genset - {welding_genset}\n"
