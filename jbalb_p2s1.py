@@ -29,11 +29,11 @@ total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
 # Select Machinery (Checkbox)
-machinery_list = ["Excavator", "Piling Rig", "Crane"]
+machinery_list = ("Machinery:" ["Excavator", "Piling Rig", "Crane"])
 selected_machinery = []
 
 for item in machinery_list:
-    if st.checkbox(f"{item} - Select if Applicable"):
+    if st.checkbox(f"{item}"):
         number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
         selected_machinery.append(f"{item} - {number if number > 0 else 'N/A'}")
 
@@ -72,7 +72,7 @@ if st.button("Generate Report"):
     output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
     output += f"{working_time}\n"
     
-    output += "Machinery\n"
+    output += "**Machinery**\n"
     for item in machinery_list:
         if machinery[item] > 0:
             output += f"{item} - {machinery[item]}\n"
