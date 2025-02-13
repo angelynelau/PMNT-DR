@@ -9,6 +9,9 @@ team = st.selectbox("Select TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TE
 # DATE Selection (Calendar)
 date_selected = st.date_input("Select DATE:", datetime.today())
 
+# Format Date as DD/MM/YY (DAY)
+formatted_date = date_selected.strftime("%d/%m/%y (%A)")
+
 # PIPE SIZE Selection (Choose One)
 pipe_size = st.selectbox("Select PIPE SIZE:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
 
