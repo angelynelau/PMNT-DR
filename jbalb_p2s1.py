@@ -29,7 +29,7 @@ total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
 # Select Machinery (Checkbox)
-machinery_list = ("Machinery:" ["Excavator", "Piling Rig", "Crane"])
+machinery_list = st.selectbox("Machinery:", ["Excvator", "Piling Rig", "Crane", "Cloudy"])
 selected_machinery = []
 
 for item in machinery_list:
