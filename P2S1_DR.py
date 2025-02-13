@@ -76,28 +76,34 @@ if st.button("Generate Report"):
     # Include work activity if any is selected
     if work_activity:
         output += f"WORK ACTIVITY = {pipe_size} {' & '.join(work_activity)}\n"
-    
+    else:
+        output += "WORK ACTIVITY = \n"
+
     # Always include these fields
-    output += f"HOURS WORKING = {hours_working}\n"
-    output += f"MANPOWER = {manpower}\n"
+    output += f"HOURS WORKING = {hours_working}\n" if hours_working else "HOURS WORKING = \n"
+    output += f"MANPOWER = {manpower}\n" if manpower else "MANPOWER = \n"
 
     # Add JOINT section if Pipe Jointing is selected
     if "Pipe Jointing" in work_activity:
-        output += f"JOINT = {joint}\n"
+        output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
 
     # Add LAID section if Pipe Laying is selected
     if "Pipe Laying" in work_activity:
-        output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n"
+        output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n" if starting_chainage else "LAID = \n"
 
     # Only include FITTING if it's not blank
     if fitting:
         output += f"FITTING = {fitting}\n"
+    else:
+        output += "FITTING = \n"
 
     # Add DELIVERY only if it has a value
     if delivery > 0:
         output += f"DELIVERY = {pipe_size} - {delivery} lengths\n"
+    else:
+        output += "DELIVERY = \n"
     
-    output += f"WEATHER = {weather}\n"
-    output += f"REMARKS = {remarks}\n"
+    output += f"WEATHER = {weather}\n" if weather else "WEATHER = \n"
+    output += f"REMARKS = {remarks}\n" if remarks else "REMARKS = \n"
 
     st.text_area("Generated Report:", output, height=300)
