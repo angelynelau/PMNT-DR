@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime
 
-st.title("PMNT Daily Report Generator")
+st.title("P2S1 Daily Report")
 
 # TEAM Selection (Choose One)
 team = st.selectbox("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
