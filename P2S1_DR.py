@@ -46,10 +46,10 @@ if starting_chainage_raw and ending_chainage_raw:
         chainage_diff = "(Invalid chainage format)"
 
 # FITTING input
-fitting = st.text_input("FITTING (Leave blank if not applicable)")
+fitting = st.text_input("FITTING")
 
 # DELIVERY input
-delivery = st.number_input(f"DELIVERY ({pipe_size})", min_value=0, step=1)
+delivery = st.number_input(f"NUMBER OF PIPES DELIVERED ({pipe_size})", min_value=0, step=1)
 
 # WEATHER Selection (Choose One)
 weather = st.selectbox("Select WEATHER:", ["Sunny", "Drizzling", "Rainy", "Cloudy"])
