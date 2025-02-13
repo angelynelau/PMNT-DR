@@ -4,19 +4,19 @@ from datetime import datetime
 st.title("Work Report Generator")
 
 # TEAM Selection (Choose One)
-team = st.selectbox("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
+team = st.selectbox("Select TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
 # DATE Selection (Calendar)
-date_selected = st.date_input("DATE:", datetime.today())
+date_selected = st.date_input("Select DATE:", datetime.today())
 
 # Format Date as DD/MM/YY (DAY)
 formatted_date = date_selected.strftime("%d/%m/%y (%A)")
 
 # PIPE SIZE Selection (Choose One)
-pipe_size = st.selectbox("PIPE SIZE:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
+pipe_size = st.selectbox("Select PIPE SIZE:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
 
 # WORK ACTIVITY (Multiple Choice)
-work_activity = st.multiselect("WORK ACTIVITY:", ["Pipe Laying", "Pipe Jointing"])
+work_activity = st.multiselect("Select WORK ACTIVITY:", ["Pipe Laying", "Pipe Jointing"])
 
 # Numeric Inputs
 hours_working = st.number_input("HOURS WORKING", min_value=0, step=1)
@@ -56,10 +56,10 @@ if "Pipe Laying" in work_activity:
             chainage_diff = "(Invalid chainage format)"
 
 # FITTING input
-fitting = st.text_input("FITTING")
+fitting = st.text_input("FITTING (Leave blank if not applicable)")
 
 # DELIVERY input
-delivery = st.number_input(f"NUMBER OF PIPES DELIVERED ({pipe_size})", min_value=0, step=1)
+delivery = st.number_input(f"DELIVERY ({pipe_size})", min_value=0, step=1)
 
 # WEATHER Selection (Choose One)
 weather = st.selectbox("Select WEATHER:", ["Sunny", "Drizzling", "Rainy", "Cloudy"])
@@ -71,19 +71,32 @@ remarks = st.text_area("REMARKS")
 if st.button("Generate Report"):
     output = f"> {team}\n"
     output += f"PIPE = {pipe_size}\n"
-    output += f"DATE = {date_selected}\n"
-    output += f"WORK ACTIVITY = {pipe_size} {' & '.join(work_activity)}\n"
+    output += f"DATE = {formatted_date}\n"
+    
+    # Include work activity if any is selected
+    if work_activity:
+        output += f"WORK ACTIVITY = {pipe_size} {' & '.join(work_activity)}\n"
+    
+    # Always include these fields
     output += f"HOURS WORKING = {hours_working}\n"
     output += f"MANPOWER = {manpower}\n"
 
+    # Add JOINT section if Pipe Jointing is selected
     if "Pipe Jointing" in work_activity:
         output += f"JOINT = {joint}\n"
 
+    # Add LAID section if Pipe Laying is selected
     if "Pipe Laying" in work_activity:
         output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n"
 
-    output += f"FITTING = {fitting}\n"
-    output += f"DELIVERY = {pipe_size} - {delivery} lengths\n"
+    # Only include FITTING if it's not blank
+    if fitting:
+        output += f"FITTING = {fitting}\n"
+
+    # Add DELIVERY only if it has a value
+    if delivery > 0:
+        output += f"DELIVERY = {pipe_size} - {delivery} lengths\n"
+    
     output += f"WEATHER = {weather}\n"
     output += f"REMARKS = {remarks}\n"
 
