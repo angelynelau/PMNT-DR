@@ -1,7 +1,7 @@
 import streamlit as st
 from datetime import datetime
 
-st.title("PMNT Daily Report Generator")
+st.title("PMNT P2S1 Site Diary")
 
 # TEAM Selection (Choose One)
 team = st.selectbox("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
@@ -28,12 +28,15 @@ total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.
 # Time Working (e.g., 0800-1700)
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
+# Display the "Machinery" title before the checkboxes
+st.markdown("### Machinery (Select if Applicable)")
+
 # Select Machinery (Checkbox)
-machinery_list = ("Machinery:", ["Excvator", "Piling Rig", "Crane", "Cloudy"])
+machinery_list = ["Excavator", "Piling Rig", "Crane"]
 selected_machinery = []
 
 for item in machinery_list:
-    if st.checkbox(f"{item}"):
+    if st.checkbox(f"{item} - Select if Applicable"):
         number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
         selected_machinery.append(f"{item} - {number if number > 0 else 'N/A'}")
 
