@@ -30,7 +30,7 @@ def format_chainage(value):
     except:
         return "Invalid input"
 
-# Conditional Inputs
+# Conditional Inputs for LAID and JOINT
 joint = 0
 starting_chainage = ""
 ending_chainage = ""
