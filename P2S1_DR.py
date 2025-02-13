@@ -18,7 +18,6 @@ work_activity = st.multiselect("Select WORK ACTIVITY:", ["Pipe Laying", "Pipe Jo
 # Numeric Inputs
 hours_working = st.number_input("HOURS WORKING", min_value=0, step=1)
 manpower = st.number_input("MANPOWER", min_value=0, step=1)
-joint = st.number_input("JOINT", min_value=0, step=1)
 
 # Chainage Formatting Function
 def format_chainage(value):
@@ -28,22 +27,30 @@ def format_chainage(value):
     except:
         return "Invalid input"
 
-# Chainage Inputs (Automatically Formats)
-starting_chainage_raw = st.text_input("Starting Chainage (Enter as a number)")
-ending_chainage_raw = st.text_input("Ending Chainage (Enter as a number)")
-
-starting_chainage = format_chainage(starting_chainage_raw) if starting_chainage_raw else ""
-ending_chainage = format_chainage(ending_chainage_raw) if ending_chainage_raw else ""
-
-# Calculate Chainage Difference (if both values are provided)
+# Conditional Inputs
+joint = 0
+starting_chainage = ""
+ending_chainage = ""
 chainage_diff = ""
-if starting_chainage_raw and ending_chainage_raw:
-    try:
-        start_value = int(starting_chainage_raw)
-        end_value = int(ending_chainage_raw)
-        chainage_diff = f"({end_value - start_value}m)"
-    except:
-        chainage_diff = "(Invalid chainage format)"
+
+if "Pipe Jointing" in work_activity:
+    joint = st.number_input("JOINT", min_value=0, step=1)
+
+if "Pipe Laying" in work_activity:
+    starting_chainage_raw = st.text_input("Starting Chainage (Enter as a number)")
+    ending_chainage_raw = st.text_input("Ending Chainage (Enter as a number)")
+
+    starting_chainage = format_chainage(starting_chainage_raw) if starting_chainage_raw else ""
+    ending_chainage = format_chainage(ending_chainage_raw) if ending_chainage_raw else ""
+
+    # Calculate Chainage Difference
+    if starting_chainage_raw and ending_chainage_raw:
+        try:
+            start_value = int(starting_chainage_raw)
+            end_value = int(ending_chainage_raw)
+            chainage_diff = f"({end_value - start_value}m)"
+        except:
+            chainage_diff = "(Invalid chainage format)"
 
 # FITTING input
 fitting = st.text_input("FITTING")
@@ -65,8 +72,13 @@ if st.button("Generate Report"):
     output += f"WORK ACTIVITY = {pipe_size} {' & '.join(work_activity)}\n"
     output += f"HOURS WORKING = {hours_working}\n"
     output += f"MANPOWER = {manpower}\n"
-    output += f"JOINT = {joint}\n"
-    output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n"
+
+    if "Pipe Jointing" in work_activity:
+        output += f"JOINT = {joint}\n"
+
+    if "Pipe Laying" in work_activity:
+        output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n"
+
     output += f"FITTING = {fitting}\n"
     output += f"DELIVERY = {pipe_size} - {delivery} lengths\n"
     output += f"WEATHER = {weather}\n"
