@@ -83,13 +83,11 @@ if st.button("Generate Report"):
     output += f"HOURS WORKING = {hours_working}\n" if hours_working else "HOURS WORKING = \n"
     output += f"MANPOWER = {manpower}\n" if manpower else "MANPOWER = \n"
 
-    # Add JOINT section if Pipe Jointing is selected
-    if "Pipe Jointing" in work_activity:
-        output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
+    # JOINT 
+    output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
 
-    # Add LAID section if Pipe Laying is selected
-    if "Pipe Laying" in work_activity:
-        output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n" if starting_chainage else "LAID = \n"
+    # LAID
+    output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n" if starting_chainage else "LAID = \n"
 
     # Only include FITTING if it's not blank
     if fitting:
