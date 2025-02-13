@@ -20,16 +20,27 @@ hours_working = st.number_input("HOURS WORKING", min_value=0, step=1)
 manpower = st.number_input("MANPOWER", min_value=0, step=1)
 joint = st.number_input("JOINT", min_value=0, step=1)
 
-# Chainage Inputs
-starting_chainage = st.text_input("Starting Chainage (e.g., CH1+000)")
-ending_chainage = st.text_input("Ending Chainage (e.g., CH1+500)")
+# Chainage Formatting Function
+def format_chainage(value):
+    try:
+        value = int(value)
+        return f"CH{value // 1000}+{value % 1000:03d}"
+    except:
+        return "Invalid input"
+
+# Chainage Inputs (Automatically Formats)
+starting_chainage_raw = st.text_input("Starting Chainage (Enter as a number)")
+ending_chainage_raw = st.text_input("Ending Chainage (Enter as a number)")
+
+starting_chainage = format_chainage(starting_chainage_raw) if starting_chainage_raw else ""
+ending_chainage = format_chainage(ending_chainage_raw) if ending_chainage_raw else ""
 
 # Calculate Chainage Difference (if both values are provided)
 chainage_diff = ""
-if starting_chainage and ending_chainage:
+if starting_chainage_raw and ending_chainage_raw:
     try:
-        start_value = int(starting_chainage.split("+")[1])
-        end_value = int(ending_chainage.split("+")[1])
+        start_value = int(starting_chainage_raw)
+        end_value = int(ending_chainage_raw)
         chainage_diff = f"({end_value - start_value}m)"
     except:
         chainage_diff = "(Invalid chainage format)"
