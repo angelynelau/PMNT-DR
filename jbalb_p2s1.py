@@ -23,7 +23,7 @@ start_time = st.time_input("Start Time:", datetime.strptime("08:00", "%H:%M").ti
 end_time = st.time_input("End Time:", datetime.strptime("17:00", "%H:%M").time())
 
 # Calculate Total Working Hours (in hours)
-total_working_hours = (datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600
+total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 
 # Time Working (e.g., 0800-1700)
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
