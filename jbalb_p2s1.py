@@ -28,12 +28,14 @@ total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.
 # Time Working (e.g., 0800-1700)
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
-# Select applicable machinery and input quantity
+# Select Machinery (Checkbox)
 machinery_list = ["Excavator", "Piling Rig", "Crane"]
+selected_machinery = []
 
-machinery = {}
 for item in machinery_list:
-    machinery[item] = st.number_input(f"{item} -", min_value=0, step=1, label_visibility="collapsed")
+    if st.checkbox(f"{item} - Select if Applicable"):
+        number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
+        selected_machinery.append(f"{item} - {number if number > 0 else 'N/A'}")
 
 # Equipment
 welding_genset = st.number_input("Welding/Genset -", min_value=0, step=1)
