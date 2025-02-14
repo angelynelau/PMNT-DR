@@ -99,12 +99,24 @@ if st.button("Generate Report"):
     
     if team_members:
         report += "**PIPE LAYING TEAM**\n" + "\n".join(team_members) + "\n\n"
+
+    output += "\n**MATERIALS DELIVERED TO SITE**\n"
+    if pipe_count > 0:
+        output += f"1. {pipe_size}\n- {pipe_count} lengths\n"
+    if valves_fittings:
+        output += "2. Valves & Fittings\n"
     
-    if materials:
-        report += "**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n\n"
+    output += "\n**ACTIVITY CARRIED OUT**\n"
+    if pipe_laying:
+        output += f"1. Pipe Laying\n- {pipe_size} pipe laying works from CH{start_chainage}+{end_chainage} {chainage_length}\n"
+    if pipe_jointing:
+        output += f"2. Pipe Jointing\n- {joint_count} nos joints ({pipe_size}) // E-CH{jointing_chainage}\n"
     
-    if activity_list:
-        report += "**ACTIVITY CARRIED OUT**\n" + "\n".join(activity_list) + "\n\n"
+   # if materials:
+     #   report += "**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n\n"
+    
+  #  if activity_list:
+    #    report += "**ACTIVITY CARRIED OUT**\n" + "\n".join(activity_list) + "\n\n"
     
     if remarks:
         report += "**REMARKS**\n" + remarks + "\n"
