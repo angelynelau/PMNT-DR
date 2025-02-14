@@ -55,8 +55,9 @@ if st.checkbox("General Worker"):
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
-pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
-pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
+if st.checkbox("Pipe"):
+    pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
+    pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
 if pipe_count > 0:
     materials.append(f"{len(materials)+1}. {pipe_size} \n- {pipe_count} lengths")
 if st.checkbox("Valves & Fittings"):
