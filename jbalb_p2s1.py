@@ -27,8 +27,6 @@ st.markdown("**Machinery**")
 machinery_options = {"Excavator": 0, "Piling Rigs": 0, "Crane": 0}
 for machine in machinery_options.keys():
     if st.checkbox(machine):
-        if machine == "General Worker":
-            machinery_options[machine] = st.number_input(f"Enter number for {machine}", min_value=1, step=1)
         else:
             machinery_options[machine] = 1
 
