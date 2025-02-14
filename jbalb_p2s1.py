@@ -31,9 +31,6 @@ working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 # Display the "Machinery" title before the checkboxes
 st.markdown("Machinery")
 
- Title
-st.markdown("### Machinery (Select if Applicable)")
-
 # List of Machinery
 machinery_list = ["Excavator", "Piling Rig", "Crane"]
 
