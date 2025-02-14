@@ -52,24 +52,26 @@ if st.checkbox("General Worker"):
     workers = st.number_input("Enter number of General Workers", min_value=1, step=1)
     team_members.append(f"General Worker - {workers}")
 
-# MATERIALS DELIVERED
+# Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
-if st.checkbox("Pipe"):
-    pipe_size = st.selectbox("Select Pipe Size", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
-    pipe_length = st.number_input("Enter number of lengths", min_value=1, step=1)
-    materials.append(f"{pipe_size} - {pipe_length} lengths")
+pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
+pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
+if pipe_count > 0:
+    materials.append(f"{len(materials)+1}. {pipe_size} \n- {pipe_count} lengths")
 if st.checkbox("Valves & Fittings"):
-    materials.append("Valves & Fittings")
+    materials.append(f"{len(materials)+1}. Valves & Fittings")
 
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
+
 if st.checkbox("Pipe Laying"):
     start_chainage = format_chainage(st.text_input("Starting Chainage"))
     end_chainage = format_chainage(st.text_input("Ending Chainage"))
     if start_chainage and end_chainage:
-        activity_list.append(f"Pipe laying works from {start_chainage} to {end_chainage}")
+        chainage_length = f"({int(end_chainage) - int(start_chainage)}m)"
+            activity_list.append(f"{len(activity_list)+1}. Pipe Laying \n- {pipe_size} pipe laying works from {start_chainage} to {end_chainage} {chainage_length}")
 
 if st.checkbox("Pipe Jointing"):
     joint_count = st.number_input("Number of Joints", min_value=1, step=1)
@@ -77,8 +79,8 @@ if st.checkbox("Pipe Jointing"):
     joint_route = st.text_input("Insert Route")
     joint_chainage = format_chainage(st.text_input("Jointing Chainage"))
     if joint_count and joint_chainage:
-        activity_list.append(f"{joint_count} nos joints ({joint_pipe_size}) // {joint_route}-{joint_chainage}")
-
+        activity_list.append(f"{len(activity_list)+1}. Pipe Jointing \n- {joint_count} nos joints ({joint_pipe_size}) // {joint_route}-{joint_chainage}")
+    
 # REMARKS
 remarks = st.text_area("REMARKS")
 
