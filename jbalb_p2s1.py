@@ -25,9 +25,9 @@ working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 # Machinery Selection
 st.markdown("**Machinery**")
 machinery_options = {"Excavator": 0, "Piling Rigs": 0, "Crane": 0}
-for role in machinery_options.keys():
+for machine in machinery_options.keys():
     if st.checkbox(machine):
-        if role == "General Worker":
+        if machine == "General Worker":
             machinery_options[machine] = st.number_input(f"Enter number for {machine}", min_value=1, step=1)
         else:
             machinery_options[machine] = 1
