@@ -23,11 +23,15 @@ total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
 # Machinery Selection
-st.markdown("**MACHINERY**")
-machinery_options = {"Excavator": 0, "Piling Rig": 0, "Crane": 0}
-for machine in machinery_options.keys():
+st.markdown("**Machinery**")
+machinery_options = {"Excavator": 0, "Piling Rigs": 0, "Crane": 0}
+for role in machinery_options.keys():
     if st.checkbox(machine):
-        machinery_options[machine] = st.number_input(f"Enter number for {machine}", min_value=1, step=1)
+        if role == "General Worker":
+            machinery_options[machine] = st.number_input(f"Enter number for {machine}", min_value=1, step=1)
+        else:
+            machinery_options[machine] = 1
+
 
 # Equipment Selection
 st.markdown("**EQUIPMENT**")
@@ -53,7 +57,7 @@ pipe_sizes = ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDP
 pipes_delivered = {}
 if st.checkbox("Pipes Delivered"):
     pipe_size_selected = st.selectbox("Select Pipe Size:", pipe_sizes)
-    pipes_delivered[pipe_size_selected] = st.number_input("Enter number of lengths", min_value=0, step=1)
+    pipes_delivered[pipe_size_selected] = st.number_input("Enter number of lengths", min_value=1, step=1)
 
 valves_fittings = st.checkbox("Valves & Fittings")
 
@@ -71,7 +75,7 @@ joint_count = 0
 joint_route = ""
 joint_chainage = ""
 if pipe_jointing:
-    joint_count = st.number_input("Number of Joints", min_value=0, step=1)
+    joint_count = st.number_input("Number of Joints", min_value=1, step=1)
     joint_route = st.text_input("Insert Route")
     joint_chainage = st.number_input("Jointing Chainage", min_value=0, step=1)
 
