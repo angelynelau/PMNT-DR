@@ -22,14 +22,14 @@ afternoon_weather = st.selectbox("Afternoon Weather:", ["Sunny", "Drizzling", "R
 start_time = st.time_input("Start Time:", datetime.strptime("08:00", "%H:%M").time())
 end_time = st.time_input("End Time:", datetime.strptime("17:00", "%H:%M").time())
 
-# Calculate Total Working Hours (in hours)
+# Calculate Total Working Hours (subtract 1 hour for break)
 total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 
-# Time Working (e.g., 0800-1700)
+# Format Working Time (e.g., 08:00-17:00)
 working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 
-# Display the "Machinery" title before the checkboxes
-st.markdown("Machinery")
+# Machinery Section Title
+st.markdown("### Machinery (Select if Applicable)")
 
 # List of Machinery
 machinery_list = ["Excavator", "Piling Rig", "Crane"]
@@ -65,11 +65,11 @@ if st.button("Generate Report"):
     output += f"Afternoon: {afternoon_weather}\n"
     output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
     output += f"{working_time}\n"
-    
+
     # Output machinery only if selected
     if machinery_selected:
-        output += "**Machinery**\n"
+        output += "\n**Machinery**\n"
         for machinery in machinery_selected:
             output += f"- {machinery} - {machinery_numbers[machinery]}\n"
 
-    st.text_area("Generated Report:", output, height=200)
+    st.text_area("Generated Report:", output, height=250)
