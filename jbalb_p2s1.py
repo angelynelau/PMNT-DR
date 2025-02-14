@@ -40,8 +40,14 @@ for item in machinery_list:
         number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
         selected_machinery.append(f"{item} - {number if number > 0 else 'N/A'}")
 
-# Equipment
-welding_genset = st.number_input("Welding/Genset -", min_value=0, step=1)
+# Select Equipment (Checkbox)
+equipement_list = ["Welding/Genset", "Butt Fusion Welding Machine"]
+selected_machinery = []
+
+for item in equipment_list:
+    if st.checkbox(f"{item}"):
+        number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
+        selected_equipment.append(f"{item} - {number if number > 0 else 'N/A'}")
 
 # Manpower
 project_manager = st.number_input("Project Manager -", min_value=0, step=1)
