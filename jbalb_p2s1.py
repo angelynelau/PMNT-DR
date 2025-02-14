@@ -67,10 +67,14 @@ st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
 
 if st.checkbox("Pipe Laying"):
-    start_chainage = format_chainage(st.text_input("Starting Chainage"))
-    end_chainage = format_chainage(st.text_input("Ending Chainage"))
+    start_chainage = st.text_input("Starting Chainage (e.g., 450)", "")
+    end_chainage = st.text_input("Ending Chainage (e.g., 1234)", "")
     if start_chainage and end_chainage:
-        activity_list.append(f"Pipe laying works from {start_chainage} to {end_chainage}")
+        start_formatted = format_chainage(start_chainage)
+        end_formatted = format_chainage(end_chainage)
+        if start_formatted and end_formatted:
+            chainage_length = f"({int(end_chainage) - int(start_chainage)}m)"
+            activity_list.append(f"{len(activity_list)+1}. Pipe Laying \n- {pipe_size} pipe laying works from {start_formatted} to {end_formatted} {chainage_length}")
 
 if st.checkbox("Pipe Jointing"):
     joint_count = st.number_input("Number of Joints", min_value=1, step=1)
