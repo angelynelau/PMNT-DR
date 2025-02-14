@@ -92,13 +92,13 @@ if st.button("Generate Report"):
     output += f"{working_time}\n\n"
     
     if machinery_types:
-        report += "**MACHINERY**\n" + "\n".join(machinery_types) + "\n\n"
+        output += "**MACHINERY**\n" + "\n".join(machinery_types) + "\n\n"
     
     if equipment_list:
-        report += "**EQUIPMENT**\n" + "\n".join(equipment_list) + "\n\n"
+        output += "**EQUIPMENT**\n" + "\n".join(equipment_list) + "\n\n"
     
     if team_members:
-        report += "**PIPE LAYING TEAM**\n" + "\n".join(team_members) + "\n\n"
+        output += "**PIPE LAYING TEAM**\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
         output += "\n**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n"
