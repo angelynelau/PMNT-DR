@@ -66,6 +66,10 @@ if st.button("Generate Report"):
     output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
     output += f"{working_time}\n"
     
-    output += f"- {machinery} - {machinery_numbers[machinery]}\n"
+    # Output machinery only if selected
+    if machinery_selected:
+        output += "**Machinery**\n"
+        for machinery in machinery_selected:
+            output += f"- {machinery} - {machinery_numbers[machinery]}\n"
 
     st.text_area("Generated Report:", output, height=200)
