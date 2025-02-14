@@ -29,10 +29,9 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')}"
 
 # MACHINERY Selection
 st.markdown("**MACHINERY**")
-machinery_types = {"Excavator": 0, "Piling Rig": 0, "Crane": 0}
-for mach in machinery_types.keys():
-    if st.checkbox(mach):
-        machinery_types[mach] = st.number_input(f"Enter number for {mach}", min_value=1, step=1, key=mach)
+machinery_types = []
+if st.checkbox("Excavator"):
+    machinery_types.append("Excavator - 1")
 
 # EQUIPMENT Selection
 st.markdown("**EQUIPMENT**")
@@ -92,12 +91,8 @@ if st.button("Generate Report"):
     report += f"Total Working Hours: {working_hours:.2f} hrs\n"
     report += f"{working_time}\n\n"
     
-    if any(machinery_types.values()):
-        report += "**MACHINERY**\n"
-        for mach, qty in machinery_types.items():
-            if qty > 0:
-                report += f"{mach} - {qty}\n"
-        report += "\n"
+   if machinery_types:
+        report += "**EQUIPMENT**\n" + "\n".join(machinery_types) + "\n\n"
     
     if equipment_list:
         report += "**EQUIPMENT**\n" + "\n".join(equipment_list) + "\n\n"
