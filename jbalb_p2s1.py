@@ -67,8 +67,8 @@ st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
 
 if st.checkbox("Pipe Laying"):
-    start_chainage = st.text_input("Starting Chainage (e.g., 450)", "")
-    end_chainage = st.text_input("Ending Chainage (e.g., 1234)", "")
+    start_chainage = st.text_input("Starting Chainage", "")
+    end_chainage = st.text_input("Ending Chainage", "")
     if start_chainage and end_chainage:
         start_formatted = format_chainage(start_chainage)
         end_formatted = format_chainage(end_chainage)
