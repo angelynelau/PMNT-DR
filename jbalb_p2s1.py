@@ -31,46 +31,34 @@ working_time = f"{start_time.strftime('%H:%M')}-{end_time.strftime('%H:%M')}"
 # Display the "Machinery" title before the checkboxes
 st.markdown("Machinery")
 
-# Select Machinery (Checkbox)
+ Title
+st.markdown("### Machinery (Select if Applicable)")
+
+# List of Machinery
 machinery_list = ["Excavator", "Piling Rig", "Crane"]
-selected_machinery = []
 
-for item in machinery_list:
-    if st.checkbox(f"{item}"):
-        number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
-        selected_machinery.append(f"{item} - {number if number > 0 else 'N/A'}")
+# Create columns for selection (Checkbox) and input (Number)
+machinery_selected = []
+machinery_numbers = {}
 
-# Select Equipment (Checkbox)
-equipement_list = ["Welding/Genset", "Butt Fusion Welding Machine"]
-selected_machinery = []
+# Streamlit Columns for side-by-side layout
+col1, col2 = st.columns([2, 1])
 
-for item in equipment_list:
-    if st.checkbox(f"{item}"):
-        number = st.number_input(f"Enter number for {item}:", min_value=0, step=1)
-        selected_equipment.append(f"{item} - {number if number > 0 else 'N/A'}")
+with col1:
+    st.write("**Machinery Type**")
 
-# Manpower
-project_manager = st.number_input("Project Manager -", min_value=0, step=1)
-construction_manager = st.number_input("Construction Manager -", min_value=0, step=1)
+with col2:
+    st.write("**Total Number**")
 
-# Pipe Laying Team
-supervisor = st.number_input("Supervisor -", min_value=0, step=1)
-operator_excavator = st.number_input("Operator Excavator -", min_value=0, step=1)
-
-# Materials Delivered to Site (Choose pipe size then insert number)
-pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
-materials_delivered = st.number_input(f"Number of {pipe_size} pipes delivered", min_value=0, step=1)
-
-# Activity Carried Out (Choose activity)
-activity = st.multiselect("Activity Carried Out:", ["Pipe Laying", "Pipe Jointing"])
-
-# Chainage Details (for Pipe Laying)
-start_chainage_raw = st.text_input("Starting Chainage (e.g., 400)")
-end_chainage_raw = st.text_input("Ending Chainage (e.g., 500)")
-
-# Pipe Jointing Details
-joint_number = st.number_input("Number of joints (size pipe)", min_value=0, step=1)
-jointing_chainage = st.text_input("Jointing Chainage (e.g., CH0+900)")
+# Loop through machinery list to create checkboxes and number inputs
+for machinery in machinery_list:
+    with col1:
+        selected = st.checkbox(f"{machinery}")
+    with col2:
+        if selected:
+            number = st.number_input(f"Enter number for {machinery}", min_value=1, step=1, key=machinery)
+            machinery_selected.append(machinery)
+            machinery_numbers[machinery] = number
 
 # Generate Report button
 if st.button("Generate Report"):
@@ -81,32 +69,8 @@ if st.button("Generate Report"):
     output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
     output += f"{working_time}\n"
     
- output += "**Machinery**\n"
-    for item in selected_machinery:
-        output += f"{item}\n"
+    output = "**Machinery**\n"
+    for machinery in machinery_selected:
+        output += f"- {machinery} - {machinery_numbers[machinery]}\n"
 
-    output += "Equipment\n"
-    output += f"Welding/Genset - {welding_genset}\n"
-
-    output += "Manpower\n"
-    output += f"Project Manager - {project_manager}\n"
-    output += f"Construction Manager - {construction_manager}\n"
-
-    output += "Pipe Laying Team\n"
-    output += f"Supervisor - {supervisor}\n"
-    output += f"Operator Excavator - {operator_excavator}\n"
-
-    output += "Materials Delivered to Site:\n"
-    output += f"{pipe_size} - {materials_delivered} lengths\n"
-
-    output += "Activity Carried Out:\n"
-    if "Pipe Laying" in activity:
-        output += f"Pipe Laying\n"
-        if start_chainage_raw and end_chainage_raw:
-            output += f"Pipe laying works from {start_chainage_raw} to {end_chainage_raw}\n"
-    if "Pipe Jointing" in activity:
-        output += f"Pipe Jointing\n"
-        if joint_number and jointing_chainage:
-            output += f"{joint_number} nos joints ({pipe_size}) // {jointing_chainage}\n"
-
-    st.text_area("Generated Report:", output, height=500)
+    st.text_area("Generated Report:", output, height=200)
