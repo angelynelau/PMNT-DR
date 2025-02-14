@@ -91,18 +91,14 @@ if st.button("Generate Report"):
     output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
     output += f"{working_time}\n\n"
     
-    output += "**MACHINERY**\n"
-    if machinery_selected > 0:
-        output += f"- Excavator - {machinery_selected}\n"
+    if machinery_types:
+        report += "**MACHINERY**\n" + "\n".join(machinery_types) + "\n\n"
     
-    output += "\n**EQUIPMENT**\n"
-    for equip in equipment_selected:
-        output += f"- {equip}\n"
+    if equipment_list:
+        report += "**EQUIPMENT**\n" + "\n".join(equipment_list) + "\n\n"
     
-    output += "\n**PIPE LAYING TEAM**\n"
-    for role, count in pipeline_roles.items():
-        if count > 0:
-            output += f"- {role} - {count}\n"
+    if team_members:
+        report += "**PIPE LAYING TEAM**\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
         output += "\n**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n"
