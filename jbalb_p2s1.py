@@ -1,112 +1,97 @@
 import streamlit as st
-from datetime import datetime, time
-
-def format_chainage(value):
-    try:
-        value = int(value)
-        return f"CH{value // 1000}+{value % 1000:03d}"
-    except:
-        return "Invalid input"
+from datetime import datetime
 
 st.title("PMNT P2S1 Site Diary")
 
-# TEAM Selection
+# TEAM Selection (Choose One)
 team = st.selectbox("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
-# DATE Selection
-selected_date = st.date_input("DATE:", datetime.today())
-formatted_date = selected_date.strftime("%d/%m/%y (%A)")
+# DATE Selection (Calendar)
+date_selected = st.date_input("DATE:", datetime.today())
+formatted_date = date_selected.strftime("%d/%m/%y (%A)")
 
-# WEATHER Selection
+# Weather Selection
 morning_weather = st.selectbox("Morning Weather:", ["Sunny", "Cloudy", "Drizzling", "Rainy"])
 afternoon_weather = st.selectbox("Afternoon Weather:", ["Sunny", "Cloudy", "Drizzling", "Rainy"])
 
-# WORKING HOURS
-start_time = st.time_input("Start Time:", time(8, 0))
-end_time = st.time_input("End Time:", time(17, 0))
-working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
-working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')}"
+# Working Hours: Select Start and End Time
+start_time = st.time_input("Start Time:", datetime.strptime("08:00", "%H:%M").time())
+end_time = st.time_input("End Time:", datetime.strptime("17:00", "%H:%M").time())
 
-# MACHINERY Selection
+total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
+working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
+
+# Machinery Selection (Only Excavator)
 st.markdown("**MACHINERY**")
-machinery_types = []
-if st.checkbox("Excavator"):
-    machinery_types.append("Excavator - 1")
+machinery_selected = st.number_input("Excavator (if applicable, insert number)", min_value=0, step=1)
 
-# EQUIPMENT Selection
+# Equipment Selection
 st.markdown("**EQUIPMENT**")
-equipment_list = []
-if st.checkbox("Genset"):
-    equipment_list.append("Genset - 1")
-if st.checkbox("Butt Fusion Welding Machine"):
-    equipment_list.append("Butt Fusion Welding Machine - 1")
+equipment_list = ["Genset", "Butt Fusion Welding Machine"]
+equipment_selected = [equip for equip in equipment_list if st.checkbox(equip)]
 
-# PIPE LAYING TEAM
+# Pipe Laying Team Selection
 st.markdown("**PIPE LAYING TEAM**")
-team_members = []
-if st.checkbox("Supervisor"):
-    team_members.append("Supervisor - 1")
-if st.checkbox("Excavator Operator"):
-    team_members.append("Excavator Operator - 1")
-if st.checkbox("General Worker"):
-    workers = st.number_input("Enter number of General Workers", min_value=1, step=1)
-    team_members.append(f"General Worker - {workers}")
+pipeline_roles = {"Supervisor": 1, "Excavator Operator": 1, "General Worker": st.number_input("General Worker (choose number)", min_value=0, step=1)}
 
-# MATERIALS DELIVERED
+# Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
-if st.checkbox("Pipe"):
-    pipe_size = st.selectbox("Select Pipe Size", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
-    pipe_length = st.number_input("Enter number of lengths", min_value=1, step=1)
-    materials.append(f"{pipe_size} - {pipe_length} lengths")
+pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
+pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
+if pipe_count > 0:
+    materials.append(f"{len(materials)+1}. {pipe_size} \n- {pipe_count} lengths")
 if st.checkbox("Valves & Fittings"):
-    materials.append("Valves & Fittings")
+    materials.append(f"{len(materials)+1}. Valves & Fittings")
 
-# ACTIVITY CARRIED OUT
+# Activity Carried Out
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
 if st.checkbox("Pipe Laying"):
-    start_chainage = format_chainage(st.text_input("Starting Chainage"))
-    end_chainage = format_chainage(st.text_input("Ending Chainage"))
+    start_chainage = st.text_input("Starting Chainage (Insert number)")
+    end_chainage = st.text_input("Ending Chainage (Insert number)")
     if start_chainage and end_chainage:
-        activity_list.append(f"Pipe laying works from {start_chainage} to {end_chainage}")
+        chainage_length = f"({int(end_chainage) - int(start_chainage)}m)"
+        activity_list.append(f"{len(activity_list)+1}. Pipe Laying \n- {pipe_size} pipe laying works from CH{start_chainage}+{end_chainage} {chainage_length}")
 
 if st.checkbox("Pipe Jointing"):
-    joint_count = st.number_input("Number of Joints", min_value=1, step=1)
-    joint_pipe_size = st.selectbox("Pipe Size for Jointing", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"], key="joint_pipe_size")
-    joint_route = st.text_input("Insert Route")
-    joint_chainage = format_chainage(st.text_input("Jointing Chainage"))
-    if joint_count and joint_chainage:
-        activity_list.append(f"{joint_count} nos joints ({joint_pipe_size}) // {joint_route}-{joint_chainage}")
+    joint_count = st.number_input("Number of Joints", min_value=0, step=1)
+    jointing_chainage = st.text_input("Jointing Chainage (Insert number)")
+    if joint_count > 0 and jointing_chainage:
+        activity_list.append(f"{len(activity_list)+1}. Pipe Jointing \n- {joint_count} nos joints ({pipe_size}) // E-CH{jointing_chainage}")
 
-# REMARKS
+# Remarks
 remarks = st.text_area("REMARKS")
 
-# GENERATE REPORT
+# Generate Report Button
 if st.button("Generate Report"):
-    report = f"> {team}\n"
-    report += f"Date: {formatted_date}\n"
-    report += f"Morning: {morning_weather}\n"
-    report += f"Afternoon: {afternoon_weather}\n"
-    report += f"Total Working Hours: {working_hours:.2f} hrs\n"
-    report += f"{working_time}\n\n"
+    output = f"> {team}\n"
+    output += f"Date: {formatted_date}\n"
+    output += f"Morning: {morning_weather}\n"
+    output += f"Afternoon: {afternoon_weather}\n"
+    output += f"Total Working Hours: {total_working_hours:.2f} hrs\n"
+    output += f"{working_time}\n\n"
     
-    if machinery_types:
-        report += "**MACHINERY**\n" + "\n".join(machinery_types) + "\n\n"
+    output += "**MACHINERY**\n"
+    if machinery_selected > 0:
+        output += f"- Excavator - {machinery_selected}\n"
     
-    if equipment_list:
-        report += "**EQUIPMENT**\n" + "\n".join(equipment_list) + "\n\n"
+    output += "\n**EQUIPMENT**\n"
+    for equip in equipment_selected:
+        output += f"- {equip}\n"
     
-    if team_members:
-        report += "**PIPE LAYING TEAM**\n" + "\n".join(team_members) + "\n\n"
+    output += "\n**PIPE LAYING TEAM**\n"
+    for role, count in pipeline_roles.items():
+        if count > 0:
+            output += f"- {role} - {count}\n"
     
     if materials:
-        report += "**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n\n"
+        output += "\n**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n"
     
     if activity_list:
-        report += "**ACTIVITY CARRIED OUT**\n" + "\n".join(activity_list) + "\n\n"
+        output += "\n**ACTIVITY CARRIED OUT**\n" + "\n".join(activity_list) + "\n"
     
-    if remarks:
-        report += "**REMARKS**\n" + remarks + "\n"
+    output += "\n**REMARKS**\n"
+    output += f"{remarks}\n"
     
-    st.text_area("Generated Report:", report, height=400)
+    st.text_area("Generated Report:", output, height=300)
