@@ -25,7 +25,7 @@ afternoon_weather = st.selectbox("Afternoon Weather:", ["Sunny", "Cloudy", "Driz
 start_time = st.time_input("Start Time:", time(8, 0))
 end_time = st.time_input("End Time:", time(17, 0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
-working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')}"
+working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # MACHINERY Selection
 st.markdown("**MACHINERY**")
