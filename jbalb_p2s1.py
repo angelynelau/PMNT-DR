@@ -3,6 +3,13 @@ from datetime import datetime
 
 st.title("PMNT P2S1 Site Diary")
 
+def format_chainage(chainage):
+    """Function to format chainage as CHX+XXX."""
+    if chainage.isdigit():
+        chainage = int(chainage)
+        return f"CH{chainage // 1000}+{chainage % 1000:03d}"
+    return ""
+
 # TEAM Selection (Choose One)
 team = st.selectbox("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
@@ -21,28 +28,40 @@ end_time = st.time_input("End Time:", datetime.strptime("17:00", "%H:%M").time()
 total_working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
-# Machinery Selection (Only Excavator)
+# MACHINERY Selection
 st.markdown("**MACHINERY**")
-machinery_selected = st.number_input("Excavator (if applicable, insert number)", min_value=0, step=1)
+machinery_types = []
+if st.checkbox("Excavator"):
+    machinery_types.append("Excavator - 1")
 
-# Equipment Selection
+# EQUIPMENT Selection
 st.markdown("**EQUIPMENT**")
-equipment_list = ["Genset", "Butt Fusion Welding Machine"]
-equipment_selected = [equip for equip in equipment_list if st.checkbox(equip)]
+equipment_list = []
+if st.checkbox("Genset"):
+    equipment_list.append("Genset - 1")
+if st.checkbox("Butt Fusion Welding Machine"):
+    equipment_list.append("Butt Fusion Welding Machine - 1")
 
-# Pipe Laying Team Selection
+# PIPE LAYING TEAM
 st.markdown("**PIPE LAYING TEAM**")
-pipeline_roles = {"Supervisor": 1, "Excavator Operator": 1, "General Worker": st.number_input("General Worker (choose number)", min_value=0, step=1)}
+team_members = []
+if st.checkbox("Supervisor"):
+    team_members.append("Supervisor - 1")
+if st.checkbox("Excavator Operator"):
+    team_members.append("Excavator Operator - 1")
+if st.checkbox("General Worker"):
+    workers = st.number_input("Enter number of General Workers", min_value=1, step=1)
+    team_members.append(f"General Worker - {workers}")
 
-# Materials Delivered
+# MATERIALS DELIVERED
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
-pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
-pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
-if pipe_count > 0:
-    materials.append(f"{len(materials)+1}. {pipe_size} \n- {pipe_count} lengths")
+if st.checkbox("Pipe"):
+    pipe_size = st.selectbox("Select Pipe Size", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
+    pipe_length = st.number_input("Enter number of lengths", min_value=1, step=1)
+    materials.append(f"{pipe_size} - {pipe_length} lengths")
 if st.checkbox("Valves & Fittings"):
-    materials.append(f"{len(materials)+1}. Valves & Fittings")
+    materials.append("Valves & Fittings")
 
 # Activity Carried Out
 st.markdown("**ACTIVITY CARRIED OUT**")
