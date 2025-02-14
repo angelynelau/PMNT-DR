@@ -53,7 +53,7 @@ pipe_sizes = ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDP
 pipes_delivered = {}
 if st.checkbox("Pipes Delivered"):
     pipe_size_selected = st.selectbox("Select Pipe Size:", pipe_sizes)
-    pipes_delivered[pipe_size_selected] = st.number_input("Enter number of lengths", min_value=1, step=1)
+    pipes_delivered[pipe_size_selected] = st.number_input("Enter number of lengths", min_value=0, step=1)
 
 valves_fittings = st.checkbox("Valves & Fittings")
 
@@ -71,7 +71,7 @@ joint_count = 0
 joint_route = ""
 joint_chainage = ""
 if pipe_jointing:
-    joint_count = st.number_input("Number of Joints", min_value=1, step=1)
+    joint_count = st.number_input("Number of Joints", min_value=0, step=1)
     joint_route = st.text_input("Insert Route")
     joint_chainage = st.number_input("Jointing Chainage", min_value=0, step=1)
 
