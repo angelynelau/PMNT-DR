@@ -52,17 +52,24 @@ if st.checkbox("General Worker"):
     workers = st.number_input("Enter number of General Workers", min_value=1, step=1)
     team_members.append(f"General Worker - {workers}")
 
-# Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
+material_counter = 1  # Track material number
 
 if st.checkbox("Pipe"):
     pipe_size = st.selectbox("Pipe Size:", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"])
     pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
     if pipe_count > 0:
-        materials.append(f"{len(materials)+1}. {pipe_size} \n- {pipe_count} lengths")
+        materials.append(f"{material_counter}. {pipe_size} \n- {pipe_count} lengths")
+        material_counter += 1
+
 if st.checkbox("Valves & Fittings"):
-    materials.append(f"{len(materials)+1}. Valves & Fittings")
+    materials.append(f"{material_counter}. Valves & Fittings")
+    material_counter += 1
+
+# Show materials in the interface
+if materials:
+    st.write("\n".join(materials))
 
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
