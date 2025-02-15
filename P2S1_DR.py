@@ -1,4 +1,5 @@
 import streamlit as st
+import urllib.parse
 from datetime import datetime
 
 st.title("P2S1 Daily Report")
@@ -103,5 +104,13 @@ if st.button("Generate Report"):
     
     output += f"WEATHER = {weather}\n" if weather else "WEATHER = \n"
     output += f"REMARKS = {remarks}\n" if remarks else "REMARKS = \n"
-
+    
     st.text_area("Generated Report:", output, height=300)
+
+# Encode report for URL
+encoded_report = urllib.parse.quote(report_content)
+
+# WhatsApp share link
+whatsapp_link = f"https://wa.me/?text={encoded_report}"
+
+st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
