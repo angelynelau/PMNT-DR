@@ -116,6 +116,9 @@ if st.button("Generate Report"):
     if remarks:
         output += "*REMARKS*\n" + remarks + "\n"    
 
+    st.text_area("Generated Report:", output, height=300)
+
+
 if 'output' in locals() and output:
     encoded_report = urllib.parse.quote(output)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
