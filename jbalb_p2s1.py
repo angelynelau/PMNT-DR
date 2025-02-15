@@ -1,4 +1,5 @@
 import streamlit as st
+import urllib.parse
 from datetime import datetime, time
 
 def format_chainage(value):
@@ -117,4 +118,9 @@ if st.button("Generate Report"):
     
     st.text_area("Generated Report:", report, height=400)
 
-
+if 'output' in locals() and output:
+    encoded_report = urllib.parse.quote(output)
+    whatsapp_link = f"https://wa.me/?text={encoded_report}"
+    st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
+else:
+    st.warning("Generate the report first before sharing.")
