@@ -80,11 +80,10 @@ if st.checkbox("Pipe Laying"):
 
 if st.checkbox("Pipe Jointing"):
     joint_count = st.number_input("Number of Joints", min_value=1, step=1)
-    joint_pipe_size = st.selectbox("Pipe Size for Jointing", ["160mm HDPE", "225mm HDPE", "280mm HDPE", "355mm HDPE", "400mm HDPE"], key="joint_pipe_size")
     joint_route = st.text_input("Insert Route")
     joint_chainage = format_chainage(st.text_input("Jointing Chainage"))
     if joint_count and joint_chainage:
-        activity_list.append(f"{len(activity_list)+1}. Pipe Jointing \n- {joint_count} nos joints ({joint_pipe_size}) // {joint_route}-{joint_chainage}")
+        activity_list.append(f"{len(activity_list)+1}. Pipe Jointing \n- {joint_count} nos joints ({pipe_size}) // {joint_route}-{joint_chainage}")
     
 # REMARKS
 remarks = st.text_area("REMARKS")
@@ -99,22 +98,22 @@ if st.button("Generate Report"):
     report += f"{working_time}\n\n"
     
     if machinery_types:
-        report += "**MACHINERY**\n" + "\n".join(machinery_types) + "\n\n"
+        report += "*MACHINERY*\n" + "\n".join(machinery_types) + "\n\n"
     
     if equipment_list:
-        report += "**EQUIPMENT**\n" + "\n".join(equipment_list) + "\n\n"
+        report += "*EQUIPMENT*\n" + "\n".join(equipment_list) + "\n\n"
     
     if team_members:
-        report += "**PIPE LAYING TEAM**\n" + "\n".join(team_members) + "\n\n"
+        report += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
-        report += "**MATERIALS DELIVERED TO SITE**\n" + "\n".join(materials) + "\n\n"
+        report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
     
     if activity_list:
-        report += "**ACTIVITY CARRIED OUT**\n" + "\n".join(activity_list) + "\n\n"
+        report += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
     
     if remarks:
-        report += "**REMARKS**\n" + remarks + "\n"
+        report += "*REMARKS*\n" + remarks + "\n"
     
     st.text_area("Generated Report:", report, height=400)
 
