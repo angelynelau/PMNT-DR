@@ -118,8 +118,8 @@ if st.button("Generate Report"):
     
     st.text_area("Generated Report:", report, height=400)
 
-if 'output' in locals() and output:
-    encoded_report = urllib.parse.quote(output)
+if 'report ' in locals() and report:
+    encoded_report = urllib.parse.quote(report)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
 else:
