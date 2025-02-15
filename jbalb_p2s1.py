@@ -114,11 +114,9 @@ if st.button("Generate Report"):
         report += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
     
     if remarks:
-        report += "*REMARKS*\n" + remarks + "\n"
-    
-    st.text_area("Generated Report:", report, height=400)
+        report += "*REMARKS*\n" + remarks + "\n"    
 
-if 'report ' in locals() and report:
+if 'report' in locals() and report:
     encoded_report = urllib.parse.quote(report)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
