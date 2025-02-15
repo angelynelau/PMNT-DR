@@ -70,7 +70,6 @@ remarks = st.text_area("REMARKS")
 
 # Generate report button
 if st.button("Generate Report"):
-    report_content = "
     output = f"> {team}\n"
     output += f"PIPE = {pipe_size}\n"
     output += f"DATE = {formatted_date}\n"
@@ -104,14 +103,13 @@ if st.button("Generate Report"):
         output += "DELIVERY = \n"
     
     output += f"WEATHER = {weather}\n" if weather else "WEATHER = \n"
-    output += f"REMARKS = {remarks}\n" if remarks else "REMARKS = \n" "
+    output += f"REMARKS = {remarks}\n" if remarks else "REMARKS = \n"
     
     st.text_area("Generated Report:", output, height=300)
 
-# Encode report for URL
-encoded_report = urllib.parse.quote(report_content)
-
-# WhatsApp share link
-whatsapp_link = f"https://wa.me/?text={encoded_report}"
-
-st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
+if 'output' in locals() and output:
+    encoded_report = urllib.parse.quote(output)
+    whatsapp_link = f"https://wa.me/?text={encoded_report}"
+    st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
+else:
+    st.warning("Generate the report first before sharing.")
