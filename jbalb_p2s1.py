@@ -91,33 +91,33 @@ remarks = st.text_area("REMARKS")
 
 # GENERATE REPORT
 if st.button("Generate Report"):
-    report = f"> {team}\n"
-    report += f"Date: {formatted_date}\n"
-    report += f"Morning: {morning_weather}\n"
-    report += f"Afternoon: {afternoon_weather}\n"
-    report += f"Total Working Hours: {working_hours:.2f} hrs\n"
-    report += f"{working_time}\n\n"
+    output = f"> {team}\n"
+    output += f"Date: {formatted_date}\n"
+    output += f"Morning: {morning_weather}\n"
+    output += f"Afternoon: {afternoon_weather}\n"
+    output += f"Total Working Hours: {working_hours:.2f} hrs\n"
+    output += f"{working_time}\n\n"
     
     if machinery_types:
-        report += "*MACHINERY*\n" + "\n".join(machinery_types) + "\n\n"
+        output += "*MACHINERY*\n" + "\n".join(machinery_types) + "\n\n"
     
     if equipment_list:
-        report += "*EQUIPMENT*\n" + "\n".join(equipment_list) + "\n\n"
+        output += "*EQUIPMENT*\n" + "\n".join(equipment_list) + "\n\n"
     
     if team_members:
-        report += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
+        output += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
-        report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
+        output += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
     
     if activity_list:
-        report += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
+        output += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
     
     if remarks:
-        report += "*REMARKS*\n" + remarks + "\n"    
+        output += "*REMARKS*\n" + remarks + "\n"    
 
-if 'report' in locals() and report:
-    encoded_report = urllib.parse.quote(report)
+if 'output' in locals() and output:
+    encoded_report = urllib.parse.quote(output)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
 else:
