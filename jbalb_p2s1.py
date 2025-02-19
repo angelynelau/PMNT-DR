@@ -153,7 +153,7 @@ if st.button("Generate Report"):
     else:
         pmnt_report += "WORK ACTIVITY = \n"
     
-    pmnt_report += f"HOURS WORKING = {working_hours:.2f} hrs \n"
+    pmnt_report += f"HOURS WORKING = {working_hours:.2f}\n"
     pmnt_report += f"MANPOWER = {total_people}\n"
     
     if joint_count:
