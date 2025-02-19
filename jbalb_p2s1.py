@@ -154,7 +154,7 @@ if st.button("Generate Report"):
     pmnt_report += f"JOINT = {joint_count}\n"
 
     if start_chainage and end_chainage:
-        pmnt_report += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" 
+        pmnt_report += f"LAID = {start_formatted} to {end_formatted} {chainage_length}\n" 
     else:
         pmnt_report += "LAID = \n"
 
@@ -164,7 +164,7 @@ if st.button("Generate Report"):
     if morning_weather == afternoon_weather:
         pmnt_report += f"WEATHER = {morning_weather}\n"
     else:
-        pmnt_report += f"WEATHER = {morning_weather}(am) / {afternoon_weather}(pm) \n"
+        pmnt_report += f"WEATHER = {morning_weather} (am) / {afternoon_weather} (pm) \n"
     
     if remarks:
         pmnt_report += f"REMARKS = {remarks}\n"
