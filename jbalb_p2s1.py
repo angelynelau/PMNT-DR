@@ -158,8 +158,13 @@ if st.button("Generate Report"):
     else:
         pmnt_report += "LAID = \n"
 
+    if fitting:
+        pmnt_report += f"FITTING = {fitting}\n"
+    else:
+        pmnt_report += "FITTING = \n"
+    
     pmnt_report += "DELIVERY = " + pipe_size + "\n"
-    pmnt_report += "\n".join(delivery_entries) + "\n\n"
+    pmnt_report += "\n".join(delivery_entries) + "\n"
 
     if morning_weather == afternoon_weather:
         pmnt_report += f"WEATHER = {morning_weather}\n"
@@ -168,6 +173,8 @@ if st.button("Generate Report"):
     
     if remarks:
         pmnt_report += f"REMARKS = {remarks}\n"
+    else:
+        pmnt_report += "REMARKS = \n"
 
     st.text_area("JBALB Format Report:", jbalb_report, height=300)
     st.text_area("PMNT Format Report:", pmnt_report, height=300)
