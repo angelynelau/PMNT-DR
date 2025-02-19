@@ -89,7 +89,7 @@ if st.checkbox("Pipe"):
 
 
 if st.checkbox("Valves & Fittings"):
-    material_list(f"{len(materials)+1}. Valves & Fittings")
+    material_list(f"{len(material_list)+1}. Valves & Fittings")
     material_names.append("Fittings")
 
 # ACTIVITY CARRIED OUT
@@ -139,7 +139,7 @@ if st.button("Generate Report"):
         jbalb_report += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
-        jbalb_report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
+        jbalb_report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(material_list) + "\n\n"
     
     if activity_list:
         jbalb_report += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
