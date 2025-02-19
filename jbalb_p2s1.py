@@ -96,46 +96,7 @@ remarks = st.text_area("REMARKS")
 
 # GENERATE REPORT
 if st.button("Generate Report"):
-    #PMNT FORMAT
-    output = f"> {team}\n"
-    output += f"PIPE = {pipe_size}\n"
-    output += f"DATE = {formatted_date}\n"
-    
-    # Include work activity if any is selected
-    if activity_list:
-        output += f"WORK ACTIVITY = {pipe_size} {' & '.join(activity_list)}\n"
-    else:
-        output += "WORK ACTIVITY = \n"
 
-    # Always include these fields
-    output += f"HOURS WORKING = {working_hours}\n" if working_hours else "HOURS WORKING = \n"
-
-    # Manpower
-    if team_members:
-        output += F" MANPOWER = \n".join(team_members) + f"\nTotal Manpower: {total_people}\n"
-    else:
-        output += "MANPOWER = \n"
-
-    # JOINT 
-    output += f"JOINT = {joint_count}\n" if joint_count else "JOINT = \n"
-
-    # LAID
-    output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" if start_chainage else "LAID = \n"
-
-    # Only include FITTING if it's not blank
-    if fitting:
-        output += f"FITTING = {fitting}\n"
-    else:
-        output += "FITTING = \n"
-
-    # Add DELIVERY only if it has a value
-    if delivery > 0:
-        output += f"DELIVERY = {pipe_size} - {delivery} lengths\n"
-    else:
-        output += "DELIVERY = \n"
-    
-    output += f"WEATHER = {weather}\n" if weather else "WEATHER = \n"
-    output += f"REMARKS = {remarks}\n" if remarks else "REMARKS = \n"
     
     #JBALB P2S1 FORMAT
     output = f"> {team}\n"
