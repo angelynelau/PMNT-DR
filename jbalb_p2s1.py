@@ -166,10 +166,10 @@ if st.button("Generate Report"):
     else:
         pmnt_report += "LAID = \n"
 
-    if materials:
-        pmnt_report += f"FITTING = {materials}\n"
-    else:
-        pmnt_report += "FITTING = \n"
+#    if materials:
+#        pmnt_report += f"FITTING = {materials}\n"
+#    else:
+#        pmnt_report += "FITTING = \n"
     
     pmnt_report += "DELIVERY = " + pipe_size + "\n"
     pmnt_report += "\n".join(delivery_entries) + "\n"
