@@ -164,7 +164,7 @@ if st.button("Generate Report"):
     if morning_weather == afternoon_weather:
         pmnt_report += f"WEATHER = {morning_weather}\n"
     else:
-        pmnt_report += f"WEATHER = {morning_weather} AM / {afternoon_weather}\n"
+        pmnt_report += f"WEATHER = {morning_weather}(am) / {afternoon_weather}(pm) \n"
     
     if remarks:
         pmnt_report += f"REMARKS = {remarks}\n"
