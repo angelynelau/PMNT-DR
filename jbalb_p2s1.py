@@ -90,6 +90,7 @@ if st.checkbox("Valves & Fittings"):
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
+activity_names = []
 
 if st.checkbox("Pipe Laying"):
     start_chainage = st.text_input("Starting Chainage", "")
@@ -181,15 +182,15 @@ if st.button("Generate Report"):
     st.text_area("JBALB Format Report:", jbalb_report, height=300)
     st.text_area("PMNT Format Report:", pmnt_report, height=300)
 
-if 'jbalb_report' in locals() and output:
-    encoded_report = urllib.parse.quote(output)
+if 'jbalb_report' in locals() and jbalb_report:
+    encoded_report = urllib.parse.quote(jbalb_report)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
 else:
     st.warning("Generate the report first before sharing.")
 
-if 'pmnt_report' in locals() and output:
-    encoded_report = urllib.parse.quote(output)
+if 'pmnt_report' in locals() and pmnt_report:
+    encoded_report = urllib.parse.quote(pmnt_report)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
 else:
