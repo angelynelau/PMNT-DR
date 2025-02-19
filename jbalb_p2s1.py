@@ -152,7 +152,11 @@ if st.button("Generate Report"):
     output += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
     output += f"MANPOWER = {total_people}\n"
     output += f"JOINT = {joint_count}\n"
-    output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" if start_chainage and end_chainage else "LAID = \n"    
+
+    if start_chainage and end_chainage
+        output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" 
+    else 
+        output += "LAID = \n"    
 
     if fitting:
         output += f"FITTING = {fitting}\n"
