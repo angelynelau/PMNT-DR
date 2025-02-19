@@ -73,6 +73,11 @@ if st.checkbox("Pipe"):
         if pipe_count > 0:
             pipe_entries.append(f"{i+1}. {pipe_size} \n- {pipe_count} lengths // {route} {chainage}")
     if pipe_entries:
+        materials.append(f"{len(pipe_size)}\n" + "\n".join(pipe_entries))
+    else:
+        materials.append(f"{len(pipe_size)} \n- {total_pipe_length} lengths")
+        
+    if pipe_entries:
         materials.extend(pipe_entries)
 
 if st.checkbox("Valves & Fittings"):
