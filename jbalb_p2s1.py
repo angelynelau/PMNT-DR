@@ -76,7 +76,7 @@ if st.checkbox("Pipe"):
         materials.extend(pipe_entries)
 
 if st.checkbox("Valves & Fittings"):
-    materials.append("2. Valves & Fittings")
+    materials.append(f"{len(materials)+1}. Valves & Fittings")
 
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
