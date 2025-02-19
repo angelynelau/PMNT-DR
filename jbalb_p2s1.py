@@ -64,6 +64,7 @@ st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
 pipe_entries = []
 total_pipe_length = 0
+delivery_entries = []  # Fixing the undefined variable issue
 
 if st.checkbox("Pipe"):
     num_entries = st.number_input("Number of Pipe Entries", min_value=1, step=1, value=1)
@@ -76,7 +77,8 @@ if st.checkbox("Pipe"):
         
         if pipe_count > 0 and route and chainage:
             pipe_entries.append(f"- {pipe_count} lengths // {route} {chainage}")
-    
+            delivery_entries.append(f"- {pipe_count} lengths // {route} {chainage}")
+
     if pipe_entries:
         materials.append(f"1. {pipe_size}\n" + "\n".join(pipe_entries))
     else:
@@ -112,67 +114,55 @@ remarks = st.text_area("REMARKS")
 # GENERATE REPORT
 if st.button("Generate Report"):
     # JBALB FORMAT
-    output = f"> {team}\n"
-    output += f"Date: {formatted_date}\n"
-    output += f"Morning: {morning_weather}\n"
-    output += f"Afternoon: {afternoon_weather}\n"
-    output += f"Total Working Hours: {working_hours:.2f} hrs\n"
-    output += f"{working_time}\n\n"
+    jbalb_report = f"> {team}\n"
+    jbalb_report += f"Date: {formatted_date}\n"
+    jbalb_report += f"Morning: {morning_weather}\n"
+    jbalb_report += f"Afternoon: {afternoon_weather}\n"
+    jbalb_report += f"Total Working Hours: {working_hours:.2f} hrs\n"
+    jbalb_report += f"{working_time}\n\n"
     
     if machinery_types:
-        output += "*MACHINERY*\n" + "\n".join(machinery_types) + "\n\n"
+        jbalb_report += "*MACHINERY*\n" + "\n".join(machinery_types) + "\n\n"
     
     if equipment_list:
-        output += "*EQUIPMENT*\n" + "\n".join(equipment_list) + "\n\n"
+        jbalb_report += "*EQUIPMENT*\n" + "\n".join(equipment_list) + "\n\n"
     
     if team_members:
-        output += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
+        jbalb_report += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
-        output += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
+        jbalb_report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
     
     if activity_list:
-        output += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
+        jbalb_report += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
     
     if remarks:
-        output += "*REMARKS*\n" + remarks + "\n"    
-
+        jbalb_report += "*REMARKS*\n" + remarks + "\n"    
 
     # PMNT FORMAT
-    output = f"> {team}\n"
-    output += f"PIPE = {pipe_size}\n"
-    output += f"DATE = {formatted_date}\n"
+    pmnt_report = f"> {team}\n"
+    pmnt_report += f"PIPE = {pipe_size}\n"
+    pmnt_report += f"DATE = {formatted_date}\n"
     
- # Include work activity if any is selected
     if activity_list:
-        output += f"WORK ACTIVITY = {pipe_size} {' & '.join(activity_list)}\n"
+        pmnt_report += f"WORK ACTIVITY = {pipe_size} {' & '.join(activity_list)}\n"
     else:
-        output += "WORK ACTIVITY = \n"
+        pmnt_report += "WORK ACTIVITY = \n"
     
-    output += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
-    output += f"MANPOWER = {total_people}\n"
-    output += f"JOINT = {joint_count}\n"
+    pmnt_report += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
+    pmnt_report += f"MANPOWER = {total_people}\n"
+    pmnt_report += f"JOINT = {joint_count}\n"
 
     if start_chainage and end_chainage:
-        output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" 
+        pmnt_report += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" 
     else:
-        output += "LAID = \n"    
+        pmnt_report += "LAID = \n"
 
-    if materials:
-        output += f"FITTING = {materials}\n"
-    else:
-        output += "FITTING = \n"
-    
-    output += "DELIVERY = " + pipe_size + "\n"
-    output += "\n".join(delivery_entries) + "\n\n"
-    
-    if morning_weather == afternoon_weather:
-        output += f"WEATHER = {morning_weather}\n"
-    else:
-        output += f"MORNING WEATHER AM = {morning_weather}\n"
-        output += f"AFTERNOON WEATHER PM = {afternoon_weather}\n"
+    pmnt_report += "DELIVERY = " + pipe_size + "\n"
+    pmnt_report += "\n".join(delivery_entries) + "\n\n"
     
     if remarks:
-        output += f"REMARKS = {remarks}\n"
+        pmnt_report += f"REMARKS = {remarks}\n"
 
-    st.text_area("Generated Report:", output, height=300)
+    st.text_area("JBALB Format Report:", jbalb_report, height=300)
+    st.text_area("PMNT Format Report:", pmnt_report, height=300)
