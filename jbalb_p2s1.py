@@ -61,12 +61,22 @@ if st.checkbox("General Worker"):
 
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
-materials = [
-    "1. 160mm HDPE \n- 4 lengths // A CH0+528",  
-    "- 9 lengths // B CH0+100",  
-    "- 5 lengths // C CH0+123",  
-    "2. Valves & Fittings"
-]
+materials = []
+pipe_entries = []
+
+if st.checkbox("Pipe"):
+    num_entries = st.number_input("Number of Pipe Entries", min_value=1, step=1, value=1)
+    for i in range(num_entries):
+        pipe_count = st.number_input(f"Pipe Count (Entry {i+1})", min_value=0, step=1, key=f"pipe_count_{i}")
+        route = st.text_input(f"Route (Entry {i+1})", key=f"route_{i}")
+        chainage = format_chainage(st.text_input(f"Chainage (Entry {i+1})", key=f"chainage_{i}"))
+        if pipe_count > 0:
+            pipe_entries.append(f"{i+1}. {pipe_size} \n- {pipe_count} lengths // {route} {chainage}")
+    if pipe_entries:
+        materials.extend(pipe_entries)
+
+if st.checkbox("Valves & Fittings"):
+    materials.append("2. Valves & Fittings")
 
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
@@ -120,7 +130,3 @@ if st.button("Generate Report"):
         output += "*REMARKS*\n" + remarks + "\n"    
 
     st.text_area("Generated Report:", output, height=300)
-    
-    encoded_report = urllib.parse.quote(output)
-    whatsapp_link = f"https://wa.me/?text={encoded_report}"
-    st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
