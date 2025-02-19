@@ -158,7 +158,7 @@ if st.button("Generate Report"):
     else:
         pmnt_report += "LAID = \n"
 
-    if fitting:
+    if materials:
         pmnt_report += f"FITTING = {fitting}\n"
     else:
         pmnt_report += "FITTING = \n"
