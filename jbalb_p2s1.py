@@ -149,7 +149,7 @@ if st.button("Generate Report"):
     else:
         pmnt_report += "WORK ACTIVITY = \n"
     
-    pmnt_report += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
+    pmnt_report += f"HOURS WORKING = {working_hours:.2f} hrs \n"
     pmnt_report += f"MANPOWER = {total_people}\n"
     pmnt_report += f"JOINT = {joint_count}\n"
 
@@ -178,3 +178,17 @@ if st.button("Generate Report"):
 
     st.text_area("JBALB Format Report:", jbalb_report, height=300)
     st.text_area("PMNT Format Report:", pmnt_report, height=300)
+
+if 'jbalb_report' in locals() and output:
+    encoded_report = urllib.parse.quote(output)
+    whatsapp_link = f"https://wa.me/?text={encoded_report}"
+    st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
+else:
+    st.warning("Generate the report first before sharing.")
+
+if 'pmnt_report' in locals() and output:
+    encoded_report = urllib.parse.quote(output)
+    whatsapp_link = f"https://wa.me/?text={encoded_report}"
+    st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
+else:
+    st.warning("Generate the report first before sharing.")
