@@ -154,7 +154,11 @@ if st.button("Generate Report"):
     
     pmnt_report += f"HOURS WORKING = {working_hours:.2f} hrs \n"
     pmnt_report += f"MANPOWER = {total_people}\n"
-    pmnt_report += f"JOINT = {joint_count}\n"
+    
+    if joint_count:
+        pmnt_report += f"JOINT = {joint_count}\n"
+    else:
+        pmnt_report += "JOINT = \n"
 
     if start_chainage and end_chainage:
         pmnt_report += f"LAID = {start_formatted} to {end_formatted} {chainage_length}\n" 
