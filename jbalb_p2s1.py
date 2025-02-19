@@ -158,8 +158,8 @@ if st.button("Generate Report"):
     else:
         output += "LAID = \n"    
 
-    if fitting:
-        output += f"FITTING = {fitting}\n"
+    if materials:
+        output += f"FITTING = {materials}\n"
     else:
         output += "FITTING = \n"
     
