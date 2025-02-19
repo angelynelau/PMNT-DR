@@ -103,14 +103,14 @@ if st.button("Generate Report"):
         output += "WORK ACTIVITY = \n"
 
     # Always include these fields
-    output += f"HOURS WORKING = {hours_working}\n" if hours_working else "HOURS WORKING = \n"
+    output += f"HOURS WORKING = {working_hours}\n" if working_hours else "HOURS WORKING = \n"
     output += f"MANPOWER = {manpower}\n" if manpower else "MANPOWER = \n"
 
     # JOINT 
     output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
 
     # LAID
-    output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n" if starting_chainage else "LAID = \n"
+    output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" if start_chainage else "LAID = \n"
 
     # Only include FITTING if it's not blank
     if fitting:
