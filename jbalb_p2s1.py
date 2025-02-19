@@ -84,12 +84,14 @@ if st.checkbox("Pipe"):
     if pipe_entries:
         material_list.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
     else:
-        material_list.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")            material_names.append("Pipe")
+        material_list.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")            
+        material_names.append("Pipe")
 
 
 if st.checkbox("Valves & Fittings"):
     material_list(f"{len(materials)+1}. Valves & Fittings")
-material_names.append("Fittings")
+    material_names.append("Fittings")
+
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
