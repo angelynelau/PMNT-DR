@@ -109,11 +109,12 @@ if st.button("Generate Report"):
 
     # Always include these fields
     output += f"HOURS WORKING = {working_hours}\n" if working_hours else "HOURS WORKING = \n"
-    output += f"MANPOWER = {manpower}\n" if manpower else "MANPOWER = \n"
-if team_members:
-    manpower_output += "\n".join(team_members) + f"\nTotal Manpower: {total_people}\n"
-else:
-    manpower_output += "No manpower assigned.\n"
+
+    # Manpower
+    if team_members:
+        output += F" MANPOWER = \n".join(team_members) + f"\nTotal Manpower: {total_people}\n"
+    else:
+        output += "MANPOWER = \n"
 
     # JOINT 
     output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
