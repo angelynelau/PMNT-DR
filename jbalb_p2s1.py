@@ -85,7 +85,7 @@ if st.checkbox("Pipe Laying"):
             activity_list.append(f"{len(activity_list)+1}. Pipe Laying \n- {pipe_size} pipe laying works from {start_formatted} to {end_formatted} {chainage_length}")
 
 if st.checkbox("Pipe Jointing"):
-    joint_count = st.number_input("Number of Joints", min_value=1, step=1)
+    joint_count = st.number_input("Number of Joints", min_value=0, step=1)
     joint_route = st.text_input("Insert Route")
     joint_chainage = format_chainage(st.text_input("Jointing Chainage"))
     if joint_count and joint_chainage:
