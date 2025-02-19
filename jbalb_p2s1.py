@@ -164,8 +164,8 @@ if st.button("Generate Report"):
         pmnt_report += "FITTING = \n"
     
     pmnt_report += "DELIVERY = " + pipe_size + "\n"
-    pmnt_report += .join(delivery_entries) + "\n"
-
+    pmnt_report += "\n".join(delivery_entries) + "\n"
+    
     if morning_weather == afternoon_weather:
         pmnt_report += f"WEATHER = {morning_weather}\n"
     else:
