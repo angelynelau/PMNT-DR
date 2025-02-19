@@ -61,7 +61,9 @@ if st.checkbox("General Worker"):
 
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
-materials = []
+material_list = []
+material_names = []
+
 pipe_entries = []
 total_pipe_length = 0
 delivery_entries = []  # Fixing the undefined variable issue
@@ -80,13 +82,14 @@ if st.checkbox("Pipe"):
             delivery_entries.append(f"- {pipe_count} lengths // {route} {chainage}")
 
     if pipe_entries:
-        materials.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
+        material_list.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
     else:
-        materials.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")
+        material_list.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")            material_names.append("Pipe")
+
 
 if st.checkbox("Valves & Fittings"):
-    materials.append(f"{len(materials)+1}. Valves & Fittings")
-
+    material_list(f"{len(materials)+1}. Valves & Fittings")
+material_names.append("Fittings")
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
