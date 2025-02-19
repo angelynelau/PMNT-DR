@@ -117,7 +117,7 @@ if st.button("Generate Report"):
         output += "MANPOWER = \n"
 
     # JOINT 
-    output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
+    output += f"JOINT = {joint_count}\n" if joint else "JOINT = \n"
 
     # LAID
     output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" if start_chainage else "LAID = \n"
