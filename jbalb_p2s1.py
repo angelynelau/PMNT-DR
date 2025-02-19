@@ -63,19 +63,24 @@ if st.checkbox("General Worker"):
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
 pipe_entries = []
+total_pipe_length = 0
 
 if st.checkbox("Pipe"):
     num_entries = st.number_input("Number of Pipe Entries", min_value=1, step=1, value=1)
     for i in range(num_entries):
         pipe_count = st.number_input(f"Pipe Count (Entry {i+1})", min_value=0, step=1, key=f"pipe_count_{i}")
         route = st.text_input(f"Route (Entry {i+1})", key=f"route_{i}")
-        chainage = format_chainage(st.text_input(f"Chainage (Entry {i+1})", key=f"chainage_{i}"))
-        if pipe_count > 0:
-            pipe_entries.append(f"{i+1}. {pipe_size} \n- {pipe_count} lengths // {route} {chainage}")
+        chainage_input = st.text_input(f"Chainage (Entry {i+1})", key=f"chainage_{i}")
+        chainage = format_chainage(chainage_input) if chainage_input else ""
+        total_pipe_length += pipe_count
+        
+        if pipe_count > 0 and route and chainage:
+            pipe_entries.append(f"- {pipe_count} lengths // {route} {chainage}")
+    
     if pipe_entries:
-        materials.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
+        materials.append(f"1. {pipe_size}\n" + "\n".join(pipe_entries))
     else:
-        materials.append(f"{len(pipe_size)+1} \n- {total_pipe_length} lengths")
+        materials.append(f"1. {pipe_size}\n- {total_pipe_length} lengths")
 
 if st.checkbox("Valves & Fittings"):
     materials.append(f"{len(materials)+1}. Valves & Fittings")
