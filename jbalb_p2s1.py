@@ -5,7 +5,7 @@ from datetime import datetime, time
 def format_chainage(value):
     try:
         value = int(value)
-        return f"ch0+{value}"
+        return f"CH{value // 1000}+{value % 1000:03d}"
     except:
         return "Invalid input"
 
@@ -26,7 +26,7 @@ afternoon_weather = st.selectbox("Afternoon Weather:", ["Sunny", "Cloudy", "Driz
 # WORKING HOURS
 start_time = st.time_input("Start Time:", time(8, 0))
 end_time = st.time_input("End Time:", time(17, 0))
-working_hours = 8  # Fixed as 8 hrs
+working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # MACHINERY Selection
@@ -80,9 +80,9 @@ if st.checkbox("Pipe"):
             delivery_entries.append(f"- {pipe_count} lengths // {route} {chainage}")
 
     if pipe_entries:
-        materials.append(f"1. {pipe_size}\n" + "\n".join(pipe_entries))
+        materials.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
     else:
-        materials.append(f"1. {pipe_size}\n- {total_pipe_length} lengths")
+        materials.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")
 
 if st.checkbox("Valves & Fittings"):
     materials.append(f"{len(materials)+1}. Valves & Fittings")
@@ -90,7 +90,6 @@ if st.checkbox("Valves & Fittings"):
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
-laid_chainage_info = ""
 
 if st.checkbox("Pipe Laying"):
     start_chainage = st.text_input("Starting Chainage", "")
@@ -100,7 +99,6 @@ if st.checkbox("Pipe Laying"):
         end_formatted = format_chainage(end_chainage)
         if start_formatted and end_formatted:
             chainage_length = f"({int(end_chainage) - int(start_chainage)}m)"
-            laid_chainage_info = f"{start_formatted} to {end_formatted} {chainage_length}"
             activity_list.append(f"{len(activity_list)+1}. Pipe Laying \n- {pipe_size} pipe laying works from {start_formatted} to {end_formatted} {chainage_length}")
 
 if st.checkbox("Pipe Jointing"):
@@ -115,12 +113,12 @@ remarks = st.text_area("REMARKS")
 
 # GENERATE REPORT
 if st.button("Generate Report"):
-    # JBALB FORMAT (Unchanged)
+    # JBALB FORMAT
     jbalb_report = f"> {team}\n"
     jbalb_report += f"Date: {formatted_date}\n"
     jbalb_report += f"Morning: {morning_weather}\n"
     jbalb_report += f"Afternoon: {afternoon_weather}\n"
-    jbalb_report += f"Total Working Hours: {working_hours} hrs\n"
+    jbalb_report += f"Total Working Hours: {working_hours:.2f} hrs\n"
     jbalb_report += f"{working_time}\n\n"
     
     if machinery_types:
@@ -141,7 +139,7 @@ if st.button("Generate Report"):
     if remarks:
         jbalb_report += "*REMARKS*\n" + remarks + "\n"    
 
-    # PMNT FORMAT (Adjusted)
+    # PMNT FORMAT
     pmnt_report = f"> {team}\n"
     pmnt_report += f"PIPE = {pipe_size}\n"
     pmnt_report += f"DATE = {formatted_date}\n"
@@ -151,17 +149,23 @@ if st.button("Generate Report"):
     else:
         pmnt_report += "WORK ACTIVITY = \n"
     
-    pmnt_report += f"HOURS WORKING = {working_hours}\n"  # Adjusted to just "8"
+    pmnt_report += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
     pmnt_report += f"MANPOWER = {total_people}\n"
     pmnt_report += f"JOINT = {joint_count}\n"
 
-    if laid_chainage_info:
-        pmnt_report += f"LAID = {laid_chainage_info}\n"  # Adjusted chainage format
+    if start_chainage and end_chainage:
+        pmnt_report += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" 
     else:
         pmnt_report += "LAID = \n"
 
     pmnt_report += "DELIVERY = " + pipe_size + "\n"
     pmnt_report += "\n".join(delivery_entries) + "\n\n"
+
+    if morning_weather == afternoon_weather:
+        pmnt_report += f"WEATHER = {morning_weather}\n"
+    else:
+        pmnt_report += f"MORNING WEATHER AM = {morning_weather}\n"
+        pmnt_report += f"AFTERNOON WEATHER PM = {afternoon_weather}\n"
     
     if remarks:
         pmnt_report += f"REMARKS = {remarks}\n"
