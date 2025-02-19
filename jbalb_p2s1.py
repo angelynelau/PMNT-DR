@@ -171,13 +171,8 @@ if st.button("Generate Report"):
 #    else:
 #        pmnt_report += "FITTING = \n"
     
-#    pmnt_report += "DELIVERY = " + pipe_size + "\n"
-#    pmnt_report += "\n".join(delivery_entries) + "\n"
-
-    if delivery_entries > 0:
-        pmnt_report += f"DELIVERY = {pipe_size} - {delivery_entries} lengths\n"
-    else:
-        pmnt_report += "DELIVERY = \n"
+    pmnt_report += "DELIVERY = " + pipe_size + "\n"
+    pmnt_report += "\n".join(delivery_entries) + "\n"
     
     if morning_weather == afternoon_weather:
         pmnt_report += f"WEATHER = {morning_weather}\n"
@@ -206,7 +201,6 @@ if 'pmnt_report' in locals() and pmnt_report:
 else:
     st.warning("Generate the report first before sharing.")
     
-
 
 
 
