@@ -144,7 +144,7 @@ if st.button("Generate Report"):
     output += f"DATE = {formatted_date}\n"
     
  # Include work activity if any is selected
-    if work_activity:
+    if activity_list:
         output += f"WORK ACTIVITY = {pipe_size} {' & '.join(activity_list)}\n"
     else:
         output += "WORK ACTIVITY = \n"
