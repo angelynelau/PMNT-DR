@@ -48,11 +48,14 @@ st.markdown("**PIPE LAYING TEAM**")
 team_members = []
 if st.checkbox("Supervisor"):
     team_members.append("Supervisor - 1")
+    total_people += 1
 if st.checkbox("Excavator Operator"):
     team_members.append("Excavator Operator - 1")
+    total_people += 1
 if st.checkbox("General Worker"):
     workers = st.number_input("Enter number of General Workers", min_value=1, step=1)
     team_members.append(f"General Worker - {workers}")
+    total_people += workers
 
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
@@ -105,6 +108,10 @@ if st.button("Generate Report"):
     # Always include these fields
     output += f"HOURS WORKING = {working_hours}\n" if working_hours else "HOURS WORKING = \n"
     output += f"MANPOWER = {manpower}\n" if manpower else "MANPOWER = \n"
+if team_members:
+    manpower_output += "\n".join(team_members) + f"\nTotal Manpower: {total_people}\n"
+else:
+    manpower_output += "No manpower assigned.\n"
 
     # JOINT 
     output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
