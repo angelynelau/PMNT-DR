@@ -62,11 +62,19 @@ if st.checkbox("General Worker"):
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
 materials = []
+pipe_entries = []
 
 if st.checkbox("Pipe"):
-    pipe_count = st.number_input("Insert number of lengths", min_value=0, step=1)
-    if pipe_count > 0:
-        materials.append(f"{len(materials)+1}. {pipe_size} \n- {pipe_count} lengths")
+    num_entries = st.number_input("Number of Pipe Entries", min_value=1, step=1, value=1)
+    for i in range(num_entries):
+        pipe_count = st.number_input(f"Pipe Count (Entry {i+1})", min_value=0, step=1, key=f"pipe_count_{i}")
+        route = st.text_input(f"Route (Entry {i+1})", key=f"route_{i}")
+        chainage = format_chainage(st.text_input(f"Chainage (Entry {i+1})", key=f"chainage_{i}"))
+        if pipe_count > 0:
+            pipe_entries.append(f"{i+1}. {pipe_size} \n- {pipe_count} lengths // {route} {chainage}")
+    if pipe_entries:
+        materials.extend(pipe_entries)
+
 if st.checkbox("Valves & Fittings"):
     materials.append(f"{len(materials)+1}. Valves & Fittings")
     
@@ -96,9 +104,6 @@ remarks = st.text_area("REMARKS")
 
 # GENERATE REPORT
 if st.button("Generate Report"):
-
-    
-    #JBALB P2S1 FORMAT
     output = f"> {team}\n"
     output += f"Date: {formatted_date}\n"
     output += f"Morning: {morning_weather}\n"
@@ -125,11 +130,7 @@ if st.button("Generate Report"):
         output += "*REMARKS*\n" + remarks + "\n"    
 
     st.text_area("Generated Report:", output, height=300)
-
-
-if 'output' in locals() and output:
+    
     encoded_report = urllib.parse.quote(output)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
-else:
-    st.warning("Generate the report first before sharing.")
