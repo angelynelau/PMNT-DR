@@ -91,6 +91,43 @@ remarks = st.text_area("REMARKS")
 
 # GENERATE REPORT
 if st.button("Generate Report"):
+    #PMNT FORMAT
+    output = f"> {team}\n"
+    output += f"PIPE = {pipe_size}\n"
+    output += f"DATE = {formatted_date}\n"
+    
+    # Include work activity if any is selected
+    if work_activity:
+        output += f"WORK ACTIVITY = {pipe_size} {' & '.join(work_activity)}\n"
+    else:
+        output += "WORK ACTIVITY = \n"
+
+    # Always include these fields
+    output += f"HOURS WORKING = {hours_working}\n" if hours_working else "HOURS WORKING = \n"
+    output += f"MANPOWER = {manpower}\n" if manpower else "MANPOWER = \n"
+
+    # JOINT 
+    output += f"JOINT = {joint}\n" if joint else "JOINT = \n"
+
+    # LAID
+    output += f"LAID = {starting_chainage} to {ending_chainage} {chainage_diff}\n" if starting_chainage else "LAID = \n"
+
+    # Only include FITTING if it's not blank
+    if fitting:
+        output += f"FITTING = {fitting}\n"
+    else:
+        output += "FITTING = \n"
+
+    # Add DELIVERY only if it has a value
+    if delivery > 0:
+        output += f"DELIVERY = {pipe_size} - {delivery} lengths\n"
+    else:
+        output += "DELIVERY = \n"
+    
+    output += f"WEATHER = {weather}\n" if weather else "WEATHER = \n"
+    output += f"REMARKS = {remarks}\n" if remarks else "REMARKS = \n"
+    
+    #JBALB P2S1 FORMAT
     output = f"> {team}\n"
     output += f"Date: {formatted_date}\n"
     output += f"Morning: {morning_weather}\n"
