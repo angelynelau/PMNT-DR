@@ -142,12 +142,22 @@ if st.button("Generate Report"):
     output = f"> {team}\n"
     output += f"PIPE = {pipe_size}\n"
     output += f"DATE = {formatted_date}\n"
-    output += f"WORK ACTIVITY = \n"
+    
+ # Include work activity if any is selected
+    if work_activity:
+        output += f"WORK ACTIVITY = {pipe_size} {' & '.join(work_activity)}\n"
+    else:
+        output += "WORK ACTIVITY = \n"
+    
     output += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
     output += f"MANPOWER = {total_people}\n"
     output += f"JOINT = {joint_count}\n"
-    output += f"LAID = {laid_count}\n"
-    output += f"FITTING = {fitting_count}\n"
+    output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" if start_chainage else "LAID = \n"    
+
+    if fitting:
+        output += f"FITTING = {fitting}\n"
+    else:
+        output += "FITTING = \n"
     
     output += "DELIVERY = " + pipe_size + "\n"
     output += "\n".join(delivery_entries) + "\n\n"
