@@ -144,7 +144,7 @@ if st.button("Generate Report"):
     output += f"DATE = {formatted_date}\n"
     output += f"WORK ACTIVITY = \n"
     output += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
-    output += f"MANPOWER = {manpower}\n"
+    output += f"MANPOWER = {total_people}\n"
     output += f"JOINT = {joint_count}\n"
     output += f"LAID = {laid_count}\n"
     output += f"FITTING = {fitting_count}\n"
