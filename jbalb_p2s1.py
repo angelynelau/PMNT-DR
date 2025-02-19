@@ -142,6 +142,7 @@ if st.button("Generate Report"):
     if remarks:
         jbalb_report += "*REMARKS*\n" + remarks + "\n"    
 
+    
     # PMNT FORMAT
     pmnt_report = f"> {team}\n"
     pmnt_report += f"PIPE = {pipe_size}\n"
@@ -184,7 +185,6 @@ if st.button("Generate Report"):
         pmnt_report += "REMARKS = \n"
 
     st.text_area("JBALB Format Report:", jbalb_report, height=300)
-    st.text_area("PMNT Format Report:", pmnt_report, height=300)
 
 if 'jbalb_report' in locals() and jbalb_report:
     encoded_report = urllib.parse.quote(jbalb_report)
@@ -199,3 +199,9 @@ if 'pmnt_report' in locals() and pmnt_report:
     st.markdown(f"[Share on WhatsApp]({whatsapp_link})", unsafe_allow_html=True)
 else:
     st.warning("Generate the report first before sharing.")
+    
+    st.text_area("PMNT Format Report:", pmnt_report, height=300)
+
+
+
+
