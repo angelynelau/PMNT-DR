@@ -61,9 +61,7 @@ if st.checkbox("General Worker"):
 
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
-material_list = []
-material_names = []
-
+materials = []
 pipe_entries = []
 total_pipe_length = 0
 delivery_entries = []  # Fixing the undefined variable issue
@@ -82,15 +80,12 @@ if st.checkbox("Pipe"):
             delivery_entries.append(f"- {pipe_count} lengths // {route} {chainage}")
 
     if pipe_entries:
-        material_list.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
+        materials.append(f"{len(pipe_size)+1}\n" + "\n".join(pipe_entries))
     else:
-        material_list.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")            
-        material_names.append("Pipe")
-
+        materials.append(f"{len(pipe_size)+1}\n- {total_pipe_length} lengths")
 
 if st.checkbox("Valves & Fittings"):
-    material_list(f"{len(material_list)+1}. Valves & Fittings")
-    material_names.append("Fittings")
+    materials.append(f"{len(materials)+1}. Valves & Fittings")
 
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
@@ -139,7 +134,7 @@ if st.button("Generate Report"):
         jbalb_report += "*PIPE LAYING TEAM*\n" + "\n".join(team_members) + "\n\n"
     
     if materials:
-        jbalb_report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(material_list) + "\n\n"
+        jbalb_report += "*MATERIALS DELIVERED TO SITE*\n" + "\n".join(materials) + "\n\n"
     
     if activity_list:
         jbalb_report += "*ACTIVITY CARRIED OUT*\n" + "\n".join(activity_list) + "\n\n"
@@ -206,7 +201,6 @@ if 'pmnt_report' in locals() and pmnt_report:
 else:
     st.warning("Generate the report first before sharing.")
     
-
 
 
 
