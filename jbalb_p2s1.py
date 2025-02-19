@@ -46,6 +46,8 @@ if st.checkbox("Butt Fusion Welding Machine"):
 # PIPE LAYING TEAM
 st.markdown("**PIPE LAYING TEAM**")
 team_members = []
+total_people = 0
+
 if st.checkbox("Supervisor"):
     team_members.append("Supervisor - 1")
     total_people += 1
