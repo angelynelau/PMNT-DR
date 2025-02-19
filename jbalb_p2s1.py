@@ -156,7 +156,7 @@ if st.button("Generate Report"):
     pmnt_report += f"HOURS WORKING = {working_hours:.2f}\n"
     pmnt_report += f"MANPOWER = {total_people}\n"
 
-    if st.checkbox("Pipe Jointing"):
+    if joint_count:
         pmnt_report += f"JOINT = {joint_count}\n"
     else:
         pmnt_report += "JOINT = \n"
