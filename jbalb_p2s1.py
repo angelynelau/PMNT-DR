@@ -153,9 +153,9 @@ if st.button("Generate Report"):
     output += f"MANPOWER = {total_people}\n"
     output += f"JOINT = {joint_count}\n"
 
-    if start_chainage and end_chainage
+    if start_chainage and end_chainage:
         output += f"LAID = {start_chainage} to {end_chainage} {chainage_length}\n" 
-    else 
+    else:
         output += "LAID = \n"    
 
     if fitting:
