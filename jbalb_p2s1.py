@@ -100,6 +100,7 @@ if st.checkbox("Pipe Laying"):
         if start_formatted and end_formatted:
             chainage_length = f"({int(end_chainage) - int(start_chainage)}m)"
             activity_list.append(f"{len(activity_list)+1}. Pipe Laying \n- {pipe_size} pipe laying works from {start_formatted} to {end_formatted} {chainage_length}")
+            activity_names.append("Pipe Laying")
 
 if st.checkbox("Pipe Jointing"):
     joint_count = st.number_input("Number of Joints", min_value=0, step=1)
@@ -107,7 +108,8 @@ if st.checkbox("Pipe Jointing"):
     joint_chainage = format_chainage(st.text_input("Jointing Chainage"))
     if joint_count and joint_chainage:
         activity_list.append(f"{len(activity_list)+1}. Pipe Jointing \n- {joint_count} nos joints ({pipe_size}) // {joint_route}-{joint_chainage}")
-    
+        activity_names.append("Pipe Jointing")
+
 # REMARKS
 remarks = st.text_area("REMARKS")
 
@@ -145,7 +147,7 @@ if st.button("Generate Report"):
     pmnt_report += f"DATE = {formatted_date}\n"
     
     if activity_list:
-        pmnt_report += f"WORK ACTIVITY = {pipe_size} {' & '.join(activity_list)}\n"
+        pmnt_report += f"WORK ACTIVITY = {pipe_size} {' & '.join(activity_names)}\n"
     else:
         pmnt_report += "WORK ACTIVITY = \n"
     
