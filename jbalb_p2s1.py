@@ -61,23 +61,13 @@ if st.checkbox("General Worker"):
 
 # Materials Delivered
 st.markdown("**MATERIALS DELIVERED TO SITE**")
-materials = []
-pipe_entries = []
+materials = [
+    "1. 160mm HDPE \n- 4 lengths // A CH0+528",  
+    "- 9 lengths // B CH0+100",  
+    "- 5 lengths // C CH0+123",  
+    "2. Valves & Fittings"
+]
 
-if st.checkbox("Pipe"):
-    num_entries = st.number_input("Number of Pipe Entries", min_value=1, step=1, value=1)
-    for i in range(num_entries):
-        pipe_count = st.number_input(f"Pipe Count (Entry {i+1})", min_value=0, step=1, key=f"pipe_count_{i}")
-        route = st.text_input(f"Route (Entry {i+1})", key=f"route_{i}")
-        chainage = format_chainage(st.text_input(f"Chainage (Entry {i+1})", key=f"chainage_{i}"))
-        if pipe_count > 0:
-            pipe_entries.append(f"{i+1}. {pipe_size} \n- {pipe_count} lengths // {route} {chainage}")
-    if pipe_entries:
-        materials.extend(pipe_entries)
-
-if st.checkbox("Valves & Fittings"):
-    materials.append(f"{len(materials)+1}. Valves & Fittings")
-    
 # ACTIVITY CARRIED OUT
 st.markdown("**ACTIVITY CARRIED OUT**")
 activity_list = []
