@@ -193,6 +193,8 @@ if 'jbalb_report' in locals() and jbalb_report:
 else:
     st.warning("Generate the report first before sharing.")
 
+    st.text_area("PMNT Format Report:", pmnt_report, height=300)
+
 if 'pmnt_report' in locals() and pmnt_report:
     encoded_report = urllib.parse.quote(pmnt_report)
     whatsapp_link = f"https://wa.me/?text={encoded_report}"
@@ -200,7 +202,7 @@ if 'pmnt_report' in locals() and pmnt_report:
 else:
     st.warning("Generate the report first before sharing.")
     
-    st.text_area("PMNT Format Report:", pmnt_report, height=300)
+
 
 
 
