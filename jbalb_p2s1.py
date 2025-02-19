@@ -111,6 +111,7 @@ remarks = st.text_area("REMARKS")
 
 # GENERATE REPORT
 if st.button("Generate Report"):
+    # JBALB FORMAT
     output = f"> {team}\n"
     output += f"Date: {formatted_date}\n"
     output += f"Morning: {morning_weather}\n"
@@ -135,5 +136,29 @@ if st.button("Generate Report"):
     
     if remarks:
         output += "*REMARKS*\n" + remarks + "\n"    
+
+
+    # PMNT FORMAT
+    output = f"> {team}\n"
+    output += f"PIPE = {pipe_size}\n"
+    output += f"DATE = {formatted_date}\n"
+    output += f"WORK ACTIVITY = \n"
+    output += f"HOURS WORKING = {working_hours:.2f} hrs ({working_time})\n"
+    output += f"MANPOWER = {manpower}\n"
+    output += f"JOINT = {joint_count}\n"
+    output += f"LAID = {laid_count}\n"
+    output += f"FITTING = {fitting_count}\n"
+    
+    output += "DELIVERY = " + pipe_size + "\n"
+    output += "\n".join(delivery_entries) + "\n\n"
+    
+    if morning_weather == afternoon_weather:
+        output += f"WEATHER = {morning_weather}\n"
+    else:
+        output += f"MORNING WEATHER AM = {morning_weather}\n"
+        output += f"AFTERNOON WEATHER PM = {afternoon_weather}\n"
+    
+    if remarks:
+        output += f"REMARKS = {remarks}\n"
 
     st.text_area("Generated Report:", output, height=300)
