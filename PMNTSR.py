@@ -55,4 +55,4 @@ for team in teams:
         end_value = int(end_ch_raw)
         ch_diff = f"({end_value - start_value}m)"
     
-  fittings = st.multiselect
+  fittings = st.multiselect("Fitting(s):", ["Tee"])
