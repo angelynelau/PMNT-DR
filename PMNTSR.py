@@ -54,3 +54,7 @@ for team in teams:
         start_value = int(start_ch_raw)
         end_value = int(end_ch_raw)
         ch_diff = f"({end_value - start_value}m)"
+      except:
+        ch_diff = "(Invalid)"
+
+fittings = st.multiselect("Fitting(s):", ["A","B"})
