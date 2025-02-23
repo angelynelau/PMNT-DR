@@ -55,4 +55,4 @@ for team in teams:
         end_value = int(end_ch_raw)
         ch_diff = f"({end_value - start_value}m)"
         
-  st.multiselect(f"Fitting(s):", ["Tee"])
+fittings = st.selectbox(f"Fittings", ["A", "B"])
