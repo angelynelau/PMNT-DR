@@ -43,7 +43,7 @@ for team in teams:
     
   if "Pipe Laying" in activity_list:
     start_ch_raw = st.text_input ("Starting Chainage")
-    end_ch_raw = st.text_inpur ("Ending Chainage")
+    end_ch_raw = st.text_input ("Ending Chainage")
     start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
     end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
     
