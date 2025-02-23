@@ -36,7 +36,7 @@ for team in teams:
   st.subheader(f"{team}")
   pipe_size = st.selectbox(f"Pipe Size", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"], key=f"pipe_{team}")
   
-  st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"])
+  st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
   activity_list = []
   activity_names = []
 
