@@ -58,6 +58,14 @@ for team in teams:
 
   fittings = st.multiselect("Fitting(s):", ["A","B"], key=f"fittings_{team}")
 
+  data.append([team, pipe_size, activity_list, working_hours, joint, start_ch, end_ch, ch_diff, fittings])
+
+# CONVERT TO DATAFRAME
+df = pd.DataFrame(data, columns=["Team","Pipe Size","Activity","Hours Working","Joints","Laid Start","Laid End","Laid Length(m)", "Fitting"])
+
+# DISPLAY TABLE
+edited_df = st.data_editor(df, use_container_width=True)
+
 # GENERATE REPORT
 if st.button("Generate Report"):
 
