@@ -40,7 +40,7 @@ for team in teams:
   activity_list = []
   activity_names = []
 
-  if "Pipe Jointing" in activity_list
+  if "Pipe Jointing" in activity_list:
     joint = st.number_input("Joint")
   if "Pipe Laying" in activity_list
     start_ch_raw = st.text_input ("Starting Chainage")
