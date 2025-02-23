@@ -13,3 +13,6 @@ st. title("PMNT Site Diary")
 
 # TEAM SELECTION
 team = st.multiselect("TEAM:", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
+
+# DATE SELECTION
+date_selected = st.date_input("Date:", datetime.today())
