@@ -52,7 +52,7 @@ for team in teams:
       try:
         start_value = int(start_ch_raw)
         end_value = int(end_ch_raw)
-        ch_diff = f"({end_value - start_value}m,key=f"ch_diff_{team}")"
+        ch_diff = f"({end_value - start_value}m)"
       except:
         ch_diff = "(Invalid)"
 
