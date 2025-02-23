@@ -42,15 +42,17 @@ for team in teams:
 
   if "Pipe Jointing" in activity_list:
     joint = st.number_input("Joint")
-  if "Pipe Laying" in activity_list
+  if "Pipe Laying" in activity_list:
     start_ch_raw = st.text_input ("Starting Chainage")
     end_ch_raw = st.text_inpur ("Ending Chainage")
     start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
     end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
+    
     # CALCULATE CHAINAGE DIFF
     if start_ch_raw and end_ch_raw:
       try:
         start_value = int(start_ch_raw)
         end_value = int(end_ch_raw)
         ch_diff = f"({end_value - start_value}m)"
-    fittings = st.multiselect
+    
+  fittings = st.multiselect
