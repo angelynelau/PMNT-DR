@@ -42,8 +42,8 @@ for team in teams:
     joint = st.number_input("Joint",step=1, key=f"joint_{team}")
     
   if "Pipe Laying" in activity_list:
-    start_ch_raw = st.text_input ("Starting Chainage", key=f"startch_{team})
-    end_ch_raw = st.text_input ("Ending Chainage", key=f"endch_{team})
+    start_ch_raw = st.text_input ("Starting Chainage", key=f"startch_{team}")
+    end_ch_raw = st.text_input ("Ending Chainage", key=f"endch_{team}")
     start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
     end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
     
