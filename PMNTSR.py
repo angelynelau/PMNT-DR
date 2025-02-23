@@ -34,4 +34,23 @@ data = []
 
 for team in teams:
   st.subheader(f"{team}")
-  pipe_size = st.selectbox(f"{team} - Pipe Size", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"])
+  pipe_size = st.selectbox(f"Pipe Size", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"])
+  
+  st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"])
+  activity_list = []
+  activity_names = []
+
+  if "Pipe Jointing" in activity_list
+    joint = st.number_input("Joint")
+  if "Pipe Laying" in activity_list
+    start_ch_raw = st.text_input ("Starting Chainage")
+    end_ch_raw = st.text_inpur ("Ending Chainage")
+    start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
+    end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
+    # CALCULATE CHAINAGE DIFF
+    if start_ch_raw and end_ch_raw:
+      try:
+        start_value = int(start_ch_raw)
+        end_value = int(end_ch_raw)
+        ch_diff = f"({end_value - start_value}m)"
+    fittings = st.multiselect
