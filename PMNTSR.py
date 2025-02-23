@@ -57,4 +57,4 @@ for team in teams:
       except:
         ch_diff = "(Invalid)"
 
-fittings = st.multiselect("Fitting(s):", ["A","B"})
+fittings = st.multiselect("Fitting(s):", ["A","B"])
