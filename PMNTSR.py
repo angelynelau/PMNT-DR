@@ -7,7 +7,7 @@ def format_chainage(value):
   try: 
     value = int(value)
     return f"CH{value // 1000}+{value % 1000:03d}"
-  except:e
+  except:
     return "Invalid Input"
 
 st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
