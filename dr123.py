@@ -1,7 +1,14 @@
 import datetime
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
+
+def format_chainage(value):
+    try:
+        value = int(value)
+        return f"CH{value // 1000}+{value % 1000:03d}"
+    except:
+        return "Invalid input"
 
 def generate_report(data):
     pmnt_format = ""
@@ -30,8 +37,8 @@ def generate_report(data):
         work_activity = f"{pipe_size} Pipe Jointing & Laying"
         manpower = team.get("manpower", 5)
         joints = team.get("joints", 5)
-        laid_start = team.get("laid_start", "CH1+000")
-        laid_end = team.get("laid_end", "CH1+500")
+        laid_start = format_chainage(team.get("laid_start", "1000"))
+        laid_end = format_chainage(team.get("laid_end", "1500"))
         laid_length = team.get("laid_length", 500)
         fittings = ", ".join(team.get("fittings", ["TEE"]))
         delivery = f"{pipe_size} - {team.get('delivery', 23)} lengths"
@@ -64,7 +71,7 @@ def index():
             "hours_working": int(request.form.get("hours_working")),
             "teams": []
         }
-        for i in range(2):  # Assume max 2 teams can be selected
+        for i in range(2):
             team_name = request.form.get(f"team_{i}")
             if team_name:
                 data["teams"].append({
