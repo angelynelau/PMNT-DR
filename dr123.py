@@ -1,4 +1,7 @@
 import datetime
+from flask import Flask, render_template, request, redirect, url_for
+
+app = Flask(__name__)
 
 def generate_report(data):
     pmnt_format = ""
@@ -9,16 +12,9 @@ def generate_report(data):
     morning_weather = data.get("weather_am", "Sunny")
     afternoon_weather = data.get("weather_pm", "Sunny")
     total_hours = data.get("hours_working", 8)
-    machinery = data.get("machinery", "Excavator - 2")
-    equipment = data.get("equipment", "Genset - 2\nButt Fusion Welding Machine - 2")
     
     jbalb_format += f"Date: {date_today}\nMorning: {morning_weather}\nAfternoon: {afternoon_weather}\n"
     jbalb_format += f"Total Working Hours: {total_hours}.00 hrs\n0800 - 1700 hrs\n\n"
-    jbalb_format += f"MACHINERY\n{machinery}\n\nEQUIPMENT\n{equipment}\n\nPIPE LAYING TEAM\n"
-    
-    team_summary = ""
-    material_delivery = "MATERIALS DELIVERED TO SITE\n"
-    activity_summary = "ACTIVITY CARRIED OUT\n"
     
     for team in data.get("teams", []):
         pipe_size = team.get("pipe_size", "400mm HDPE")
@@ -31,7 +27,6 @@ def generate_report(data):
         fittings = ", ".join(team.get("fittings", ["TEE"]))
         delivery = f"{pipe_size} - {team.get('delivery', 23)} lengths"
         remarks = team.get("remarks", "")
-        route = team.get("route", "A")
         
         pmnt_format += f">{team['name']}\nPIPE = {pipe_size}\nDATE = {date_today}\n"
         pmnt_format += f"WORK ACTIVITY = {work_activity}\nHOURS WORKING = {total_hours}\nMANPOWER = {manpower}\n"
@@ -39,60 +34,40 @@ def generate_report(data):
         pmnt_format += f"FITTING = {fittings}\nDELIVERY = {delivery}\n"
         pmnt_format += f"WEATHER = {morning_weather} (AM) / {afternoon_weather} (PM)\nREMARKS = {remarks}\n\n"
         
-        material_delivery += f"{pipe_size}\n- {team.get('delivery', 23)} lengths (ROUTE {route})\n"
-        
-        activity_summary += f"1. Pipe Jointing\n> {team['name']}\n- {joints} nos joints ({pipe_size})\n"
-        activity_summary += f"2. Pipe Laying\n> {team['name']}\n- ({pipe_size}) {laid_start} to {laid_end} ({laid_length}m)\n"
-        
-        record_table.append([date_today, f"{morning_weather}/{afternoon_weather}", team['name'], route, laid_start, laid_end, joints, laid_start, laid_end, laid_length])
-    
-    jbalb_format += material_delivery + "\n" + activity_summary
+        record_table.append([date_today, f"{morning_weather}/{afternoon_weather}", team['name'], laid_start, laid_end, joints, laid_length])
     
     return pmnt_format, jbalb_format, record_table
 
-# Example Input Data
-data = {
-    "date": "23/02/25",
-    "weather_am": "Sunny",
-    "weather_pm": "Rainy",
-    "hours_working": 8,
-    "teams": [
-        {
-            "name": "TEAM A",
-            "pipe_size": "400mm HDPE",
-            "manpower": 5,
-            "joints": 5,
-            "laid_start": "CH1+000",
-            "laid_end": "CH1+500",
-            "laid_length": 500,
-            "fittings": ["TEE", "STUB END"],
-            "delivery": 23,
-            "route": "A",
-            "remarks": ""
-        },
-        {
-            "name": "TEAM B",
-            "pipe_size": "225mm HDPE",
-            "manpower": 4,
-            "joints": 9,
-            "laid_start": "CH2+000",
-            "laid_end": "CH3+500",
-            "laid_length": 1500,
-            "fittings": ["TEE"],
-            "delivery": 60,
-            "route": "E",
-            "remarks": "Machine Breakdown"
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        data = {
+            "date": request.form.get("date"),
+            "weather_am": request.form.get("weather_am"),
+            "weather_pm": request.form.get("weather_pm"),
+            "hours_working": int(request.form.get("hours_working")),
+            "teams": []
         }
-    ]
-}
+        for i in range(2):  # Assume max 2 teams can be selected
+            team_name = request.form.get(f"team_{i}")
+            if team_name:
+                data["teams"].append({
+                    "name": team_name,
+                    "pipe_size": request.form.get(f"pipe_size_{i}"),
+                    "manpower": int(request.form.get(f"manpower_{i}")),
+                    "joints": int(request.form.get(f"joints_{i}")),
+                    "laid_start": request.form.get(f"laid_start_{i}"),
+                    "laid_end": request.form.get(f"laid_end_{i}"),
+                    "laid_length": int(request.form.get(f"laid_length_{i}")),
+                    "fittings": request.form.getlist(f"fittings_{i}"),
+                    "delivery": int(request.form.get(f"delivery_{i}")),
+                    "remarks": request.form.get(f"remarks_{i}")
+                })
+        
+        pmnt_report, jbalb_report, record_table = generate_report(data)
+        return render_template("report.html", pmnt_report=pmnt_report, jbalb_report=jbalb_report, record_table=record_table)
+    
+    return render_template("form.html")
 
-pmnt_report, jbalb_report, record_table = generate_report(data)
-
-print("# PMNT FORMAT\n")
-print(pmnt_report)
-print("# JBALB FORMAT\n")
-print(jbalb_report)
-print("# RECORD TABLE\n")
-print("No | Date Submit | Weather | Team | Route | Chainage From | Chainage To | No. Of Joint | Chainage From | Chainage To | Laid Length (m)")
-for i, record in enumerate(record_table, 1):
-    print(f"{i}. | {' | '.join(map(str, record))}")
+if __name__ == '__main__':
+    app.run(debug=True)
