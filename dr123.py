@@ -8,13 +8,22 @@ def generate_report(data):
     jbalb_format = ""
     record_table = []
     
-    date_today = data.get("date", datetime.datetime.today().strftime('%d/%m/%y'))
+    date_today = data.get("date", datetime.datetime.today().strftime('%d/%m/%y (%A)'))
     morning_weather = data.get("weather_am", "Sunny")
     afternoon_weather = data.get("weather_pm", "Sunny")
     total_hours = data.get("hours_working", 8)
     
     jbalb_format += f"Date: {date_today}\nMorning: {morning_weather}\nAfternoon: {afternoon_weather}\n"
     jbalb_format += f"Total Working Hours: {total_hours}.00 hrs\n0800 - 1700 hrs\n\n"
+    
+    machinery = "Excavator - 2"
+    equipment = "Genset - 2\nButt Fusion Welding Machine - 2"
+    
+    jbalb_format += f"MACHINERY\n{machinery}\n\nEQUIPMENT\n{equipment}\n\n"
+    jbalb_format += "PIPE LAYING TEAM\nSupervisor - 2\nExcavator Operator - 2\nGeneral Worker - 5\n\n"
+    jbalb_format += "MATERIALS DELIVERED TO SITE\n"
+    
+    activity_carried_out = ""
     
     for team in data.get("teams", []):
         pipe_size = team.get("pipe_size", "400mm HDPE")
@@ -28,13 +37,20 @@ def generate_report(data):
         delivery = f"{pipe_size} - {team.get('delivery', 23)} lengths"
         remarks = team.get("remarks", "")
         
-        pmnt_format += f">{team['name']}\nPIPE = {pipe_size}\nDATE = {date_today}\n"
+        pmnt_format += f"> {team['name']}\nPIPE = {pipe_size}\nDATE = {date_today}\n"
         pmnt_format += f"WORK ACTIVITY = {work_activity}\nHOURS WORKING = {total_hours}\nMANPOWER = {manpower}\n"
         pmnt_format += f"JOINT = {joints}\nLAID = {laid_start} to {laid_end} ({laid_length}m)\n"
         pmnt_format += f"FITTING = {fittings}\nDELIVERY = {delivery}\n"
         pmnt_format += f"WEATHER = {morning_weather} (AM) / {afternoon_weather} (PM)\nREMARKS = {remarks}\n\n"
         
+        jbalb_format += f"{len(record_table) + 1}.{pipe_size}\n- {team.get('delivery', 23)} lengths (ROUTE {team['name'][5]})\n"
+        
+        activity_carried_out += f"1. Pipe Jointing\n> {team['name']}\n- {joints} nos joints ({pipe_size})\n"
+        activity_carried_out += f"2. Pipe Laying\n> {team['name']}\n- ({pipe_size}) {laid_start} to {laid_end} ({laid_length}m)\n"
+        
         record_table.append([date_today, f"{morning_weather}/{afternoon_weather}", team['name'], laid_start, laid_end, joints, laid_length])
+    
+    jbalb_format += "\nACTIVITY CARRIED OUT\n" + activity_carried_out
     
     return pmnt_format, jbalb_format, record_table
 
