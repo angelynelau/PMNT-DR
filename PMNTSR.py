@@ -14,6 +14,7 @@ st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
 st. title("PMNT Site Diary")
 
 # TEAM SELECTION
+teams = ""
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
 # DATE SELECTION
@@ -43,6 +44,8 @@ for team in teams:
   if "Pipe Jointing" in activity_list:
     joints = st.number_input("Joint",step=1, key=f"joint_{team}")
 
+  start_ch_raw = ""
+  end_ch_raw = ""
   ch_diff = ""
   
   if "Pipe Laying" in activity_list:
