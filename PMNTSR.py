@@ -82,7 +82,7 @@ for team in teams:
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
     # MANPOWER
-    st.markdown("PIPE LAYING TEAM")
+    st.markdown("**PIPE LAYING TEAM**")
     team_members = []
     total_people = 0
 
@@ -105,7 +105,7 @@ for team in teams:
     }
 
     # DELIVERY
-    st.markdown("MATERIALS DELIVERED TO SITE")
+    st.markdown("**MATERIALS DELIVERED TO SITE**")
     delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
     if delivery:
         pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
