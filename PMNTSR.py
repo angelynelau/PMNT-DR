@@ -34,8 +34,8 @@ date_selected = st.date_input("Date:", datetime.today())
 formatted_date = date_selected.strftime("%d/%m/%y (%A)")
 
 # WEATHER SELECTION
-weather_am = st.selectbox("Morning Weather", ["Fine", "Rainy"])
-weather_pm = st.selectbox("Afternoon Weather", ["Fine", "Rainy"])
+weather_am = st.selectbox("Morning Weather:", ["Fine", "Rainy"])
+weather_pm = st.selectbox("Afternoon Weather:", ["Fine", "Rainy"])
 
 # WORKING HOURS
 start_time = st.time_input("Start Time:", time(8, 0))
@@ -82,7 +82,7 @@ for team in teams:
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
     # MANPOWER
-    st.markdown("**PIPE LAYING TEAM**")
+    st.markdown("PIPE LAYING TEAM")
     team_members = []
     total_people = 0
 
@@ -103,9 +103,9 @@ for team in teams:
         "members": team_members,
         "total": total_people
     }
-
+\n 
     # DELIVERY
-    delivery = st.checkbox(f"Delivery", key=f"del_checkbox_{team}")
+    delivery = st.checkbox(f"**Delivery**", key=f"del_checkbox_{team}")
     if delivery:
         pipe_count = st.number_input(f"Pipe Count ({team})", min_value=0, step=1, key=f"pipe_count_{team}")
         del_chainage = st.text_input(f"Chainage ({team})", key=f"chainage_{team}")
