@@ -42,7 +42,9 @@ for team in teams:
   
   if "Pipe Jointing" in activity_list:
     joints = st.number_input("Joint",step=1, key=f"joint_{team}")
-    
+
+  ch_diff = ""
+  
   if "Pipe Laying" in activity_list:
     start_ch_raw = st.text_input ("Starting Chainage", key=f"startch_{team}")
     end_ch_raw = st.text_input ("Ending Chainage", key=f"endch_{team}")
@@ -55,7 +57,7 @@ for team in teams:
         start_value = int(start_ch_raw)
         end_value = int(end_ch_raw)
         ch_diff = f"({end_value - start_value}m)"
-      except:
+      except ValueError:
         ch_diff = "(Invalid)"
 
   fittings = st.multiselect("Fitting(s):", ["A","B"], key=f"fittings_{team}")
