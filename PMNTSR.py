@@ -37,7 +37,10 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 # DATA STORAGE
 data = []
 team_routes = {}
-team_manpower = {}
+team_manpower[team] = {
+    "members": team_members,  # List of workers
+    "total": total_people      # Total manpower count
+}
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
