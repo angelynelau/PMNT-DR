@@ -98,11 +98,11 @@ for team in teams:
     }
 
     # DELIVERY
-    delivery = st.number_input("Delivered", step=1, key=f"delivery_{team}")
-    del_route = st.text_input("Route", key=f"delroute_{team}")
-    del_route = validate_text_input(del_route)
-    if team and del_route: 
-        team_routes[team] = del_route
+    if st.checkbox(f"Pipe ({team})", key=f"pipe_checkbox_{team}"):
+        pipe_count = st.number_input(f"Pipe Count ({team})", min_value=0, step=1, key=f"pipe_count_{team}")
+        del_chainage = st.text_input(f"Chainage ({team})", key=f"chainage_{team}")
+        chainage = format_chainage(del_chainage) if del_chainage else ""
+        total_pipe_length += pipe_count
 
     
     # APPEND DATA FOR EACH TEAM
@@ -132,9 +132,20 @@ if st.button("Generate Report"):
         route_text = team_routes.get(row["Team"], "")
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
+        
         team_manpower_data = team_manpower.get(row["Team"], {"members": [], "total": 0})
         manpower_details = "\n".join(team_manpower_data["members"])
         total_people = team_manpower_data["total"]
+
+        delivery_text = ""
+        if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:  
+            total_delivered = sum(entry["count"] for entry in team_deliveries[row["Team"]])
+            delivery_routes = "\n".join([f"- {entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in team_deliveries[row["Team"]]])
+
+            delivery_text = (
+                f"DELIVERY = {total_delivered} lengths\n"
+                f"{delivery_routes}\n"
+            )
         
         pmnt_report += (
             f"> {row['Team']}\n"
@@ -146,7 +157,7 @@ if st.button("Generate Report"):
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
-            f"DELIVERY = \n"
+            f"{delivery_text} \n"
             f"{weather_text}\n"
             f"REMARKS = \n"
             "\n"
