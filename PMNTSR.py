@@ -38,6 +38,8 @@ for team in teams:
   
   activity_list = st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
 
+  joints = "" 
+  
   if "Pipe Jointing" in activity_list:
     joints = st.number_input("Joint",step=1, key=f"joint_{team}")
     
