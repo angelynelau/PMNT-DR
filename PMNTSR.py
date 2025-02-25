@@ -87,7 +87,7 @@ for team in teams:
     ])
 
 # CONVERT TO DATAFRAME
-df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Activity", "Hours Working", "Joints", "Laid Start", "Laid End", "Laid Length(m)", "Fitting"])
+df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Activity", "Hours Working", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting"])
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
@@ -106,7 +106,7 @@ if st.button("Generate Report"):
             f"DATE = {formatted_date}\n"
             f"WORK ACTIVITY = {row['Activity']}\n"
             f"HOURS WORKING = {row['Hours Working']}\n"
-            f"JOINTS = {row['Joints']}\n"
+            f"JOINT = {row['Joints']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
             "\n"
