@@ -66,13 +66,13 @@ for team in teams:
     data.append([
         team,
         pipe_size,
-        ", ".join(activity_list),
+        "& ".join(activity_list),
         working_hours,
         joints,
         start_ch,
         end_ch,
         ch_diff,
-        ", ".join(fittings)
+        ", ".join(fittings),
     ])
 
 # CONVERT TO DATAFRAME
@@ -99,3 +99,7 @@ if st.button("Generate Report"):
         )
     
     st.text_area("Generated Report:", pmnt_report, height=300)
+
+# DISPLAY REPORTS
+    st.subheader("Generated PMNT Report")
+    st.text(pmnt_report)
