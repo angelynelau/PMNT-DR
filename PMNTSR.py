@@ -155,7 +155,7 @@ if st.button("Generate Report"):
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
             deliveries = team_deliveries[row["Team"]]
             delivery_text = "DELIVERY = " + " // ".join(
-                [f"{row['Pipe Size']}-{entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in deliveries]
+                [f"{row['Pipe Size']} - {entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in deliveries]
             )
 
         pmnt_report += (
