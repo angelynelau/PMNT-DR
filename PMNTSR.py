@@ -105,8 +105,8 @@ for team in teams:
     }
 
     # DELIVERY
-    st.markdown("DELIVERY")
-    delivery = st.checkbox("Delivery", key=f"del_checkbox_{team}")
+    st.markdown("MATERIALS DELIVERED TO SITE")
+    delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
     if delivery:
         pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
         del_chainage = st.text_input(f"Chainage", key=f"chainage_{team}")
