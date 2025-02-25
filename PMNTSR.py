@@ -59,10 +59,10 @@ for team in teams:
 
     # JOINTS
     ("**PIPE JOINTING**") if "Pipe Jointing" in activity_list else ""
-    jroute = st.text_input("Route", key=f"jroute_{team}") if "Pipe Jointing" in activity_list else ""
-    jroute = validate_text_input(jroute)
-    if team and jroute:
-        team_jroutes[team] = jroute
+    #jroute = st.text_input("Route", key=f"jroute_{team}") if "Pipe Jointing" in activity_list else ""
+    #jroute = validate_text_input(jroute)
+    #if team and jroute:
+    #    team_jroutes[team] = jroute
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
@@ -166,11 +166,11 @@ if st.button("Generate Report"):
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
-        jroute_text = team_jroutes.get(row["Team"], "")
-        if row["Joint"]:
-            joint_text = f"JOINT = {row['Joint']} // ROUTE {jroute_text}"
-        else:
-            joint_text = "JOINT = "
+        #jroute_text = team_jroutes.get(row["Team"], "")
+        #if row["Joint"]:
+        #    joint_text = f"JOINT = {row['Joint']} // ROUTE {jroute_text}"
+        #else:
+        #    joint_text = "JOINT = "
         lroute_text = team_lroutes.get(row["Team"], "")
         laid_text = f"LAID = {lroute_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
@@ -191,7 +191,8 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
-            f"{joint_text}\n"
+            #f"{joint_text}\n"
+            f"JOINT = {joint}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
             f"{delivery_text}\n"
