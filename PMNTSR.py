@@ -63,7 +63,7 @@ data.append([
     pipe_size if pipe_size else "", 
     activity_list if activity_list else "", 
     working_hours if working_hours else "", 
-    joints if joints else "", 
+    joints if "Pipe Jointing" in activity_list else "", 
     fittings if fittings else ""
 ])
 
