@@ -60,6 +60,7 @@ for team in teams:
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
+    ("**PIPE LAYING**")
     route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
     route = validate_text_input(route)
     if team and route:
@@ -77,10 +78,7 @@ for team in teams:
             ch_diff = f"{int(end_ch_raw) - int(start_ch_raw)}m"
         except ValueError:
             ch_diff = "(Invalid)"
-
-    # FITTINGS
-    fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
-
+            
     # MACHINERY
     st.markdown("**MACHINERY**")
     machinery_types = []
@@ -118,6 +116,10 @@ for team in teams:
         "total": total_people
     }
 
+     # FITTINGS
+    fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
+
+    
     # DELIVERY
     st.markdown("**MATERIALS DELIVERED TO SITE**")
     delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
