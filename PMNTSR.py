@@ -116,18 +116,17 @@ for team in teams:
     data.append([
         team,
         pipe_size,
-        " & ".join(activity_list),
-        working_hours,
         joints,
         start_ch,
         end_ch,
         ch_diff,
         ", ".join(fittings),
+        pipecount,
         remarks
     ])
 
 # CONVERT TO DATAFRAME
-df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Activity", "Hours Working", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting","Remarks"])
+df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting","Delivery","Remarks"])
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
