@@ -39,7 +39,7 @@ for team in teams:
   activity_list = st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
 
   if "Pipe Jointing" in activity_list:
-    joint = st.number_input("Joint",step=1, key=f"joint_{team}")
+    joints = st.number_input("Joint",step=1, key=f"joint_{team}")
     
   if "Pipe Laying" in activity_list:
     start_ch_raw = st.text_input ("Starting Chainage", key=f"startch_{team}")
@@ -63,7 +63,7 @@ data.append([
     pipe_size if pipe_size else "", 
     activity_list if activity_list else "", 
     working_hours if working_hours else "", 
-    joint if joint else "", 
+    joints if joints else "", 
     fittings if fittings else ""
 ])
 
