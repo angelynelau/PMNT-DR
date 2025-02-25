@@ -38,6 +38,8 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 data = []
 team_routes = {}
 team_manpower = {}
+team_deliveries = {}  # Store delivery data
+total_pipe_length = 0  # Initialize total pipe count
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
@@ -104,7 +106,11 @@ for team in teams:
         chainage = format_chainage(del_chainage) if del_chainage else ""
         total_pipe_length += pipe_count
 
-    
+        if pipe_count > 0:
+            if team not in team_deliveries:
+                team_deliveries[team] = []
+            team_deliveries[team].append({"count": pipe_count, "route": route, "chainage": chainage})
+
     # APPEND DATA FOR EACH TEAM
     data.append([
         team,
@@ -134,9 +140,9 @@ if st.button("Generate Report"):
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         
         team_manpower_data = team_manpower.get(row["Team"], {"members": [], "total": 0})
-        manpower_details = "\n".join(team_manpower_data["members"])
         total_people = team_manpower_data["total"]
 
+        # DELIVERY SECTION
         delivery_text = ""
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:  
             total_delivered = sum(entry["count"] for entry in team_deliveries[row["Team"]])
@@ -157,7 +163,7 @@ if st.button("Generate Report"):
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
-            f"{delivery_text} \n"
+            f"{delivery_text}"
             f"{weather_text}\n"
             f"REMARKS = \n"
             "\n"
