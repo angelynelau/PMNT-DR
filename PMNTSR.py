@@ -41,7 +41,6 @@ start_time = st.time_input("Start Time:", time(8, 0))
 end_time = st.time_input("End Time:", time(17, 0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
-team_working_hours[team] = working_hours
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
@@ -52,10 +51,12 @@ for team in teams:
 
     # ACTIVITY
     activity_list = st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
+    team_activities[team] = " & ".join(activity_list)
+
+    team_working_hours[team] = working_hours
 
     # JOINTS
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
-    team_activities[team] = " & ".join(activity_list)
 
     # PIPE LAYING
     route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
