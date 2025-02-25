@@ -56,9 +56,9 @@ for team in teams:
     # PIPE LAYING
     route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
     route = validate_text_input(route)
-    if team and route: 
+    if team and route:
         team_routes[team] = route
-            
+        
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
 
@@ -137,16 +137,9 @@ if st.button("Generate Report"):
         route_text = team_routes.get(row["Team"], "")
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
-        
-        team_manpower_data = team_manpower.get(row["Team"], {"members": [], "total": 0})
-        total_people = team_manpower_data["total"]
+        total_people = team_manpower.get(row["Team"], {}).get("total", 0)
 
-        delivery_text = ""
-        if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:  
-            total_delivered = sum(entry["count"] for entry in team_deliveries[row["Team"]])
-            delivery_routes = "\n".join([f"- {entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in team_deliveries[row["Team"]]])        
-       
-    pmnt_report += (
+        pmnt_report += (
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
             f"DATE = {formatted_date}\n"
@@ -156,12 +149,10 @@ if st.button("Generate Report"):
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
-            f"{delivery_text}"
             f"{weather_text}\n"
-            f"REMARKS = \n"
+            "REMARKS = \n"
             "\n"
         )
 
-    # DISPLAY REPORT
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
