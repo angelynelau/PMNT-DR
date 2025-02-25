@@ -46,6 +46,8 @@ for team in teams:
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
+    route = st.textinput(key=f"route_{team}) if if "Pipe Laying" in activity_list else ""
+    route = validate_text_input(route).upper()
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
     
@@ -60,13 +62,13 @@ for team in teams:
             ch_diff = "(Invalid)"
     
     # FITTINGS
-    fittings = st.multiselect("Fitting(s):", ["Stub End", "Adaptor", "Tee"], key=f"fittings_{team}")
+    fittings = st.multiselect("Fitting(s):", [" ", " ", " "], key=f"fittings_{team}")
 
     # APPEND DATA FOR EACH TEAM
     data.append([
         team,
         pipe_size,
-        "& ".join(activity_list),
+        " & ".join(activity_list),
         working_hours,
         joints,
         start_ch,
@@ -95,10 +97,10 @@ if st.button("Generate Report"):
             f"JOINTS = {row['Joints']}\n"
             f"LAID = {row['Laid Start']} to {row['Laid End']} {row['Laid Length(m)']}\n"
             f"FITTING = {row['Fitting']}\n"
-            "-----------------------------\n"
+            "\n"
         )
     
-    st.text_area("Generated Report:", pmnt_report, height=300)
+    # st.text_area("Generated Report:", pmnt_report, height=300)
 
 # DISPLAY REPORTS
     st.subheader("Generated PMNT Report")
