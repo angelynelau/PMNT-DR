@@ -73,6 +73,24 @@ for team in teams:
     # FITTINGS
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
+    # MANPOWER
+    st.markdown("**PIPE LAYING TEAM**")
+    team_members = []
+    total_people = 0
+
+    if st.checkbox(f"Supervisor ({team})"):
+        team_members.append("Supervisor - 1")
+        total_people += 1
+
+    if st.checkbox(f"Excavator Operator ({team})"):
+        team_members.append("Excavator Operator - 1")
+        total_people += 1
+
+    if st.checkbox(f"General Worker ({team})"):
+        workers = st.number_input(f"Enter number of General Workers ({team})", min_value=1, step=1, key=f"workers_{team}")
+        team_members.append(f"General Worker - {workers}")
+        total_people += workers
+    
     # APPEND DATA FOR EACH TEAM
     data.append([
         team,
