@@ -20,7 +20,8 @@ st.title("PMNT Site Diary")
 data = []
 team_activities = {}
 team_working_hours = {}
-team_routes = {}
+team_lroutes = {}
+team_jroutes = {}
 team_manpower = {}
 team_deliveries = {}  
 pipe_count = 0
