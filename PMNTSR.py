@@ -37,10 +37,7 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 # DATA STORAGE
 data = []
 team_routes = {}
-team_manpower[team] = {
-    "members": team_members,  # List of workers
-    "total": total_people      # Total manpower count
-}
+team_manpower = {}
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
@@ -94,6 +91,11 @@ for team in teams:
         workers = st.number_input(f"Enter number of General Workers ({team})", min_value=1, step=1, key=f"workers_{team}")
         team_members.append(f"General Worker - {workers}")
         total_people += workers
+
+    team_manpower[team] = {
+        "members": team_members,  
+        "total": total_people      
+    }
     
     # APPEND DATA FOR EACH TEAM
     data.append([
