@@ -141,9 +141,12 @@ if st.button("Generate Report"):
         team_manpower_data = team_manpower.get(row["Team"], {"members": [], "total": 0})
         total_people = team_manpower_data["total"]
 
-        delivery_text = f" DELIVERY = {row['Pipe Size']} - {entry['count']} lengths // {entry['route']} {entry['chainage']}"
-        
-        pmnt_report += (
+        delivery_text = ""
+        if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:  
+            total_delivered = sum(entry["count"] for entry in team_deliveries[row["Team"]])
+            delivery_routes = "\n".join([f"- {entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in team_deliveries[row["Team"]]])        
+       
+    pmnt_report += (
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
             f"DATE = {formatted_date}\n"
