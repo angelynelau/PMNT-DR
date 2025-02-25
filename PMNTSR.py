@@ -150,7 +150,7 @@ if st.button("Generate Report"):
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
 
         # Generate delivery text
-        delivery_text = ""
+        delivery_text = "DELIVERY = "
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
             deliveries = team_deliveries[row["Team"]]
             delivery_text = "DELIVERY = " + " // ".join(
