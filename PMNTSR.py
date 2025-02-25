@@ -109,6 +109,9 @@ for team in teams:
             team_deliveries[team] = []
         team_deliveries[team].append({"count": pipe_count, "route": route, "chainage": chainage})
 
+    # REMARKS
+    remarks = st.text_input("Remarks", key=f"remarks_{team}")
+
     # APPEND DATA FOR EACH TEAM
     data.append([
         team,
@@ -120,10 +123,11 @@ for team in teams:
         end_ch,
         ch_diff,
         ", ".join(fittings),
+        remarks
     ])
 
 # CONVERT TO DATAFRAME
-df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Activity", "Hours Working", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting"])
+df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Activity", "Hours Working", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting","Remarks"])
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
@@ -143,7 +147,7 @@ if st.button("Generate Report"):
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
             deliveries = team_deliveries[row["Team"]]
             delivery_text = "DELIVERY = " + " // ".join(
-                [f"{entry['count']} lengths - {entry['route']} {entry['chainage']}" for entry in deliveries]
+                [f"{row['Pipe Size']}-{entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in deliveries]
             )
 
         pmnt_report += (
@@ -158,7 +162,7 @@ if st.button("Generate Report"):
             f"FITTING = {row['Fitting']}\n"
             f"{delivery_text}\n"
             f"{weather_text}\n"
-            "REMARKS = \n"
+            f"REMARKS = {row['Remarks']}\n"
             "\n"
         )
 
