@@ -78,15 +78,15 @@ for team in teams:
     team_members = []
     total_people = 0
 
-    if st.checkbox(f"Supervisor"):
+    if st.checkbox(f"Supervisor", key=f"supervisor_{team}"):
         team_members.append("Supervisor - 1")
         total_people += 1
 
-    if st.checkbox(f"Excavator Operator"):
+    if st.checkbox(f"Excavator Operator", key=f"ExcavatorOperator_{team}"):
         team_members.append("Excavator Operator - 1")
         total_people += 1
 
-    if st.checkbox(f"General Worker"):
+    if st.checkbox(f"General Worker", key=f"General Worker_{team}"):
         workers = st.number_input(f"Enter number of General Workers ({team})", min_value=1, step=1, key=f"workers_{team}")
         team_members.append(f"General Worker - {workers}")
         total_people += workers
