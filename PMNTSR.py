@@ -168,7 +168,7 @@ if st.button("Generate Report"):
     for _, row in edited_df.iterrows():
         jroute_text = team_jroutes.get(row["Team"], "")
         if row["Joint"]:
-            joint_text = f"JOINT = {row['Joint']} // {jroute_text}"
+            joint_text = f"JOINT = {row['Joint']} // ROUTE {jroute_text}"
         else:
             joint_text = "JOINT = "
         lroute_text = team_lroutes.get(row["Team"], "")
