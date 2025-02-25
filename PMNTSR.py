@@ -22,8 +22,9 @@ team_activities = {}
 team_working_hours = {}
 team_routes = {}
 team_manpower = {}
-team_deliveries = {}  # Store delivery data
-total_pipe_length = 0  # Initialize total pipe count
+team_deliveries = {}  
+pipe_count = 0
+# total_pipe_length = 0 
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
