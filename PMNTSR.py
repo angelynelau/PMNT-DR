@@ -192,7 +192,7 @@ if st.button("Generate Report"):
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
             #f"{joint_text}\n"
-            f"JOINT = {joint}\n"
+            f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
             f"{delivery_text}\n"
