@@ -105,11 +105,6 @@ for team in teams:
         chainage = format_chainage(del_chainage) if del_chainage else ""
         total_pipe_length += pipe_count
 
-        if pipe_count > 0:
-            if team not in team_deliveries:
-                team_deliveries[team] = []
-            team_deliveries[team].append({"count": pipe_count, "route": route, "chainage": chainage})
-
     # APPEND DATA FOR EACH TEAM
     data.append([
         team,
@@ -138,6 +133,7 @@ if st.button("Generate Report"):
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
+        delivery_text = f"DELIVERY = {row['Pipe Size']} - {row[pipe_count]} // {row[del_chainage]}"
 
         pmnt_report += (
             f"> {row['Team']}\n"
@@ -149,6 +145,7 @@ if st.button("Generate Report"):
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
+            f"{delivery_text}\n"
             f"{weather_text}\n"
             "REMARKS = \n"
             "\n"
