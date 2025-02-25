@@ -96,6 +96,14 @@ for team in teams:
         "members": team_members,  
         "total": total_people      
     }
+
+    # DELIVERY
+    delivery = st.number_input("Delivered", step=1, key=f"delivery_{team}")
+    del_route = st.text_input("Route", key=f"delroute_{team}")
+    del_route = validate_text_input(del_route)
+    if team and del_route: 
+        team_routes[team] = del_route
+
     
     # APPEND DATA FOR EACH TEAM
     data.append([
