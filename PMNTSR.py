@@ -125,7 +125,7 @@ if st.button("Generate Report"):
             f"DATE = {formatted_date}\n"
             f"WORK ACTIVITY = {row['Activity']}\n"
             f"HOURS WORKING = {row['Hours Working']}\n"
-            f"MANPOWER = \n"
+            f"MANPOWER = {total_people} people\n{manpower_details}\n"
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
