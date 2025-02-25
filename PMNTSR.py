@@ -137,7 +137,7 @@ for team in teams:
 
         if team not in team_deliveries:
             team_deliveries[team] = []
-        team_deliveries[team].append({"count": pipe_count, "route": route, "chainage": chainage})
+        team_deliveries[team].append({"count": pipe_count, "route": lroute, "chainage": chainage})
 
     # REMARKS
     remarks = st.text_input("Remarks", key=f"remarks_{team}")
