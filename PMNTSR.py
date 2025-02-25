@@ -58,7 +58,14 @@ for team in teams:
 
   fittings = st.multiselect("Fitting(s):", ["A","B"], key=f"fittings_{team}")
 
-  data.append([team, pipe_size, activity_list, working_hours, joint, fittings])
+data.append([
+    team if team else "", 
+    pipe_size if pipe_size else "", 
+    activity_list if activity_list else "", 
+    working_hours if working_hours else "", 
+    joint if joint else "", 
+    fittings if fittings else ""
+])
 
 # CONVERT TO DATAFRAME
 df = pd.DataFrame(data, columns=["Team","Pipe Size","Activity","Hours Working","Joints","Laid Start","Laid End","Laid Length(m)", "Fitting"])
