@@ -1,13 +1,18 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, time
+import re  # For text validation
 
 def format_chainage(value):
-    try: 
+    try:
         value = int(value)
         return f"CH{value // 1000}+{value % 1000:03d}"
-    except:
+    except ValueError:
         return ""
+
+def validate_text_input(input_value):
+    """Allow only alphabets and spaces, remove numbers and special characters."""
+    return re.sub(r'[^A-Za-z\s]', '', input_value).upper()
 
 st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
 st.title("PMNT Site Diary")
@@ -35,10 +40,10 @@ data = []
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
     st.subheader(f"{team}")
-    
+
     # PIPE SIZE
     pipe_size = st.selectbox(f"Pipe Size", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"], key=f"pipe_{team}")
-    
+
     # ACTIVITY
     activity_list = st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
 
@@ -46,23 +51,24 @@ for team in teams:
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
-    route = st.textinput(key=f"route_{team}") if "Pipe Laying" in activity_list else ""
-    route = validate_text_input(route).upper()
+    route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
+    route = validate_text_input(route)  # Remove numbers and special characters, convert to uppercase
+    
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
-    
+
     start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
     end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
-    
+
     ch_diff = ""
     if start_ch_raw and end_ch_raw:
         try:
             ch_diff = f"({int(end_ch_raw) - int(start_ch_raw)}m)"
         except ValueError:
             ch_diff = "(Invalid)"
-    
+
     # FITTINGS
-    fittings = st.multiselect("Fitting(s):", [" ", " ", " "], key=f"fittings_{team}")
+    fittings = st.multiselect("Fitting(s):", ["Elbow", "Tee", "Coupling", "Reducer"], key=f"fittings_{team}")
 
     # APPEND DATA FOR EACH TEAM
     data.append([
@@ -88,6 +94,8 @@ if st.button("Generate Report"):
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
+        laid_text = f"LAID = {row['Laid Start']} to {row['Laid End']} {row['Laid Length(m)']}" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
+
         pmnt_report += (
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
@@ -95,13 +103,11 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {row['Activity']}\n"
             f"HOURS WORKING = {row['Hours Working']}\n"
             f"JOINTS = {row['Joints']}\n"
-            f"LAID = {row['Laid Start']} to {row['Laid End']} {row['Laid Length(m)']}\n"
+            f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
             "\n"
         )
-    
-    # st.text_area("Generated Report:", pmnt_report, height=300)
 
-# DISPLAY REPORTS
+    # DISPLAY REPORT
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
