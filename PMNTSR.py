@@ -35,6 +35,10 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # DATA STORAGE
 data = []
+team_activities = {}
+team_activities[team] = " & ".join(activity_list)
+team_working_hours = {}
+team_working_hours[team] = working_hours
 team_routes = {}
 team_manpower = {}
 team_deliveries = {}  # Store delivery data
@@ -136,7 +140,7 @@ if st.button("Generate Report"):
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
-        activity_text = f"WORK ACTIVITY = " & ".join(activity_list)"
+        
         route_text = team_routes.get(row["Team"], "")
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
@@ -154,8 +158,8 @@ if st.button("Generate Report"):
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
             f"DATE = {formatted_date}\n"
-            f"WORK ACTIVITY = {row['Activity']}\n"
-            f"HOURS WORKING = {row['Hours Working']}\n"
+            f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
+            f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
