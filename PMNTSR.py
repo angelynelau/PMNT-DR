@@ -81,6 +81,20 @@ for team in teams:
     # FITTINGS
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
+    # MACHINERY
+    st.markdown("**MACHINERY**")
+    machinery_types = []
+    if st.checkbox(f"Excavator", key=f"excavator_{team}"):
+        machinery_types.append("Excavator - 1")
+
+    # EQUIPMENT
+    st.markdown("**EQUIPMENT**")
+    equipment_list = []
+    if st.checkbox(f"Genset", key=f"genset_{team}"):
+        equipment_list.append("Genset - 1")
+    if st.checkbox(f"Butt Fusion Welding Machine", key=f"welding_{team}"):
+        equipment_list.append("Butt Fusion Welding Machine - 1")
+        
     # MANPOWER
     st.markdown("**PIPE LAYING TEAM**")
     team_members = []
