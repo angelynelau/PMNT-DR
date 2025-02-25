@@ -36,6 +36,7 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # DATA STORAGE
 data = []
+team_routes = {}
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
@@ -53,7 +54,9 @@ for team in teams:
     # PIPE LAYING
     route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
     route = validate_text_input(route)  # Remove numbers and special characters, convert to uppercase
-    
+    if team and route:  # Store route in dictionary
+        team_routes[team] = route
+            
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
 
@@ -63,12 +66,12 @@ for team in teams:
     ch_diff = ""
     if start_ch_raw and end_ch_raw:
         try:
-            ch_diff = f"({int(end_ch_raw) - int(start_ch_raw)}m)"
+            ch_diff = f"{int(end_ch_raw) - int(start_ch_raw)}m"
         except ValueError:
             ch_diff = "(Invalid)"
 
     # FITTINGS
-    fittings = st.multiselect("Fitting(s):", ["Elbow", "Tee", "Coupling", "Reducer"], key=f"fittings_{team}")
+    fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
     # APPEND DATA FOR EACH TEAM
     data.append([
@@ -94,7 +97,7 @@ if st.button("Generate Report"):
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
-        laid_text = f"LAID = {row['Laid Start']} to {row['Laid End']} {row['Laid Length(m)']}" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
+        laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
 
         pmnt_report += (
             f"> {row['Team']}\n"
