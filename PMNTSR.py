@@ -118,7 +118,7 @@ if st.button("Generate Report"):
         route_text = team_routes.get(row["Team"], "")
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
-        manpower_details = "\n".join(team_manpower.get(row["Team"], {}).get("members", []))
+        manpower_details = "\n".join(team_manpower.get(row["Team"], {"members": []})["members"])
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
         
         pmnt_report += (
