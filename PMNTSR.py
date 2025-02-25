@@ -104,7 +104,7 @@ for team in teams:
     }
 
     # DELIVERY
-    delivery = st.checkbox(f"Delivery", key=f"del_checkbox_{team}"):
+    delivery = st.checkbox(f"Delivery", key=f"del_checkbox_{team}")
         pipe_count = st.number_input(f"Pipe Count ({team})", min_value=0, step=1, key=f"pipe_count_{team}")
         del_chainage = st.text_input(f"Chainage ({team})", key=f"chainage_{team}")
         chainage = format_chainage(del_chainage) if del_chainage else ""
