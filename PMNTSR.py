@@ -68,7 +68,7 @@ data.append([
     joints if joints else "",
     start_ch if start_ch else "",
     end_ch if end_ch else "",
-    ch_diff if ch_diff else "",
+    ch_diff,
     fittings if fittings else ""
 ])
 
