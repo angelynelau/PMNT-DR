@@ -37,6 +37,7 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 # DATA STORAGE
 data = []
 team_routes = {}
+team_manpower = {}
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
