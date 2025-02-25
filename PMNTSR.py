@@ -57,14 +57,19 @@ for team in teams:
     team_working_hours[team] = working_hours
 
     # JOINTS
+    ("**PIPE JOINTING**") if "Pipe Jointing" in activity_list else ""
+    jroute = st.text_input("Route", key=f"jroute_{team}") if "Pipe Jointing" in activity_list else ""
+    jroute = validate_text_input(jroute)
+    if team and jroute:
+        team_jroutes[team] = jroute
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
     ("**PIPE LAYING**") if "Pipe Laying" in activity_list else ""
-    route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
-    route = validate_text_input(route)
-    if team and route:
-        team_routes[team] = route
+    lroute = st.text_input("Route", key=f"lroute_{team}") if "Pipe Laying" in activity_list else ""
+    lroute = validate_text_input(lroute)
+    if team and lroute:
+        team_lroutes[team] = lroute
 
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
@@ -116,7 +121,7 @@ for team in teams:
         "total": total_people
     }
 
-     # FITTINGS
+    # FITTINGS
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
     
@@ -161,7 +166,7 @@ if st.button("Generate Report"):
 
     for _, row in edited_df.iterrows():
         
-        route_text = team_routes.get(row["Team"], "")
+        lroute_text = team_lroutes.get(row["Team"], "")
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
