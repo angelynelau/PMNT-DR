@@ -11,7 +11,6 @@ def format_chainage(value):
         return ""
 
 def validate_text_input(input_value):
-    """Allow only alphabets and spaces, remove numbers and special characters."""
     return re.sub(r'[^A-Za-z\s]', '', input_value).upper()
 
 st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
@@ -100,7 +99,7 @@ for team in teams:
     }
 
     # DELIVERY
-    if st.checkbox(f"Pipe ({team})", key=f"pipe_checkbox_{team}"):
+    if st.checkbox(f"Delivery", key=f"del_checkbox_{team}"):
         pipe_count = st.number_input(f"Pipe Count ({team})", min_value=0, step=1, key=f"pipe_count_{team}")
         del_chainage = st.text_input(f"Chainage ({team})", key=f"chainage_{team}")
         chainage = format_chainage(del_chainage) if del_chainage else ""
@@ -142,16 +141,7 @@ if st.button("Generate Report"):
         team_manpower_data = team_manpower.get(row["Team"], {"members": [], "total": 0})
         total_people = team_manpower_data["total"]
 
-        # DELIVERY SECTION
-        delivery_text = ""
-        if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:  
-            total_delivered = sum(entry["count"] for entry in team_deliveries[row["Team"]])
-            delivery_routes = "\n".join([f"- {entry['count']} lengths // {entry['route']} {entry['chainage']}" for entry in team_deliveries[row["Team"]]])
-
-            delivery_text = (
-                f"DELIVERY = {total_delivered} lengths\n"
-                f"{delivery_routes}\n"
-            )
+        delivery_text = f" DELIVERY = {row['Pipe Size']} - {entry['count']} lengths // {entry['route']} {entry['chainage']}"
         
         pmnt_report += (
             f"> {row['Team']}\n"
