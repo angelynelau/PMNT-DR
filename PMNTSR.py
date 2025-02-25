@@ -121,7 +121,7 @@ for team in teams:
         end_ch,
         ch_diff,
         ", ".join(fittings),
-        pipecount,
+        pipe_count,
         remarks
     ])
 
