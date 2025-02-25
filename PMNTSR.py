@@ -16,6 +16,15 @@ def validate_text_input(input_value):
 st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
 st.title("PMNT Site Diary")
 
+# DATA STORAGE
+data = []
+team_activities = {}
+team_working_hours = {}
+team_routes = {}
+team_manpower = {}
+team_deliveries = {}  # Store delivery data
+total_pipe_length = 0  # Initialize total pipe count
+
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
@@ -32,17 +41,7 @@ start_time = st.time_input("Start Time:", time(8, 0))
 end_time = st.time_input("End Time:", time(17, 0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
-
-# DATA STORAGE
-data = []
-team_activities = {}
-team_activities[team] = " & ".join(activity_list)
-team_working_hours = {}
 team_working_hours[team] = working_hours
-team_routes = {}
-team_manpower = {}
-team_deliveries = {}  # Store delivery data
-total_pipe_length = 0  # Initialize total pipe count
 
 # LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
@@ -56,6 +55,7 @@ for team in teams:
 
     # JOINTS
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
+    team_activities[team] = " & ".join(activity_list)
 
     # PIPE LAYING
     route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
