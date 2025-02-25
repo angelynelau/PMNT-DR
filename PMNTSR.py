@@ -60,7 +60,7 @@ for team in teams:
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
-    ("**PIPE LAYING**")
+    ("**PIPE LAYING**") if "Pipe Laying" in activity_list else ""
     route = st.text_input("Route", key=f"route_{team}") if "Pipe Laying" in activity_list else ""
     route = validate_text_input(route)
     if team and route:
