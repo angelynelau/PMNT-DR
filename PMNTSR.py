@@ -58,7 +58,7 @@ for team in teams:
     route = validate_text_input(route)
     if team and route:
         team_routes[team] = route
-        
+
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
 
@@ -94,8 +94,8 @@ for team in teams:
         total_people += workers
 
     team_manpower[team] = {
-        "members": team_members,  
-        "total": total_people      
+        "members": team_members,
+        "total": total_people
     }
 
     # DELIVERY
@@ -104,6 +104,10 @@ for team in teams:
         del_chainage = st.text_input(f"Chainage ({team})", key=f"chainage_{team}")
         chainage = format_chainage(del_chainage) if del_chainage else ""
         total_pipe_length += pipe_count
+
+        if team not in team_deliveries:
+            team_deliveries[team] = []
+        team_deliveries[team].append({"count": pipe_count, "route": route, "chainage": chainage})
 
     # APPEND DATA FOR EACH TEAM
     data.append([
@@ -133,6 +137,8 @@ if st.button("Generate Report"):
         laid_text = f"LAID = {route_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
+
+        # Generate delivery text
         delivery_text = ""
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
             deliveries = team_deliveries[row["Team"]]
