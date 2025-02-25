@@ -87,4 +87,4 @@ if st.button("Generate Report"):
   for _, row in edited_df.iterrows():
     #pmnt_report += f"> {row['Team]}\n"
     #pmnt_report += f"PIPE = = {row['Pipe Size']} \n"
-    pmnt_report += f"> {row['Team']}\nPIPE = = {row['Pipe Size']}\nDATE = {date_selected}\nWORK ACTIVITY = {row['Work Activity']}\nHOURS WORKING = {row['Hours Working']}\n"
+    pmnt_report += f"> {row['Team']}\nPIPE = {row['Pipe Size']}\nDATE = {date_selected.strftime('%d/%m/%y (%A)')}\nWORK ACTIVITY = {row['Activity']}\nHOURS WORKING = {row['Hours Working']}\n"
