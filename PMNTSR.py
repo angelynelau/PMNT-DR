@@ -215,6 +215,8 @@ if st.button("Generate Report"):
         f"{pmweather_text}\n"
         f"{totalworkinghours_text}\n"   
         f"{workingtime_text}\n"
+
+        )
     
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
