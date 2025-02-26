@@ -202,8 +202,10 @@ if st.button("Generate Report"):
         )
         
     jbalb_report = ""
+         jbalb_report += (
+            f"DATE = {formatted_date}\n"   
 
-    
+         )
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
     st.subheader("Generated JBALB Report")
