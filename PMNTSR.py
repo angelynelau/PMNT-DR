@@ -203,7 +203,7 @@ if st.button("Generate Report"):
         #    machinery_summary["Excavator"] += 1
 
         # MACHINERY SUMMARY
-	for mchinery in team_machinery.get(row["Team"], {}).get("machinery", []):
+	    for mchinery in team_machinery.get(row["Team"], {}).get("machinery", []):
     		if "Excavator" in role:
                     machinery_summary["Excavator"] += 1
 
