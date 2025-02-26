@@ -165,12 +165,11 @@ edited_df = st.data_editor(df, use_container_width=True)
 if st.button("Generate Report"):
     
     pmnt_report = ""
-    machinery_summary = set()
-    equipment_summary = set()
     manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     material_summary = {}
-    machinery_summary = {}
-    equipment_summary = {}
+    machinery_summary = {"Excavator": 0}
+    equipment_summary = {"Genset": 0, "Butt Fusion Welding Machine": 0}
+
 
     for _, row in edited_df.iterrows():
         #jroute_text = team_jroutes.get(row["Team"], "")
@@ -193,18 +192,15 @@ if st.button("Generate Report"):
                 count = int(re.search(r'\d+', role).group()) if re.search(r'\d+', role) else 1
                 manpower_summary["General Worker"] += count
 
-        # MACHINE SUMMARY
-        for role in machinery_types.get(row["Team"], {}).get("members", []):
-            if "Excavator" in role:
-                machinery_summary["Excavator"] += 1
-        
-        # Collect machinery & equipment
-        #if st.session_state.get(f"excavator_{team}"):
-        #    machinery_summary["Excavator"] = machinery_summary.get("Excavator", 0) + 1
-        #if st.session_state.get(f"genset_{team}"):
-        #    equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
-        #if st.session_state.get(f"welding_{team}"):
-        #    equipment_summary["Butt Fusion Welding Machine"] = equipment_summary.get("Butt Fusion Welding Machine", 0) + 1
+        # Machinery
+        if st.session_state.get(f"excavator_{team}"):
+            machinery_summary["Excavator"] += 1
+
+    # Equipment
+        if st.session_state.get(f"genset_{team}"):
+            equipment_summary["Genset"] += 1
+        if st.session_state.get(f"welding_{team}"):
+            equipment_summary["Butt Fusion Welding Machine"] += 1
         
         # Generate delivery text
         delivery_text = "DELIVERY = "
@@ -254,13 +250,13 @@ if st.button("Generate Report"):
     jbalb_report += "\n*ACTIVITY CARRIED OUT:*\n"
     
     if any(row["Joint"] for _, row in edited_df.iterrows()):
-        jbalb_report += "1. Pipe Jointing\n"
+        jbalb_report += "Pipe Jointing\n"
         for _, row in edited_df.iterrows():
             if row["Joint"]:
                 jbalb_report += f"> {row['Team']}\n- {row['Joint']} nos joints ({row['Pipe Size']})\n"
 
     if any(row["Laid Length(m)"] for _, row in edited_df.iterrows()):
-        jbalb_report += "2. Pipe Laying\n"
+        jbalb_report += "Pipe Laying\n"
         for _, row in edited_df.iterrows():
             if row["Laid Length(m)"]:
                 jbalb_report += f"> {row['Team']}\n- ({row['Pipe Size']}) {row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})\n"
