@@ -94,6 +94,8 @@ for team in teams:
     team_machinery[team] = {
         "machinery": team_mach,
         "total": total_people
+    }
+	
 
     # EQUIPMENT
     st.markdown("**EQUIPMENT**")
