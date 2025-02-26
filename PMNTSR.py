@@ -198,7 +198,7 @@ if st.button("Generate Report"):
 
     # Equipment
         if st.session_state.get(f"genset_{team}"):
-            equipment_summary["Genset"] += 1
+            equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
         if st.session_state.get(f"welding_{team}"):
             equipment_summary["Butt Fusion Welding Machine"] += 1
         
