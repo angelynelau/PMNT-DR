@@ -136,7 +136,6 @@ df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Laid Start", "Laid End", 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
 
-# GENERATE REPORT
 if st.button("Generate Report"):
     pmnt_report = ""
 
@@ -146,6 +145,14 @@ if st.button("Generate Report"):
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
 
+        # Generate delivery text
+        delivery_text = "DELIVERY = "
+        if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
+            deliveries = team_deliveries[row["Team"]]
+            delivery_text = "DELIVERY = " + " // ".join(
+                [f"{row['Pipe Size']} - {entry['count']} lengths // {entry['route']}-{entry['chainage']}" for entry in deliveries]
+            )
+
         pmnt_report += (
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
@@ -153,23 +160,28 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
+            f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
+            f"{delivery_text}\n"
             f"{weather_text}\n"
             f"REMARKS = {row['Remarks']}\n"
             "\n"
         )
 
-    # JBALB Report
+    # Generate JBALB Report
     jbalb_report = (
         f"Date: {formatted_date}\n"
         f"Morning: {weather_am}\n"  
         f"Afternoon: {weather_pm}\n"
-        f"Total Working Hours: {working_hours} hrs\n"
-        f"Working Time: {working_time}\n"
+        f"Total Working Hours: {working_hours} hrs\n"   
+        f"{working_time}\n"
     )
 
+    # Ensure both reports are displayed
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
+
     st.subheader("Generated JBALB Report")
     st.text(jbalb_report)
+
