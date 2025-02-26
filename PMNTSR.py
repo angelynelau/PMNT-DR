@@ -169,6 +169,8 @@ if st.button("Generate Report"):
     equipment_summary = set()
     manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     material_summary = {}
+    machinery_summary = {}
+    equipment_summary = {}
 
     for _, row in edited_df.iterrows():
         #jroute_text = team_jroutes.get(row["Team"], "")
@@ -192,12 +194,12 @@ if st.button("Generate Report"):
                 manpower_summary["General Worker"] += count
 
         # Collect machinery & equipment
-        if st.session_state.get(f"excavator_{row['Team']}"):
-            machinery_summary.add("Excavator - 1")
-        if st.session_state.get(f"genset_{row['Team']}"):
-            equipment_summary.add("Genset - 1")
-        if st.session_state.get(f"welding_{row['Team']}"):
-            equipment_summary.add("Butt Fusion Welding Machine - 1")
+        if st.session_state.get(f"excavator_{team}"):
+            machinery_summary["Excavator"] = machinery_summary.get("Excavator", 0) + 1
+        if st.session_state.get(f"genset_{team}"):
+            equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
+        if st.session_state.get(f"welding_{team}"):
+            equipment_summary["Butt Fusion Welding Machine"] = equipment_summary.get("Butt Fusion Welding Machine", 0) + 1
         
         # Generate delivery text
         delivery_text = "DELIVERY = "
