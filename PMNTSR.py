@@ -169,15 +169,6 @@ if st.button("Generate Report"):
             "\n"
         )
 
-    # Generate JBALB Report
-        jbalb_report = (
-            f"Date: {formatted_date}\n"
-            f"Morning: {weather_am}\n"  
-            f"Afternoon: {weather_pm}\n"
-            f"Total Working Hours: {working_hours} hrs\n"   
-            f"{working_time}\n"
-        )
-
     # Ensure both reports are displayed
         st.subheader("Generated PMNT Report")
         st.text(pmnt_report)
