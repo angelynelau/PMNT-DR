@@ -91,12 +91,6 @@ for team in teams:
     if st.checkbox(f"Excavator", key=f"excavator_{team}"):
         machinery_types.append("Excavator - 1")
 
-    team_machinery[team] = {
-        "machinery": team_mach,
-        "total": total_people
-    }
-	
-
     # EQUIPMENT
     st.markdown("**EQUIPMENT**")
     equipment_list = []
@@ -174,7 +168,7 @@ if st.button("Generate Report"):
     manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     material_summary = {}
     machinery_summary = {"Excavator": 0}
-    equipment_summary = {}
+    equipment_summary = {"Genset": 0, "Butt Fusion Welding Machine": 0}
 
 
     for _, row in edited_df.iterrows():
@@ -199,20 +193,14 @@ if st.button("Generate Report"):
                 manpower_summary["General Worker"] += count
 
         # Machinery
-       # if st.session_state.get(f"excavator_{team}"):
-        #    machinery_summary["Excavator"] += 1
-
-        # MACHINERY SUMMARY
-	    for mchinery in team_machinery.get(row["Team"], {}).get("machinery", []):
-    		if "Excavator" in role:
-                    machinery_summary["Excavator"] += 1
+        if st.session_state.get(f"excavator_{team}"):
+            machinery_summary["Excavator"] += 1
 
     # Equipment
         if st.session_state.get(f"genset_{team}"):
-            equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
+            equipment_summary["Genset"] += 1
         if st.session_state.get(f"welding_{team}"):
-            equipment_summary["Butt Fusion Welding Machine"] = equipment_summary.get("Butt Fusion Welding Machine", 0) + 1
-
+            equipment_summary["Butt Fusion Welding Machine"] += 1
         
         # Generate delivery text
         delivery_text = "DELIVERY = "
@@ -248,8 +236,8 @@ if st.button("Generate Report"):
         f"*MACHINERY:*\n"
         f"Excavator - {machinery_summary['Excavator']}\n\n"        
         f"*EQUIPMENT:*\n"
-        f"Genset - {equipment_summary.get('Genset')}\n"
-        f"Welding Machine - {equipment_summary.get('Butt Fusion Welding Machine')}\n\n"
+        f"Genset - {equipment_summary['Genset']}\n"
+        f"Welding Machine - {equipment_summary['Butt Fusion Welding Machine']}\n\n"
         f"*PIPE LAYING TEAM:*\n"
         f"Supervisor - {manpower_summary['Supervisor']}\n"
         f"Excavator Operator - {manpower_summary['Excavator Operator']}\n"
