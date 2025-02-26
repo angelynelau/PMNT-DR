@@ -138,7 +138,6 @@ edited_df = st.data_editor(df, use_container_width=True)
 
 if st.button("Generate Report"):
     pmnt_report = ""
-    jbalb_report = ""
 
     for _, row in edited_df.iterrows():
         lroute_text = team_lroutes.get(row["Team"], "")
