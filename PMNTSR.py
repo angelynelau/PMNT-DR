@@ -168,7 +168,7 @@ if st.button("Generate Report"):
     manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     material_summary = {}
     machinery_summary = {"Excavator": 0}
-    equipment_summary = {}
+    equipment_summary = {"Genset": 0, "Butt Fusion Welding Machine": 0}
 
 
     for _, row in edited_df.iterrows():
@@ -198,7 +198,7 @@ if st.button("Generate Report"):
 
     # Equipment
         if st.session_state.get(f"genset_{team}"):
-            equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
+            equipment_summary["Genset"] += 1
         if st.session_state.get(f"welding_{team}"):
             equipment_summary["Butt Fusion Welding Machine"] += 1
         
