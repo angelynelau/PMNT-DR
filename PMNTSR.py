@@ -165,6 +165,10 @@ edited_df = st.data_editor(df, use_container_width=True)
 if st.button("Generate Report"):
     
     pmnt_report = ""
+    machinery_summary = set()
+    equipment_summary = set()
+    manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
+    material_summary = {}
 
     for _, row in edited_df.iterrows():
         #jroute_text = team_jroutes.get(row["Team"], "")
@@ -177,6 +181,24 @@ if st.button("Generate Report"):
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
 
+        # Collect manpower summary
+        for role in team_manpower.get(row["Team"], {}).get("members", []):
+            if "Supervisor" in role:
+                manpower_summary["Supervisor"] += 1
+            elif "Excavator Operator" in role:
+                manpower_summary["Excavator Operator"] += 1
+            elif "General Worker" in role:
+                count = int(re.search(r'\d+', role).group()) if re.search(r'\d+', role) else 1
+                manpower_summary["General Worker"] += count
+
+        # Collect machinery & equipment
+        if st.session_state.get(f"excavator_{row['Team']}"):
+            machinery_summary.add("Excavator - 1")
+        if st.session_state.get(f"genset_{row['Team']}"):
+            equipment_summary.add("Genset - 1")
+        if st.session_state.get(f"welding_{row['Team']}"):
+            equipment_summary.add("Butt Fusion Welding Machine - 1")
+        
         # Generate delivery text
         delivery_text = "DELIVERY = "
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
@@ -209,8 +231,32 @@ if st.button("Generate Report"):
         f"Total Working Hours: {working_hours} hrs\n"   
         f"{working_time}\n\n"
         f"*MACHINERY:*\n"
-        
+        + "\n".join(machinery_summary) + "\n\n"
+        f"*EQUIPMENT:*\n"
+        + "\n".join(equipment_summary) + "\n\n"
+        f"*PIPE LAYING TEAM:*\n"
+        f"Supervisor - {manpower_summary['Supervisor']}\n"
+        f"Excavator Operator - {manpower_summary['Excavator Operator']}\n"
+        f"General Workers - {manpower_summary['General Worker']}\n\n"
+        f"*MATERIAL DELIVERED TO SITE:*\n"
     )
+
+    for material, count in material_summary.items():
+        jbalb_report += f"- {material}: {count} lengths\n"
+
+    jbalb_report += "\n*ACTIVITY CARRIED OUT:*\n"
+    
+    if any(row["Joint"] for _, row in edited_df.iterrows()):
+        jbalb_report += "1. Pipe Jointing\n"
+        for _, row in edited_df.iterrows():
+            if row["Joint"]:
+                jbalb_report += f"> {row['Team']}\n- {row['Joint']} nos joints ({row['Pipe Size']})\n"
+
+    if any(row["Laid Length(m)"] for _, row in edited_df.iterrows()):
+        jbalb_report += "2. Pipe Laying\n"
+        for _, row in edited_df.iterrows():
+            if row["Laid Length(m)"]:
+                jbalb_report += f"> {row['Team']}\n- ({row['Pipe Size']}) {row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})\n"
 
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
