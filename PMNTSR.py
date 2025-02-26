@@ -21,6 +21,7 @@ data = []
 team_activities = {}
 team_working_hours = {}
 team_lroutes = {}
+team_jroutes = {}
 team_manpower = {}
 team_deliveries = {}  
 pipe_count = 0
@@ -55,6 +56,14 @@ for team in teams:
     team_activities[team] = " & ".join(activity_list)
 
     team_working_hours[team] = working_hours
+
+    # JOINTS
+    ("**PIPE JOINTING**") if "Pipe Jointing" in activity_list else ""
+    #jroute = st.text_input("Route", key=f"jroute_{team}") if "Pipe Jointing" in activity_list else ""
+    #jroute = validate_text_input(jroute)
+    #if team and jroute:
+    #    team_jroutes[team] = jroute
+    joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
     ("**PIPE LAYING**") if "Pipe Laying" in activity_list else ""
@@ -116,6 +125,20 @@ for team in teams:
     # FITTINGS
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
+    
+    # DELIVERY
+    st.markdown("**MATERIALS DELIVERED TO SITE**")
+    delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
+    if delivery:
+        pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
+        del_chainage = st.text_input(f"Chainage", key=f"chainage_{team}")
+        chainage = format_chainage(del_chainage) if del_chainage else ""
+        total_pipe_length += pipe_count
+
+        if team not in team_deliveries:
+            team_deliveries[team] = []
+        team_deliveries[team].append({"count": pipe_count, "route": lroute, "chainage": chainage})
+
     # REMARKS
     remarks = st.text_input("Remarks", key=f"remarks_{team}")
 
@@ -123,23 +146,31 @@ for team in teams:
     data.append([
         team,
         pipe_size,
+        joints,
         start_ch,
         end_ch,
         ch_diff,
         ", ".join(fittings),
+        pipe_count,
         remarks
     ])
 
 # CONVERT TO DATAFRAME
-df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Laid Start", "Laid End", "Laid Length(m)", "Fitting", "Remarks"])
+df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting","Delivery","Remarks"])
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
 
+# GENERATE REPORT
 if st.button("Generate Report"):
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
+        #jroute_text = team_jroutes.get(row["Team"], "")
+        #if row["Joint"]:
+        #    joint_text = f"JOINT = {row['Joint']} // ROUTE {jroute_text}"
+        #else:
+        #    joint_text = "JOINT = "
         lroute_text = team_lroutes.get(row["Team"], "")
         laid_text = f"LAID = {lroute_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
@@ -160,6 +191,7 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
+            #f"{joint_text}\n"
             f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
@@ -169,10 +201,5 @@ if st.button("Generate Report"):
             "\n"
         )
 
-    # Ensure both reports are displayed
-        st.subheader("Generated PMNT Report")
-        st.text(pmnt_report)
-    
-        st.subheader("Generated JBALB Report")
-        st.text(jbalb_report)
-
+    st.subheader("Generated PMNT Report")
+    st.text(pmnt_report)
