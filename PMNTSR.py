@@ -200,6 +200,21 @@ if st.button("Generate Report"):
             f"REMARKS = {row['Remarks']}\n"
             "\n"
         )
+    
+    jbalb_report = ""
 
+    for _, row in edited_df.iterrows():
+        amweather_text = f"Morning: {weather_am}"
+        pmweather_text = f"Afternoon: {weather_pm}"
+        totalworkinghours_text = f"Total Working Hours: {working_hours} hrs"
+        workingtime_text = f"{working_time}"
+    
+    jbalb_report += (
+        f"Date: {formatted_date}\n"
+        f"{amweather_text}\n"
+        f"{pmweather_text}\n"
+        f"{totalworkinghours_text}\n"   
+        f"{workingtime_text}\n"
+    
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
