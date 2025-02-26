@@ -163,6 +163,7 @@ edited_df = st.data_editor(df, use_container_width=True)
 
 # GENERATE REPORT
 if st.button("Generate Report"):
+    
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
@@ -201,8 +202,8 @@ if st.button("Generate Report"):
             "\n"
         )
         
-    #jbalb_report = ""
-    jbalb_report += (
+    jbalb_report = ""
+        jbalb_report += (
             f"DATE = {formatted_date}\n"   
 
          )
