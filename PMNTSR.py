@@ -91,6 +91,10 @@ for team in teams:
     if st.checkbox(f"Excavator", key=f"excavator_{team}"):
         machinery_types.append("Excavator - 1")
 
+    team_machinery[team] = {
+        "machinery": team_mach,
+        "total": total_people
+
     # EQUIPMENT
     st.markdown("**EQUIPMENT**")
     equipment_list = []
@@ -193,8 +197,13 @@ if st.button("Generate Report"):
                 manpower_summary["General Worker"] += count
 
         # Machinery
-        if st.session_state.get(f"excavator_{team}"):
-            machinery_summary["Excavator"] += 1
+       # if st.session_state.get(f"excavator_{team}"):
+        #    machinery_summary["Excavator"] += 1
+
+        # MACHINERY SUMMARY
+	    for mchinery in team_machinery.get(row["Team"], {}).get("machinery", []):
+    		if "Excavator" in role:
+                    machinery_summary["Excavator"] += 1
 
     # Equipment
         if st.session_state.get(f"genset_{team}"):
