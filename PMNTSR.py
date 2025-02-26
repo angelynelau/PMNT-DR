@@ -200,6 +200,11 @@ if st.button("Generate Report"):
             f"REMARKS = {row['Remarks']}\n"
             "\n"
         )
+        
+    jbalb_report = ""
 
+    
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
+    st.subheader("Generated JBALB Report")
+    st.text(jbalb_report)
