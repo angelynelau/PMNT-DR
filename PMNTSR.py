@@ -21,7 +21,6 @@ data = []
 team_activities = {}
 team_working_hours = {}
 team_lroutes = {}
-team_jroutes = {}
 team_manpower = {}
 team_deliveries = {}  
 pipe_count = 0
@@ -56,14 +55,6 @@ for team in teams:
     team_activities[team] = " & ".join(activity_list)
 
     team_working_hours[team] = working_hours
-
-    # JOINTS
-    ("**PIPE JOINTING**") if "Pipe Jointing" in activity_list else ""
-    #jroute = st.text_input("Route", key=f"jroute_{team}") if "Pipe Jointing" in activity_list else ""
-    #jroute = validate_text_input(jroute)
-    #if team and jroute:
-    #    team_jroutes[team] = jroute
-    joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
     ("**PIPE LAYING**") if "Pipe Laying" in activity_list else ""
@@ -125,20 +116,6 @@ for team in teams:
     # FITTINGS
     fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
 
-    
-    # DELIVERY
-    st.markdown("**MATERIALS DELIVERED TO SITE**")
-    delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
-    if delivery:
-        pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
-        del_chainage = st.text_input(f"Chainage", key=f"chainage_{team}")
-        chainage = format_chainage(del_chainage) if del_chainage else ""
-        total_pipe_length += pipe_count
-
-        if team not in team_deliveries:
-            team_deliveries[team] = []
-        team_deliveries[team].append({"count": pipe_count, "route": lroute, "chainage": chainage})
-
     # REMARKS
     remarks = st.text_input("Remarks", key=f"remarks_{team}")
 
@@ -146,17 +123,15 @@ for team in teams:
     data.append([
         team,
         pipe_size,
-        joints,
         start_ch,
         end_ch,
         ch_diff,
         ", ".join(fittings),
-        pipe_count,
         remarks
     ])
 
 # CONVERT TO DATAFRAME
-df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting","Delivery","Remarks"])
+df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Laid Start", "Laid End", "Laid Length(m)", "Fitting", "Remarks"])
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
@@ -166,23 +141,10 @@ if st.button("Generate Report"):
     pmnt_report = ""
 
     for _, row in edited_df.iterrows():
-        #jroute_text = team_jroutes.get(row["Team"], "")
-        #if row["Joint"]:
-        #    joint_text = f"JOINT = {row['Joint']} // ROUTE {jroute_text}"
-        #else:
-        #    joint_text = "JOINT = "
         lroute_text = team_lroutes.get(row["Team"], "")
         laid_text = f"LAID = {lroute_text}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else "LAID = "
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
-
-        # Generate delivery text
-        delivery_text = "DELIVERY = "
-        if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
-            deliveries = team_deliveries[row["Team"]]
-            delivery_text = "DELIVERY = " + " // ".join(
-                [f"{row['Pipe Size']} - {entry['count']} lengths // {entry['route']}-{entry['chainage']}" for entry in deliveries]
-            )
 
         pmnt_report += (
             f"> {row['Team']}\n"
@@ -191,30 +153,22 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
-            #f"{joint_text}\n"
-            f"JOINT = {row['Joint']}\n"
             f"{laid_text}\n"
             f"FITTING = {row['Fitting']}\n"
-            f"{delivery_text}\n"
             f"{weather_text}\n"
             f"REMARKS = {row['Remarks']}\n"
             "\n"
         )
 
-# amweather_text = f"Morning: {weather_am}"
-# pmweather_text = f"Afternoon: {weather_pm}"
-# totalworkinghours_text = f"Total Working Hours: {working_hours} hrs"
-# workingtime_text = f"{working_time}"
+    # JBALB Report
+    jbalb_report = (
+        f"Date: {formatted_date}\n"
+        f"Morning: {weather_am}\n"  
+        f"Afternoon: {weather_pm}\n"
+        f"Total Working Hours: {working_hours} hrs\n"
+        f"Working Time: {working_time}\n"
+    )
 
-# Build JBALB Report
-jbalb_report = (
-    f"Date: {formatted_date}\n"
-    f"Morning: {weather_am}\n"  
-    f"Afternoon: {weather_pm}\n"
-    f"{totalworkinghours_text}\n"   
-    f"{workingtime_text}\n"
-)
-    
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
     st.subheader("Generated JBALB Report")
