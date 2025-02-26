@@ -183,7 +183,7 @@ if st.button("Generate Report"):
         weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         total_people = team_manpower.get(row["Team"], {}).get("total", 0)
 
-        # Collect manpower summary
+        # MANPOWER SUMMARY
         for role in team_manpower.get(row["Team"], {}).get("members", []):
             if "Supervisor" in role:
                 manpower_summary["Supervisor"] += 1
@@ -193,13 +193,18 @@ if st.button("Generate Report"):
                 count = int(re.search(r'\d+', role).group()) if re.search(r'\d+', role) else 1
                 manpower_summary["General Worker"] += count
 
+        # MACHINE SUMMARY
+        for role in machinery_types.get(row["Team"], {}).get("members", []):
+            if "Excavator" in role:
+                machinery_summary["Excavator"] += 1
+        
         # Collect machinery & equipment
-        if st.session_state.get(f"excavator_{team}"):
-            machinery_summary["Excavator"] = machinery_summary.get("Excavator", 0) + 1
-        if st.session_state.get(f"genset_{team}"):
-            equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
-        if st.session_state.get(f"welding_{team}"):
-            equipment_summary["Butt Fusion Welding Machine"] = equipment_summary.get("Butt Fusion Welding Machine", 0) + 1
+        #if st.session_state.get(f"excavator_{team}"):
+        #    machinery_summary["Excavator"] = machinery_summary.get("Excavator", 0) + 1
+        #if st.session_state.get(f"genset_{team}"):
+        #    equipment_summary["Genset"] = equipment_summary.get("Genset", 0) + 1
+        #if st.session_state.get(f"welding_{team}"):
+        #    equipment_summary["Butt Fusion Welding Machine"] = equipment_summary.get("Butt Fusion Welding Machine", 0) + 1
         
         # Generate delivery text
         delivery_text = "DELIVERY = "
