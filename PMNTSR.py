@@ -201,8 +201,8 @@ if st.button("Generate Report"):
             "\n"
         )
         
-    jbalb_report = ""
-         jbalb_report += (
+    #jbalb_report = ""
+    jbalb_report += (
             f"DATE = {formatted_date}\n"   
 
          )
