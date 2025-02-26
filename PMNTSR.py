@@ -201,10 +201,10 @@ if st.button("Generate Report"):
             "\n"
         )
 
-#amweather_text = f"Morning: {weather_am}"
-#pmweather_text = f"Afternoon: {weather_pm}"
-#totalworkinghours_text = f"Total Working Hours: {working_hours} hrs"
-#workingtime_text = f"{working_time}"
+# amweather_text = f"Morning: {weather_am}"
+# pmweather_text = f"Afternoon: {weather_pm}"
+# totalworkinghours_text = f"Total Working Hours: {working_hours} hrs"
+# workingtime_text = f"{working_time}"
 
 # Build JBALB Report
 jbalb_report = (
