@@ -217,3 +217,5 @@ jbalb_report = (
     
     st.subheader("Generated PMNT Report")
     st.text(pmnt_report)
+    st.subheader("Generated JBALB Report")
+    st.text(jbalb_report)
