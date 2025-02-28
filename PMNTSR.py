@@ -218,11 +218,12 @@ if st.button("Generate Report"):
         if "Excavator" in team_machinery.get(row["Team"], {}).get("machinery", []):
             mach_summary["Excavator"] += 1
         
-    # Equipment
-        if st.session_state.get(f"genset_{team}"):
-            equipment_summary["Genset"] += 1
-        if st.session_state.get(f"welding_{team}"):
-            equipment_summary["Butt Fusion Welding Machine"] += 1
+       # EQUIPMENT SUMMARY
+        for equipment in equipment_list:
+            if "Genset" in equipment:
+                equipment_summary["Genset"] += 1
+            if "Butt Fusion Welding Machine" in equipment:
+                equipment_summary["Butt Fusion Welding Machine"] += 1
         
         # Generate delivery text
         delivery_text = "DELIVERY = "
