@@ -219,11 +219,10 @@ if st.button("Generate Report"):
             mach_summary["Excavator"] += 1
         
        # EQUIPMENT SUMMARY
-        for equipment in equipment_list:
-            if "Genset" in equipment:
-                equipment_summary["Genset"] += 1
-            if "Butt Fusion Welding Machine" in equipment:
-                equipment_summary["Butt Fusion Welding Machine"] += 1
+        if "Genset" in team_activities.get(row["Team"], []):  # Adjust the condition based on your data structure
+            equipment_summary["Genset"] += 1
+        if "Butt Fusion Welding Machine" in team_activities.get(row["Team"], []):
+            equipment_summary["Butt Fusion Welding Machine"] += 1
         
         # Generate delivery text
         delivery_text = "DELIVERY = "
