@@ -95,7 +95,7 @@ for team in teams:
         team_mach.append("Excavator - 1")
         total_mach += 1
 
-    Team_machinery[team] = {
+    team_machinery[team] = {
     "machinery": team_mach,
     "total mach": total_mach
     }
