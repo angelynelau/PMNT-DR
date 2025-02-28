@@ -22,6 +22,7 @@ team_activities = {}
 team_working_hours = {}
 team_lroutes = {}
 team_jroutes = {}
+team_machinery = {}
 team_manpower = {}
 team_deliveries = {}  
 pipe_count = 0
@@ -88,8 +89,15 @@ for team in teams:
     # MACHINERY
     st.markdown("**MACHINERY**")
     machinery_types = []
+    total_machinery = 0
     if st.checkbox(f"Excavator", key=f"excavator_{team}"):
         machinery_types.append("Excavator - 1")
+        total_machinery += 1
+
+    team_machinery[team] = {
+        "machinery": machinery_types,
+        "total": total_machinery
+}
 
     # EQUIPMENT
     st.markdown("**EQUIPMENT**")
@@ -192,9 +200,14 @@ if st.button("Generate Report"):
                 count = int(re.search(r'\d+', role).group()) if re.search(r'\d+', role) else 1
                 manpower_summary["General Worker"] += count
 
+        # MACHINERY SUMMARY
+        for role in team_machinery.get(row["Team"], {}).get("machinery", []):
+            if "excavatoe" in role:
+                machinery_summary["Excavator"] += 1 else 1
+                
         # Machinery
-        if st.session_state.get(f"excavator_{team}"):
-            machinery_summary["Excavator"] += 1
+        #if st.session_state.get(f"excavator_{team}"):
+        #    machinery_summary["Excavator"] += 1
 
     # Equipment
         if st.session_state.get(f"genset_{team}"):
