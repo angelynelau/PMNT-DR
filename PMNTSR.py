@@ -3,7 +3,6 @@ import pandas as pd
 from datetime import datetime, time
 import re  # For text validation
 
-# Utility functions
 def format_chainage(value):
     try:
         value = int(value)
@@ -14,115 +13,173 @@ def format_chainage(value):
 def validate_text_input(input_value):
     return re.sub(r'[^A-Za-z\s]', '', input_value).upper()
 
-# Streamlit configuration
 st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
 st.title("PMNT Site Diary")
 
-# Data storage
+# DATA STORAGE
 data = []
 team_activities = {}
 team_working_hours = {}
 team_lroutes = {}
 team_jroutes = {}
-team_machinery = {}
+team_machinery= {}
 team_manpower = {}
 team_deliveries = {}  
 pipe_count = 0
 total_pipe_length = 0 
 
-# Team selection
+# TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
-# Date selection
+# DATE SELECTION
 date_selected = st.date_input("Date:", datetime.today())
 formatted_date = date_selected.strftime("%d/%m/%y (%A)")
 
-# Weather selection
+# WEATHER SELECTION
 weather_am = st.selectbox("Morning Weather:", ["Fine", "Rainy"])
 weather_pm = st.selectbox("Afternoon Weather:", ["Fine", "Rainy"])
 
-# Working hours calculation
+# WORKING HOURS
 start_time = st.time_input("Start Time:", time(8, 0))
 end_time = st.time_input("End Time:", time(17, 0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
-# Loop through each selected team
+# LOOP THROUGH EACH SELECTED TEAM
 for team in teams:
     st.subheader(f"{team}")
 
-    # Pipe size selection
+    # PIPE SIZE
     pipe_size = st.selectbox(f"Pipe Size", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"], key=f"pipe_{team}")
 
-    # Activity selection
+    # ACTIVITY
     activity_list = st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
     team_activities[team] = " & ".join(activity_list)
+
     team_working_hours[team] = working_hours
 
-    # Joint and Route info
+    # JOINTS
+    ("**PIPE JOINTING**") if "Pipe Jointing" in activity_list else ""
+    #jroute = st.text_input("Route", key=f"jroute_{team}") if "Pipe Jointing" in activity_list else ""
+    #jroute = validate_text_input(jroute)
+    #if team and jroute:
+    #    team_jroutes[team] = jroute
     joints = st.number_input("Joint", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
+
+    # PIPE LAYING
+    ("**PIPE LAYING**") if "Pipe Laying" in activity_list else ""
     lroute = st.text_input("Route", key=f"lroute_{team}") if "Pipe Laying" in activity_list else ""
     lroute = validate_text_input(lroute)
+    if team and lroute:
+        team_lroutes[team] = lroute
+
     start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
     end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
 
-    # Chainage format
     start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
     end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
+
     ch_diff = ""
     if start_ch_raw and end_ch_raw:
         try:
             ch_diff = f"{int(end_ch_raw) - int(start_ch_raw)}m"
         except ValueError:
             ch_diff = "(Invalid)"
-
-    # Machinery selection
+            
+    # MACHINERY
+    st.markdown("**MACHINERY**")
     team_mach = []
     total_mach = 0
+
     if st.checkbox(f"Excavator", key=f"excavator_{team}"):
         team_mach.append("Excavator - 1")
         total_mach += 1
 
     team_machinery[team] = {
-        "machinery": team_mach,
-        "total mach": total_mach
+    "machinery": team_mach,
+    "total mach": total_mach
     }
 
-    # Manpower selection
+    #st.markdown("**MACHINERY**")
+    #machinery_types = []
+    #total_machinery = 0
+   # if st.checkbox(f"Excavator", key=f"excavator_{team}"):
+   #     machinery_types.append("Excavator - 1")
+   #     total_machinery += 1
+
+    #team_machinery[team] = {
+    #    "machinery": machinery_types,
+     #   "total": total_machinery
+#}
+
+    # EQUIPMENT
+    st.markdown("**EQUIPMENT**")
+    equipment_list = []
+    if st.checkbox(f"Genset", key=f"genset_{team}"):
+        equipment_list.append("Genset - 1")
+    if st.checkbox(f"Butt Fusion Welding Machine", key=f"welding_{team}"):
+        equipment_list.append("Butt Fusion Welding Machine - 1")
+        
+    # MANPOWER
+    st.markdown("**PIPE LAYING TEAM**")
     team_members = []
     total_people = 0
+
     if st.checkbox(f"Supervisor", key=f"supervisor_{team}"):
         team_members.append("Supervisor - 1")
         total_people += 1
+
     if st.checkbox(f"Excavator Operator", key=f"ExcavatorOperator_{team}"):
         team_members.append("Excavator Operator - 1")
         total_people += 1
+
     if st.checkbox(f"General Worker", key=f"General Worker_{team}"):
         workers = st.number_input(f"Enter number of General Workers ({team})", min_value=1, step=1, key=f"workers_{team}")
         team_members.append(f"General Worker - {workers}")
         total_people += workers
+
     team_manpower[team] = {
         "members": team_members,
         "total": total_people
     }
 
-    # Materials delivered
+    # FITTINGS
+    fittings = st.multiselect("Fitting(s):", ["x", "y", "z"], key=f"fittings_{team}")
+
+    
+    # DELIVERY
+    st.markdown("**MATERIALS DELIVERED TO SITE**")
     delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
     if delivery:
         pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
+        del_chainage = st.text_input(f"Chainage", key=f"chainage_{team}")
+        chainage = format_chainage(del_chainage) if del_chainage else ""
         total_pipe_length += pipe_count
 
         if team not in team_deliveries:
             team_deliveries[team] = []
-        team_deliveries[team].append({"count": pipe_count, "route": lroute, "chainage": start_ch})
+        team_deliveries[team].append({"count": pipe_count, "route": lroute, "chainage": chainage})
 
-    # Append team data
-    data.append([team, pipe_size, joints, start_ch, end_ch, ch_diff, "", pipe_count, ""])
+    # REMARKS
+    remarks = st.text_input("Remarks", key=f"remarks_{team}")
 
-# Convert data to DataFrame
-df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting", "Delivery", "Remarks"])
+    # APPEND DATA FOR EACH TEAM
+    data.append([
+        team,
+        pipe_size,
+        joints,
+        start_ch,
+        end_ch,
+        ch_diff,
+        ", ".join(fittings),
+        pipe_count,
+        remarks
+    ])
 
-# Display table
+# CONVERT TO DATAFRAME
+df = pd.DataFrame(data, columns=["Team", "Pipe Size", "Joint", "Laid Start", "Laid End", "Laid Length(m)", "Fitting","Delivery","Remarks"])
+
+# DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True)
 
 # GENERATE REPORT
