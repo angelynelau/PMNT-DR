@@ -188,7 +188,7 @@ if st.button("Generate Report"):
     pmnt_report = ""
     manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     material_summary = {}
-    machinery_summary = {"Excavator": 0}
+    mach_summary = {"Excavator": 0}
     equipment_summary = {"Genset": 0, "Butt Fusion Welding Machine": 0}
 
 
