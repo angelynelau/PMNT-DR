@@ -214,16 +214,15 @@ if st.button("Generate Report"):
                 manpower_summary["General Worker"] += count
 
         #MACHINERY SUMMARY
-
         if "Excavator" in team_machinery.get(row["Team"], {}).get("machinery", []):
             mach_summary["Excavator"] += 1
         
        # EQUIPMENT SUMMARY
-        if "Genset" in team_activities.get(row["Team"], []):  # Adjust the condition based on your data structure
+        if "Genset" in activities:
             equipment_summary["Genset"] += 1
-        if "Butt Fusion Welding Machine" in team_activities.get(row["Team"], []):
+        if "Butt Fusion Welding Machine" in activities:
             equipment_summary["Butt Fusion Welding Machine"] += 1
-        
+            
         # Generate delivery text
         delivery_text = "DELIVERY = "
         if row["Team"] in team_deliveries and team_deliveries[row["Team"]]:
