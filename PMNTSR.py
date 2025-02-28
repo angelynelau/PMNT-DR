@@ -202,8 +202,8 @@ if st.button("Generate Report"):
 
         # MACHINERY SUMMARY
         for role in team_machinery.get(row["Team"], {}).get("machinery", []):
-            if "excavatoe" in role:
-                machinery_summary["Excavator"] += 1 else 1
+            if "excavator" in role:
+                machinery_summary["Excavator"] += 1 
                 
         # Machinery
         #if st.session_state.get(f"excavator_{team}"):
