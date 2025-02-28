@@ -22,7 +22,7 @@ team_activities = {}
 team_working_hours = {}
 team_lroutes = {}
 team_jroutes = {}
-team_machinery = {}
+team_machinery= {}
 team_manpower = {}
 team_deliveries = {}  
 pipe_count = 0
@@ -88,16 +88,29 @@ for team in teams:
             
     # MACHINERY
     st.markdown("**MACHINERY**")
-    machinery_types = []
-    total_machinery = 0
-    if st.checkbox(f"Excavator", key=f"excavator_{team}"):
-        machinery_types.append("Excavator - 1")
-        total_machinery += 1
+    team_mach = []
+    total_mach = 0
 
-    team_machinery[team] = {
-        "machinery": machinery_types,
-        "total": total_machinery
-}
+    if st.checkbox(f"Excavator", key=f"excavator_{team}"):
+        team_mach.append("Excavator - 1")
+        total_mach += 1
+
+    Team_machinery[team] = {
+    “mach”: team_mach,
+    “total mach”: total_mach
+    }
+
+    #st.markdown("**MACHINERY**")
+    #machinery_types = []
+    #total_machinery = 0
+   # if st.checkbox(f"Excavator", key=f"excavator_{team}"):
+   #     machinery_types.append("Excavator - 1")
+   #     total_machinery += 1
+
+    #team_machinery[team] = {
+    #    "machinery": machinery_types,
+     #   "total": total_machinery
+#}
 
     # EQUIPMENT
     st.markdown("**EQUIPMENT**")
@@ -200,10 +213,16 @@ if st.button("Generate Report"):
                 count = int(re.search(r'\d+', role).group()) if re.search(r'\d+', role) else 1
                 manpower_summary["General Worker"] += count
 
+        #MACHINERY SUMMARY
+
+        for role in team_machinery.get(row["Team"], {}).get("mach", []):
+            if "Excavator " in role:
+                mach_summary["Excavator "] += 1
+        
         # MACHINERY SUMMARY
-        for role in team_machinery.get(row["Team"], {}).get("machinery", []):
-            if "excavator" in role:
-                machinery_summary["Excavator"] += 1 
+       # for role in team_machinery.get(row["Team"], {}).get("machinery", []):
+        #    if "excavator" in role:
+         #       machinery_summary["Excavator"] += 1 
                 
         # Machinery
         #if st.session_state.get(f"excavator_{team}"):
@@ -247,7 +266,7 @@ if st.button("Generate Report"):
         f"Total Working Hours: {working_hours} hrs\n"   
         f"{working_time}\n\n"
         f"*MACHINERY:*\n"
-        f"Excavator - {machinery_summary['Excavator']}\n\n"        
+        f"Excavator - {mach_summary['Excavator']}\n\n"        
         f"*EQUIPMENT:*\n"
         f"Genset - {equipment_summary['Genset']}\n"
         f"Welding Machine - {equipment_summary['Butt Fusion Welding Machine']}\n\n"
