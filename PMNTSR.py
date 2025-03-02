@@ -65,7 +65,7 @@ for team in teams:
     laidch_diff = ""
     if laidstartch_raw and laidendch_raw:
         try:
-            laidch_diff = f"{int(laidendch_raw) - int(laidstartch_raw)m}"
+            laidch_diff = f"{int(laidendch_raw) - int(laidstartch_raw)}m"
         except ValueError:
             laidch_diff = "Invalid"
 
