@@ -215,9 +215,10 @@ if st.button("Generate Report"):
 
     # MACHINERY SUMMARY
     machinery_summary = {"Excavator": 0}
-    for machinery in team_machinery.get(team, {}).get("machinery",[]):
-        if "Excavator" in machinery:
-            machinery_summary["Excavator"] += 1
+    for team in teams:
+        for machinery in team_machinery.get(team, {}).get("machinery",[]):
+            if "Excavator" in machinery:
+                machinery_summary["Excavator"] += 1
     
     # MANPOWER SUMMARY
     manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
