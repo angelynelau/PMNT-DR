@@ -212,6 +212,19 @@ if st.button("Generate Report"):
             f"WEATHER = {weather_text}\n"
             f"REMARKS = {row['Remarks']}\n\n"
         )
+
+    manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
+
+    # MANPOWER SUMMARY
+    for member in team_manpower.get(row['Team'],{}).get("members", []):
+        if "Supervisor" in member:
+            manpower_summary["Supervisor"] += 1
+        elif "Excavator Supervisor" in member:
+            manpower_summary["Excavator Operator"] += 1
+        elif "General Worker" in member:
+            count = int(re.search(r'\d+', member).group()) if re.search(r'\d+', member) else 1
+            manpower_summary["General Worker"] += count
+
     
     jbalb_report += (
         f"Date: {formatted_date}\n"
@@ -219,6 +232,8 @@ if st.button("Generate Report"):
         f"Afternoon: {weather_pm}\n"
         f"Total Working Hours: {working_hours} hrs\n"
         f"{working_time}\n\n"
+        f"*MACHINERY:*\n"
+        f"
     )
 
     st.subheader("PMNT REPORT")
