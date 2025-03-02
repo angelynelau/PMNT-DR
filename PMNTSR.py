@@ -144,7 +144,7 @@ for team in teams:
         "C": ["m", "n", "o"]
     }
     st.markdown("**VALVES & FITTINGS:**")
-    selected_fittings = st.multiselect(f"",list(fittings.keys()), key=f"fittings_{team}")
+    selected_fittings = st.multiselect("",list(fittings.keys()), key=f"fittings_{team}")
     selected_data = {}
     if selected_fittings:
         for fitting in selected_fittings:
