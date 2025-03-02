@@ -197,7 +197,7 @@ if st.button("Generate Report"):
     f"Date: {formatted_date}\n"
     )
 
-st.subheader("PMNT REPORT")
-st.text(pmnt_report)
-st.subheader("JBALB REPORT")
-st.text(jbalb_report)
+    st.subheader("PMNT REPORT")
+    st.text(pmnt_report)
+    st.subheader("JBALB REPORT")
+    st.text(jbalb_report)
