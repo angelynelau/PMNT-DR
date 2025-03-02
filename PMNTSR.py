@@ -52,7 +52,93 @@ for team in teams:
     activity_list = st.multiselect("ACTIVITY CARRIED OUT:", ["Pipe Jointing", "Pipe Laying", "Road Reinstatement"], key=f"activity_{team}")
     team_activities[team] = ", ".join(activity_list)
 
-    # JOINTS
-    ("**PIPE JOINTING**") if "Pipe Jointing" in activity_list else ""
+    # PIPE JOINTING
+    ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
+
+    # PIPE LAYING
+    ("**PIPE LAYING:**") if "Pipe Laying" in activity_list else ""
+    laidstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"laidstartch_{team}") if "Pipe Laying" in activity_list else ""
+    laidendch_raw = st.text_input("ENDING CHAINAGE:", key=f"laidendch_{team}") if "Pipe Laying" else ""
+    laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw else ""
+    laidendch = format_chainage(laidendch_raw) if laidendch_raw else ""
+    laidch_diff = ""
+    if laidstartch_raw and laidendch_raw:
+        try:
+            laidch_diff = f"{int(laidendch_raw) - int(laidstartch_raw)m}"
+        except ValueError:
+            laidch_diff = "Invalid"
+
+    # ROAD REINSTATEMENT
+    ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
+    rrstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"rrstartch_{team}") if "Pipe Laying" in activity_list else ""
+    rrendch_raw = st.text_input("ENDING CHAINAGE:", key=f"rrendch_{team}") if "Pipe Laying" else ""
+    rrstartch = format_chainage(rrstartch_raw) if rrstartch_raw else ""
+    rrendch = format_chainage(rrendch_raw) if rrendch_raw else ""
+    rrch_diff = ""
+    if rrstartch_raw and rrendch_raw:
+        try:
+            rrch_diff = f"{int(rrendch_raw) - int(rrstartch_raw)m}"
+        except ValueError:
+            rrch_diff = "Invalid"
+    
+    # MACHINERY
+    st.markdown("**MACHINERY:**")
+    mach_list = []
+    total_mach = 0
+    if st.checkbox(f"Excavator", key=f"excavator_{team}"):
+        mach_list.append("Excavator - 1")
+        total_mach += 1
+    team_machinery[team] = {
+        "machinery": mach_list,
+        "total machinery": total_mach
+    }
+
+    # EQUIPMENT
+    st.markdwon("**EQUIPMENT:**")
+    equip_list = []
+    total_equip = 0
+    if st.checkbox(f"Genset", key=f"genset_{team}"):
+        equip_list.append("Genset - 1")
+        total_equip += 1
+    if st.checkbox(f"Butt Fusion Welding Machine", key=f"welding_{team}"):
+        equip_list.append("Butt Fusion Welding Machine - 1")
+        total_equip += 1
+    team_equip[team] = {
+        "equipment": equip_list,
+        "total equipment": total_equip
+    }
+
+    # MANPOWER
+    st.markdown("**PIPE LAYING TEAM:**")
+    team_members = []
+    total_people = 0
+    if st.checkbox(f"Supervisor", key=f"supervisor_{team}"):
+        team_members.append("Supervisor - 1")
+        total_people += 1
+    if st.checkbox(f"Excavator Operator", key=f"excavator operator_{team}"):
+        team_members.append("Excavator Operation - 1")
+        total_people += 1
+    if st.checkbox(f"General Worker", key=f"General Worker_{team}"):
+        workers = st.number_input(f"General Worker", min_value=1, step=1, key=f"workers_{team}")
+        team_members.append(f"General Worker - {workers}")
+        total_people += workers
+    team_manpower[team] = {
+        "members": team_members,
+        "total people": total_people
+    }
+
+    # FITTINGS
+    fittings = {
+        "Stub Tee": ["160mm", "225mm", "280mm", "355mm", "400mm"},
+        "Tee": ["j", "k", "l"],
+        "C": ["m", "n", "o"]
+    }
+    selected_fittings = st.multiselect("Select fitting(s):", list(categories.keys()))
+    if selected_fittings:
+        selected_size = st.multiselect("Select size:", categories[selected_fittings])
+        if selected_size:
+            number_input = st.number_input(min_value=0, step=1)
+    fittings = st.multiselect("FITTING(S):", ["Stub End", "Tee"], key=f"fittings_{team}")
+    
     
