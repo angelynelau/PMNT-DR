@@ -18,6 +18,7 @@ st.title("PMNT Site Diary")
 
 # DATA STORAGE
 data = []
+
 team_activities = {}
 team_machinery = {}
 team_equip = {}
@@ -64,6 +65,8 @@ for team in teams:
     # ROUTE
     route = st.text_input("ROUTE:", key=f"route_{team}")
     route = validate_text_input(route)
+    if team and route:
+        team_routes[team] = route
         
     # ACTIVITY
     activity_list = st.multiselect("ACTIVITY CARRIED OUT:", ["Pipe Jointing", "Pipe Laying", "Road Reinstatement"], key=f"activity_{team}")
