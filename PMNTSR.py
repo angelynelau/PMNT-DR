@@ -22,6 +22,7 @@ team_activities = {}
 team_machinery = {}
 team_equip = {}
 team_manpower = {}
+working_hours = {}
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
@@ -189,8 +190,10 @@ if st.button("Generate Report"):
     for _, row in edited_df.iterrows():
         
         pmnt_report += (
-        f"> {row['Team']}\n"
-        f"PIPE = {row['Pipe Size']}\n"
+            f"> {row['Team']}\n"
+            f"PIPE = {row['Pipe Size']}\n"
+            f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
+            f"HOURS WORKING = {working_hours.get}\n"
         )
     
     jbalb_report += (
