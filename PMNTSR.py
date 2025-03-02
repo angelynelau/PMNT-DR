@@ -196,23 +196,28 @@ if st.button("Generate Report"):
     for _, row in edited_df.iterrows():
         laid_text = f"{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
         del_text = f"{row['Pipe Size']} - {pipe_count} lengths" if pipe_count else ""
+        weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
         pmnt_report += (
             f"> {row['Team']} (ROUTE {team_routes.get(row['Team'])})\n"
             f"PIPE = {row['Pipe Size']}\n"
             f"DATE = {formatted_date}\n"
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
-            f"MANPOWER = {team_manpower.get(row['Team'], {}).get('total people', 0)} ({', '.join(team_manpower.get(row['Team'], {}).get('members', []))})\n"
+            f"MANPOWER = {team_manpower.get(row['Team'], {}).get('total people', 0)}\n"
             f"JOINT = {row['Joint(s)']}\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
             f"DELIVERY = {del_text}\n"
-            f"WEATHER = \n"
-            f"REMARKS = \n\n"
+            f"WEATHER = {weather_text}\n"
+            f"REMARKS = {row['Remarks']}\n\n"
         )
     
     jbalb_report += (
-    f"Date: {formatted_date}\n"
+        f"Date: {formatted_date}\n"
+        f"Morning: {weather_am}\n}"
+        f"Afternoon: {weather_pm}\n"
+        f"Total Working Hours: {working_hours} hrs\n"
+        f"{working_time}\n\n"
     )
 
     st.subheader("PMNT REPORT")
