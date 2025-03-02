@@ -139,6 +139,6 @@ for team in teams:
     }
     selected_fittings = st.multiselect("Select fitting(s):", list(fittings.keys()), key=f"fittings_{team}")
     if selected_fittings:
-        selected_size = st.multiselect("Select size:", fittings[selected_fittings], key=f"fittings_{team}")
+        selected_size = st.multiselect("Select size:", fittings[selected_fittings], key=f"fittingssize_{team}")
         if selected_size:
-            number_input = st.number_input(min_value=0, step=1, key=f"fittings_{team}")
+            number_input = st.number_input(min_value=0, step=1, key=f"fittingsnos_{team}")
