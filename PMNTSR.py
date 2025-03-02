@@ -71,8 +71,8 @@ for team in teams:
 
     # PIPE LAYING
     ("**PIPE LAYING:**") if "Pipe Laying" in activity_list else ""
-    laidstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"laidstartch_{team}") if "Pipe Laying" in activity_list else ""
-    laidendch_raw = st.text_input("ENDING CHAINAGE:", key=f"laidendch_{team}") if "Pipe Laying" in activity_list else ""
+    laidstartch_raw = st.number_input("STARTING CHAINAGE:", step=1, key=f"laidstartch_{team}") if "Pipe Laying" in activity_list else ""
+    laidendch_raw = st.number_input("ENDING CHAINAGE:", step=1, key=f"laidendch_{team}") if "Pipe Laying" in activity_list else ""
     laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw else ""
     laidendch = format_chainage(laidendch_raw) if laidendch_raw else ""
     laidch_diff = ""
@@ -84,8 +84,8 @@ for team in teams:
 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
-    rrstartch_raw = st.number_input("STARTING CHAINAGE:", key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
-    rrendch_raw = st.number_input("ENDING CHAINAGE:", key=f"rrendch_{team}") if "Road Reinstatement" in activity_list else ""
+    rrstartch_raw = st.number_input("STARTING CHAINAGE:", step=1, key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
+    rrendch_raw = st.number_input("ENDING CHAINAGE:", step=1, key=f"rrendch_{team}") if "Road Reinstatement" in activity_list else ""
     rrstartch = format_chainage(rrstartch_raw) if rrstartch_raw else ""
     rrendch = format_chainage(rrendch_raw) if rrendch_raw else ""
     rrch_diff = ""
@@ -180,3 +180,22 @@ df = pd.DataFrame(data, columns= ["Team", "Pipe Size", "Joint(s)", "Laid Start",
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True, disabled=True)
+
+# GENERATE REPORT
+if st.button("Generate Report"):
+    pmnt_report = ""
+    jbalb_report = ""
+
+    pmnt_report += (
+    f"> {row['Team']}\n"
+    f"PIPE = {row['Pipe Size']}\n"
+    )
+
+    jbalb_report += (
+    f"Date: {formatted_date}\n"
+    )
+
+st.subheader("PMNT REPORT")
+st.text(pmnt_report)
+st.subheader("JBALB REPORT")
+st.text(jbalb_report)
