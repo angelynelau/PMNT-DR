@@ -40,6 +40,12 @@ end_time = st.time_input("END TIME:", time(17,0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
+# DELIVERY
+    st.markdown("**MATERIALS DELIVERED TO SITE:**")
+    delivery = st.checkbox("PIPE", key=f"del_checkbox_{team}")
+    if delivery:
+        pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
+
 # LOOP THRU EACH TEAM
 for team in teams:
     st.subheader(f"{team}")
@@ -147,5 +153,8 @@ for team in teams:
                 selected_data[fitting] = {}  # Store sizes and quantities
                 for size in selected_sizes:
                     quantity = st.number_input(f"Enter quantity for {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
-                    if quantity > 0:  # Only store non-zero quantities
+                    if quantity > 0:
                         selected_data[fitting][size] = quantity
+
+    
+    
