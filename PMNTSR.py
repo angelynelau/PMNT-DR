@@ -208,7 +208,7 @@ if st.button("Generate Report"):
             f"FITTING = {row['Fitting(s)']}\n"
             f"DELIVERY = {del_text}\n"
             f"WEATHER = \n"
-            f"REMARKS = \n"
+            f"REMARKS = \n\n"
         )
     
     jbalb_report += (
