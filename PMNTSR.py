@@ -66,7 +66,7 @@ for team in teams:
     route = st.text_input("ROUTE:", key=f"route_{team}")
     route = validate_text_input(route)
     if team and lroute:
-        team_lroutes[team] = lroute
+        team_routes[team] = lroute
         
     # ACTIVITY
     activity_list = st.multiselect("ACTIVITY CARRIED OUT:", ["Pipe Jointing", "Pipe Laying", "Road Reinstatement"], key=f"activity_{team}")
