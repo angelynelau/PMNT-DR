@@ -98,7 +98,7 @@ for team in teams:
     }
 
     # EQUIPMENT
-    st.markdwon("**EQUIPMENT:**")
+    st.markdown("**EQUIPMENT:**")
     equip_list = []
     total_equip = 0
     if st.checkbox(f"Genset", key=f"genset_{team}"):
