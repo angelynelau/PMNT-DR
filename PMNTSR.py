@@ -202,7 +202,7 @@ if st.button("Generate Report"):
             f"DATE = {formatted_date}\n"
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
-            f"MANPOWER = {team_manpower.get(row['Team'])}"
+            f"MANPOWER = {team_manpower.get(row['Team'], {}).get('total people', 0)}\n"
             f"JOINT = {row['Joint(s)']}\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
