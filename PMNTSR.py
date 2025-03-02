@@ -18,7 +18,7 @@ st.title("PMNT Site Diary")
 
 # DATA STORAGE
 data = []
-
+team_routes = {}
 team_activities = {}
 team_machinery = {}
 team_equip = {}
