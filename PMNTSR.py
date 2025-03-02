@@ -78,7 +78,7 @@ for team in teams:
     rrch_diff = ""
     if rrstartch_raw and rrendch_raw:
         try:
-            rrch_diff = f"{int(rrendch_raw) - int(rrstartch_raw)m}"
+            rrch_diff = f"{int(rrendch_raw) - int(rrstartch_raw)}m"
         except ValueError:
             rrch_diff = "Invalid"
     
