@@ -191,7 +191,7 @@ if st.button("Generate Report"):
     jbalb_report = ""
 
     for _, row in edited_df.iterrows():
-        laid_text = f"{route}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
+        laid_text = f"{team_route.get(row['Team'])}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
         pmnt_report += (
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
