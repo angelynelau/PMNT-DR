@@ -64,6 +64,7 @@ for team in teams:
 
     # ROUTE
     route = st.text_input("ROUTE:", key=f"route_{team}")
+    route = route.upper()
     if team and route:
         team_routes[team] = route
         
