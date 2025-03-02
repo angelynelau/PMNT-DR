@@ -204,7 +204,7 @@ if st.button("Generate Report"):
             f"JOINT = {row['Joint(s)']}\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
-            f"DELIVERY = {row['Pipe Size']} - {pipe_count} lengths\n"
+            f"DELIVERY = {row['Pipe Size']} - {pipe_count} lengths\n" if pipe_count else "DELIVERY = "
             f"WEATHER = \n"
             f"REMARKS = \n"
         )
