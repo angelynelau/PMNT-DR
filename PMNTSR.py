@@ -213,9 +213,14 @@ if st.button("Generate Report"):
             f"REMARKS = {row['Remarks']}\n\n"
         )
 
-    manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
-
+    # MACHINERY SUMMARY
+    machinery_summary = {"Excavator" 0}
+    for machinery in team_machinery.get(team, {}).get("machinery",[]):
+        if "Excavator" in machinery:
+            machinery_summary["Excavator"] += 1
+    
     # MANPOWER SUMMARY
+    manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     for team in teams:
         for member in team_manpower.get(team, {}).get("members", []):
             if "Supervisor" in member:
@@ -226,7 +231,6 @@ if st.button("Generate Report"):
                 count = int(re.search(r'\d+', member).group()) if re.search(r'\d+', member) else 1
                 manpower_summary["General Worker"] += count
 
-    
     jbalb_report += (
         f"Date: {formatted_date}\n"
         f"Morning: {weather_am}\n"
@@ -234,6 +238,7 @@ if st.button("Generate Report"):
         f"Total Working Hours: {working_hours} hrs\n"
         f"{working_time}\n\n"
         f"*MACHINERY:*\n"
+        f"Excavator - {machinery_summary['Excavator']}\n"
         f"*PIPE LAYING TEAM:*\n"
         f"Supervisor - {manpower_summary['Supervisor']}\n"
         f"Excavator Operator - {manpower_summary['Excavator Operator']}\n"
