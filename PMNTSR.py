@@ -162,10 +162,8 @@ for team in teams:
     delivery = st.checkbox("Pipe")
     if delivery:
         pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
-    delroute = st.text_input("ROUTE:")
-    delroute = validate_text_input(delroute)
-    delch_raw = st.number_input("CHAINAGE:", step=1)
-    delch = format_chainage(delch_raw) if delch_raw else ""
+        delroute = st.text_input("ROUTE:")
+        delroute = validate_text_input(delroute)
     
     # REMARKS
     remarks = st.text_input("REMARKS:", key=f"remarks{team}")
@@ -199,6 +197,7 @@ if st.button("Generate Report"):
         pmnt_report += (
             f"> {row['Team']} (ROUTE {team_routes.get(row['Team'])})\n"
             f"PIPE = {row['Pipe Size']}\n"
+            f"DATE = {formatted_date}\n"
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {total_people}\n"
@@ -206,7 +205,8 @@ if st.button("Generate Report"):
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
             f"DELIVERY = {del_text}\n"
-            
+            f"WEATHER = \n"
+            f"REMARKS = \n"
         )
     
     jbalb_report += (
