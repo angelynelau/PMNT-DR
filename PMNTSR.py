@@ -129,7 +129,7 @@ for team in teams:
         team_members.append("Supervisor - 1")
         total_people += 1
     if st.checkbox(f"Excavator Operator", key=f"excavator operator_{team}"):
-        team_members.append("Excavator Operation - 1")
+        team_members.append("Excavator Operator - 1")
         total_people += 1
     if st.checkbox(f"General Worker", key=f"General Worker_{team}"):
         workers = st.number_input(f"General Worker", min_value=1, step=1, key=f"workers_{team}")
