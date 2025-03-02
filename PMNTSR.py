@@ -42,16 +42,6 @@ end_time = st.time_input("END TIME:", time(17,0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
-# DELIVERY
-st.markdown("**MATERIALS DELIVERED TO SITE:**")
-delivery = st.checkbox("Pipe")
-if delivery:
-    pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
-delroute = st.text_input("ROUTE:")
-delroute = validate_text_input(delroute)
-delch_raw = st.number_input("CHAINAGE:", step=1)
-delch = format_chainage(delch_raw) if delch_raw else ""
-
 # LOOP THRU EACH TEAM
 for team in teams:
     st.subheader(f"{team}")
@@ -167,6 +157,16 @@ for team in teams:
                     if quantity > 0:
                         selected_data[fitting][size] = quantity
 
+    # DELIVERY
+    st.markdown("**MATERIALS DELIVERED TO SITE:**")
+    delivery = st.checkbox("Pipe")
+    if delivery:
+        pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
+    delroute = st.text_input("ROUTE:")
+    delroute = validate_text_input(delroute)
+    delch_raw = st.number_input("CHAINAGE:", step=1)
+    delch = format_chainage(delch_raw) if delch_raw else ""
+    
     # REMARKS
     remarks = st.text_input("REMARKS:", key=f"remarks{team}")
 
@@ -195,6 +195,7 @@ if st.button("Generate Report"):
 
     for _, row in edited_df.iterrows():
         laid_text = f"{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
+        del_text = f" - {pipe_count} lengths"
         pmnt_report += (
             f"> {row['Team']} (ROUTE {team_routes.get(row['Team'])})\n"
             f"PIPE = {row['Pipe Size']}\n"
@@ -203,6 +204,9 @@ if st.button("Generate Report"):
             f"MANPOWER = {total_people}\n"
             f"JOINT = {row['Joint(s)']}\n"
             f"LAID = {laid_text}\n"
+            f"FITTING = {row['Fitting(s)']}\n"
+            f"DELIVERY = {del_text}\n"
+            
         )
     
     jbalb_report += (
