@@ -214,7 +214,7 @@ if st.button("Generate Report"):
         )
 
     # MACHINERY SUMMARY
-    machinery_summary = {"Excavator" 0}
+    machinery_summary = {"Excavator": 0}
     for machinery in team_machinery.get(team, {}).get("machinery",[]):
         if "Excavator" in machinery:
             machinery_summary["Excavator"] += 1
