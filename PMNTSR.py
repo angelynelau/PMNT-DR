@@ -166,10 +166,6 @@ for team in teams:
         pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED for {team}", min_value=0, step=1, key=f"pipe_count_{team}")
         delroute = st.text_input(f"ROUTE for {team}:", key=f"delroute_{team}")
         delroute = validate_text_input(delroute)
-    team_delivery[team] = {
-        "pipe_count": pipe_count,
-        "delroute": delroute
-    }
     
     # REMARKS
     remarks = st.text_input("REMARKS:", key=f"remarks{team}")
