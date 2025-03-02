@@ -214,7 +214,7 @@ if st.button("Generate Report"):
     
     jbalb_report += (
         f"Date: {formatted_date}\n"
-        f"Morning: {weather_am}\n}"
+        f"Morning: {weather_am}\n"
         f"Afternoon: {weather_pm}\n"
         f"Total Working Hours: {working_hours} hrs\n"
         f"{working_time}\n\n"
