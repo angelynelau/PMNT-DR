@@ -130,7 +130,7 @@ for team in teams:
 
     # FITTINGS
     fittings = {
-        "Stub Tee": ["160mm", "225mm", "280mm", "355mm", "400mm"},
+        "Stub Tee": ["160mm", "225mm", "280mm", "355mm", "400mm"],
         "Tee": ["j", "k", "l"],
         "C": ["m", "n", "o"]
     }
