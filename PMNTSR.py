@@ -220,7 +220,7 @@ if st.button("Generate Report"):
         for member in team_manpower.get(team, {}).get("members", []):
             if "Supervisor" in member:
                 manpower_summary["Supervisor"] += 1
-            elif "Excavator Operator" in member:  # Fixed typo from 'Excavator Supervisor'
+            elif "Excavator Operator" in member:
                 manpower_summary["Excavator Operator"] += 1
             elif "General Worker" in member:
                 count = int(re.search(r'\d+', member).group()) if re.search(r'\d+', member) else 1
