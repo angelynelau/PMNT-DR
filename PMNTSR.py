@@ -177,3 +177,6 @@ for team in teams:
 
 # CONVERT TO DATAFRAME
 df = pd.DataFrame(data, columns= ["Team", "Pipe Size", "Joint(s)", "Laid Start", "Laid End", "Laid Length (m)", "Fitting(s)", "Remarks"])
+
+# DISPLAY TABLE
+edited_df = st.data_editor(df, use_container_width=True, disabled=True)
