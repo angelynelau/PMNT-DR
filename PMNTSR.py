@@ -193,7 +193,7 @@ if st.button("Generate Report"):
 
     for _, row in edited_df.iterrows():
         laid_text = f"{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
-        #del_text = f" - {pipe_count} lengths"
+        del_text = f"{row['Pipe Size']} - {pipe_count} lengths" if pipe_count else ""
         pmnt_report += (
             f"> {row['Team']} (ROUTE {team_routes.get(row['Team'])})\n"
             f"PIPE = {row['Pipe Size']}\n"
@@ -204,7 +204,7 @@ if st.button("Generate Report"):
             f"JOINT = {row['Joint(s)']}\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
-            f"DELIVERY = {row['Pipe Size']} - {pipe_count} lengths\n" if pipe_count else "DELIVERY = "
+            f"DELIVERY = {del_text}\n"
             f"WEATHER = \n"
             f"REMARKS = \n"
         )
