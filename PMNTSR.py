@@ -56,6 +56,3 @@ for team in teams:
     ("***PIPE JOINTING***") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
     
-
-# GENERATE REPORT
-if st.button ("Generate Report"):
