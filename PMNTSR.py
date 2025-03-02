@@ -44,7 +44,11 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 st.markdown("**MATERIALS DELIVERED TO SITE:**")
 delivery = st.checkbox("Pipe")
 if delivery:
-    pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1)
+    pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
+delroute = st.number_input("ROUTE:")
+delroute = validate_text_input(delroute)
+delch_raw = st.number_input("CHAINAGE:")
+delch = format_chainage(delch_raw) if delch_raw else ""
 
 # LOOP THRU EACH TEAM
 for team in teams:
@@ -80,8 +84,8 @@ for team in teams:
 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
-    rrstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
-    rrendch_raw = st.text_input("ENDING CHAINAGE:", key=f"rrendch_{team}") if "Road Reinstatement" in activity_list else ""
+    rrstartch_raw = st.number_input("STARTING CHAINAGE:", key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
+    rrendch_raw = st.number_input("ENDING CHAINAGE:", key=f"rrendch_{team}") if "Road Reinstatement" in activity_list else ""
     rrstartch = format_chainage(rrstartch_raw) if rrstartch_raw else ""
     rrendch = format_chainage(rrendch_raw) if rrendch_raw else ""
     rrch_diff = ""
@@ -144,17 +148,32 @@ for team in teams:
         "C": ["m", "n", "o"]
     }
     st.markdown("**VALVES & FITTINGS:**")
-    selected_fittings = st.multiselect("",list(fittings.keys()), key=f"fittings_{team}")
+    selected_fittings = st.multiselect(f"SELECT FITTING(S):",list(fittings.keys()), key=f"fittings_{team}")
     selected_data = {}
     if selected_fittings:
         for fitting in selected_fittings:
-            selected_sizes = st.multiselect(f"Select size for {fitting}:", fittings[fitting], key=f"fittingssize_{team}_{fitting}")
+            selected_sizes = st.multiselect(f"SELECT SIZE FOR {fitting}:", fittings[fitting], key=f"fittingssize_{team}_{fitting}")
             if selected_sizes:
                 selected_data[fitting] = {}  # Store sizes and quantities
                 for size in selected_sizes:
-                    quantity = st.number_input(f"Enter quantity for {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
+                    quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
                     if quantity > 0:
                         selected_data[fitting][size] = quantity
 
-    
-    
+    # REMARKS
+    remarks = st.text_input("REMARKS:", key=f"remarks{team}")
+
+    # APPEND DATE
+    data.append([
+    team,
+    pipe_size,
+    joints,
+    laidstartch,
+    laidendch,
+    laidch_diff,
+    ",".join(fittings),
+    remarks
+        )]
+
+# CONVERT TO DATAFRAME
+df = pd.DataFrame(data, columns= ["Team", "Pipe Size", "Joint(s)", "Laid Start", "Laid End", "Laid Length (m)", "Fitting(s)", "Remarks"])
