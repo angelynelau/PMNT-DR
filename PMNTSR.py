@@ -53,7 +53,7 @@ for team in teams:
     team_activities[team] = ", ".join(activity_list)
 
     # JOINTS
-    ("***PIPE JOINTING***) if "Pipe Jointing" in activity_list else ""
+    ("***PIPE JOINTING***") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
     
 
