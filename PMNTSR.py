@@ -22,7 +22,7 @@ team_activities = {}
 team_machinery = {}
 team_equip = {}
 team_manpower = {}
-working_hours = {}
+team_working_hours = {}
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
@@ -55,6 +55,9 @@ delch = format_chainage(delch_raw) if delch_raw else ""
 for team in teams:
     st.subheader(f"{team}")
 
+    # WORKING HOURS
+    team_working_hours[team] = working_hours
+    
     # PIPE SIZE
     pipe_size = st.selectbox(f"PIPE SIZE:", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"], key=f"pipe_{team}")
 
@@ -79,7 +82,7 @@ for team in teams:
     laidch_diff = ""
     if laidstartch_raw and laidendch_raw:
         try:
-            laidch_diff = f"{int(laidendch_raw) - int(laidstartch_raw)}m"
+            laidch_diff = f"{int(laidendch_raw) - int(laidstartch_raw)} m"
         except ValueError:
             laidch_diff = "Invalid"
 
@@ -92,7 +95,7 @@ for team in teams:
     rrch_diff = ""
     if rrstartch_raw and rrendch_raw:
         try:
-            rrch_diff = f"{int(rrendch_raw) - int(rrstartch_raw)}m"
+            rrch_diff = f"{int(rrendch_raw) - int(rrstartch_raw)} m"
         except ValueError:
             rrch_diff = "Invalid"
     
@@ -188,12 +191,15 @@ if st.button("Generate Report"):
     jbalb_report = ""
 
     for _, row in edited_df.iterrows():
-        
+        laid_text = {route}-{row['Laid Start']} to {row['Laid End']} ({row['Laid Length(m)']}) if row["Laid Start"] or row["Laid End"] or row["Laid Length(m)"] else ""
         pmnt_report += (
             f"> {row['Team']}\n"
             f"PIPE = {row['Pipe Size']}\n"
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
-            f"HOURS WORKING = {working_hours.get}\n"
+            f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
+            f"MANPOWER = {total_people}\n"
+            f"JOINT = {row['Joint(s)']}\n"
+            f"LAID = {laid_text}\n"
         )
     
     jbalb_report += (
