@@ -42,7 +42,7 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # DELIVERY
 st.markdown("**MATERIALS DELIVERED TO SITE:**")
-delivery = st.checkbox("PIPE")
+delivery = st.checkbox("Pipe")
 if delivery:
     pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1)
 
@@ -144,7 +144,7 @@ for team in teams:
         "C": ["m", "n", "o"]
     }
     ("**VALVES & FITTINGS:**")
-    selected_fittings = st.multiselect("SELECT FITTING(S):", list(fittings.keys()), key=f"fittings_{team}")
+    selected_fittings = st.multiselect(list(fittings.keys()), key=f"fittings_{team}")
     selected_data = {}
     if selected_fittings:
         for fitting in selected_fittings:
