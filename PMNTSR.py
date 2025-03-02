@@ -141,8 +141,9 @@ for team in teams:
     selected_fittings = st.multiselect("SELECT FITTING(S):", list(fittings.keys()), key=f"fittings_{team}")
     if selected_fittings:
         selected_sizes = {}
-        number_inputs = {}
         for fitting in selected_fittings:
             selected_sizes[fitting] = st.multiselect(f"Select size for {fitting}:", fittings[fitting], key=f"fittingssize_{team}_{fitting}")
-            for size in selected_sizes:
-                number_inputs[size] = st.number_input(f"Enter quantity for {size}{fitting}:", min_value=0, step=1, key=f"fittingssize_{team}_{fitting}_{size}")
+            if selected_sizes:
+                number_inputs = {}
+                for size in selected_sizes:
+                    number_inputs[size] = st.number_input(f"Enter quantity for {size}:", min_value=0, step=1, key=f"fittingssize_{team}_{fitting}_{size}")
