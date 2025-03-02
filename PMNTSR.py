@@ -24,6 +24,7 @@ team_machinery = {}
 team_equip = {}
 team_manpower = {}
 team_working_hours = {}
+team_delivery = {}
 pipe_count = 0
 
 # TEAM SELECTION
@@ -160,11 +161,15 @@ for team in teams:
 
     # DELIVERY
     st.markdown("**MATERIALS DELIVERED TO SITE:**")
-    delivery = st.checkbox("Pipe")
+    delivery = st.checkbox("Pipe", key=f"delivery_{team}"))
     if delivery:
-        pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
-        delroute = st.text_input("ROUTE:")
+        pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED for {team}", min_value=0, step=1, key=f"pipe_count_{team}")
+        delroute = st.text_input(f"ROUTE for {team}:", key=f"delroute_{team}")
         delroute = validate_text_input(delroute)
+    team_delivery[team] = {
+        "pipe_count": pipe_count,
+        "delroute": delroute
+    }
     
     # REMARKS
     remarks = st.text_input("REMARKS:", key=f"remarks{team}")
