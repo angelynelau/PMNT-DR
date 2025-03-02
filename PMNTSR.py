@@ -173,7 +173,7 @@ for team in teams:
     laidch_diff,
     ",".join(fittings),
     remarks
-        )]
+    ])
 
 # CONVERT TO DATAFRAME
 df = pd.DataFrame(data, columns= ["Team", "Pipe Size", "Joint(s)", "Laid Start", "Laid End", "Laid Length (m)", "Fitting(s)", "Remarks"])
