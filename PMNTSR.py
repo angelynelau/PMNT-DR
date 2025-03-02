@@ -42,9 +42,9 @@ working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # DELIVERY
 st.markdown("**MATERIALS DELIVERED TO SITE:**")
-delivery = st.checkbox("PIPE", key=f"del_checkbox_{team}")
+delivery = st.checkbox("PIPE")
 if delivery:
-    pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
+    pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1)
 
 # LOOP THRU EACH TEAM
 for team in teams:
