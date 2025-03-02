@@ -171,7 +171,7 @@ for team in teams:
     laidstartch,
     laidendch,
     laidch_diff,
-    ",".join(fittings),
+    ",".join(selected_fittings),
     remarks
     ])
 
