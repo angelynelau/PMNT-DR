@@ -45,7 +45,7 @@ st.markdown("**MATERIALS DELIVERED TO SITE:**")
 delivery = st.checkbox("Pipe")
 if delivery:
     pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
-delroute = st.number_input("ROUTE:")
+delroute = st.text_input("ROUTE:")
 delroute = validate_text_input(delroute)
 delch_raw = st.number_input("CHAINAGE:")
 delch = format_chainage(delch_raw) if delch_raw else ""
