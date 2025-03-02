@@ -1,9 +1,9 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, time
-import re  # For text validation
+import re
 
-def format_chainage(value):
+def format_chainage (value):
     try:
         value = int(value)
         return f"CH{value // 1000}+{value % 1000:03d}"
@@ -11,7 +11,7 @@ def format_chainage(value):
         return ""
 
 def validate_text_input(input_value):
-    return re.sub(r'[^A-Za-z\s]', '', input_value).upper()
+    return re.sub(r'[A-Za-z\s]','', input_value).upper()
 
 st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
 st.title("PMNT Site Diary")
@@ -19,102 +19,43 @@ st.title("PMNT Site Diary")
 # DATA STORAGE
 data = []
 team_activities = {}
-team_working_hours = {}
-team_lroutes = {}
-team_jroutes = {}
-team_machinery= {}
-team_manpower = {}
-team_deliveries = {}  
-pipe_count = 0
-total_pipe_length = 0 
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
 
 # DATE SELECTION
-date_selected = st.date_input("Date:", datetime.today())
+date_selected = st.date_input("DATE:", datetime.today())
 formatted_date = date_selected.strftime("%d/%m/%y (%A)")
 
 # WEATHER SELECTION
-weather_am = st.selectbox("Morning Weather:", ["Fine", "Rainy"])
-weather_pm = st.selectbox("Afternoon Weather:", ["Fine", "Rainy"])
+weather_am = st.selectbox ("MORNING WEATHER:", ["Fine", "Rainy"])
+weather_pm = st.selectbox ("AFTERNOON WEATHER:", ["Fine", "Rainy"])
 
 # WORKING HOURS
-start_time = st.time_input("Start Time:", time(8, 0))
-end_time = st.time_input("End Time:", time(17, 0))
+start_time = st.time_input("START TIME:", time(8,0))
+end_time = st.time_input("END TIME:", time(17,0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
-# LOOP THROUGH EACH SELECTED TEAM
+# LOOP THRU EACH TEAM
 for team in teams:
     st.subheader(f"{team}")
 
     # PIPE SIZE
-    pipe_size = st.selectbox(f"Pipe Size", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"], key=f"pipe_{team}")
+    pipe_size = st.selectbox(f"PIPE SIZE:", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"], key=f"pipe_{team}")
 
+    # ROUTE
+    route = st.text_input("ROUTE:", key=f"route_{team}")
+    route = validate_text_input(route)
+        
     # ACTIVITY
-    activity_list = st.multiselect("Activity Carried Out:", ["Pipe Jointing", "Pipe Laying"], key=f"activity_{team}")
-    team_activities[team] = " & ".join(activity_list)
+    activity_list = st.multiselect("ACTIVITY CARRIED OUT:", ["Pipe Jointing", "Pipe Laying", "Road Reinstatement"], key=f"activity_{team}")
+    team_activities[team] = ", ".join(activity_list)
 
-    team_working_hours[team] = working_hours
-
-    # PIPE LAYING
-    lroute = st.text_input("Route", key=f"lroute_{team}") if "Pipe Laying" in activity_list else ""
-    lroute = validate_text_input(lroute)
-    if team and lroute:
-        team_lroutes[team] = lroute
-
-    start_ch_raw = st.text_input("Starting Chainage", key=f"startch_{team}") if "Pipe Laying" in activity_list else ""
-    end_ch_raw = st.text_input("Ending Chainage", key=f"endch_{team}") if "Pipe Laying" in activity_list else ""
-
-    start_ch = format_chainage(start_ch_raw) if start_ch_raw else ""
-    end_ch = format_chainage(end_ch_raw) if end_ch_raw else ""
-
-    ch_diff = ""
-    if start_ch_raw and end_ch_raw:
-        try:
-            ch_diff = f"{int(end_ch_raw) - int(start_ch_raw)}m"
-        except ValueError:
-            ch_diff = "(Invalid)"
-
-    # DELIVERY
-    st.markdown("**MATERIALS DELIVERED TO SITE**")
-    delivery = st.checkbox("Pipe", key=f"del_checkbox_{team}")
-    if delivery:
-        pipe_count = st.number_input(f"Total Number Delivered", min_value=0, step=1, key=f"pipe_count_{team}")
-        del_chainage = st.text_input(f"Chainage", key=f"chainage_{team}")
-        chainage = format_chainage(del_chainage) if del_chainage else ""
-        total_pipe_length += pipe_count
-
-        if team not in team_deliveries:
-            team_deliveries[team] = []
-        team_deliveries[team].append({"count": pipe_count, "route": lroute, "chainage": chainage})
+    # JOINTS
+    ("***PIPE JOINTING***) if "Pipe Jointing" in activity_list else ""
+    joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
+    
 
 # GENERATE REPORT
-if st.button("Generate Report"):
-    pmnt_report = ""
-    for team in teams:
-        lroute_text = team_lroutes.get(team, "")
-        laid_text = f"LAID = {lroute_text}-{start_ch} to {end_ch} ({ch_diff})" if start_ch or end_ch or ch_diff else "LAID = "
-        weather_text = f"WEATHER = {weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
-        delivery_text = "DELIVERY = "
-        if team in team_deliveries and team_deliveries[team]:
-            deliveries = team_deliveries[team]
-            delivery_text = "DELIVERY = " + " // ".join(
-                [f"{pipe_size} - {entry['count']} lengths // {entry['route']}-{entry['chainage']}" for entry in deliveries]
-            )
-
-        pmnt_report += (
-            f"> {team}\n"
-            f"PIPE = {pipe_size}\n"
-            f"DATE = {formatted_date}\n"
-            f"WORK ACTIVITY = {team_activities.get(team)}\n"
-            f"HOURS WORKING = {team_working_hours.get(team)}\n"
-            f"{laid_text}\n"
-            f"{delivery_text}\n"
-            f"{weather_text}\n"
-            "\n"
-        )
-
-    st.subheader("Generated PMNT Report")
-    st.text(pmnt_report)
+if st.button ("Generate Report"):
