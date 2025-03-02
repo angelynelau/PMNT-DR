@@ -186,11 +186,13 @@ if st.button("Generate Report"):
     pmnt_report = ""
     jbalb_report = ""
 
-    pmnt_report += (
-    f"> {row['Team']}\n"
-    f"PIPE = {row['Pipe Size']}\n"
-    )
-
+    for _, row in edited_df.iterrows():
+        
+        pmnt_report += (
+        f"> {row['Team']}\n"
+        f"PIPE = {row['Pipe Size']}\n"
+        )
+    
     jbalb_report += (
     f"Date: {formatted_date}\n"
     )
