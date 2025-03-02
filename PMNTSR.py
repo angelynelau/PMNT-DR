@@ -74,8 +74,8 @@ for team in teams:
 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
-    rrstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"rrstartch_{team}") if "Pipe Laying" in activity_list else ""
-    rrendch_raw = st.text_input("ENDING CHAINAGE:", key=f"rrendch_{team}") if "Pipe Laying" in activity_list else ""
+    rrstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
+    rrendch_raw = st.text_input("ENDING CHAINAGE:", key=f"rrendch_{team}") if "Road Reinstatement" in activity_list else ""
     rrstartch = format_chainage(rrstartch_raw) if rrstartch_raw else ""
     rrendch = format_chainage(rrendch_raw) if rrendch_raw else ""
     rrch_diff = ""
@@ -137,6 +137,7 @@ for team in teams:
         "Tee": ["j", "k", "l"],
         "C": ["m", "n", "o"]
     }
+    ("**VALVES & FITTINGS:**")
     selected_fittings = st.multiselect("SELECT FITTING(S):", list(fittings.keys()), key=f"fittings_{team}")
     if selected_fittings:
         selected_sizes = {}
