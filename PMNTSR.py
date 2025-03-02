@@ -56,13 +56,11 @@ for team in teams:
     team_activities[team] = ", ".join(activity_list)
 
     # PIPE JOINTING
-    ("**PIPE JOINTING:**") 
-    if "Pipe Jointing" in activity_list else ""
+    ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
 
     # PIPE LAYING
-    ("**PIPE LAYING:**") 
-    if "Pipe Laying" in activity_list else ""
+    ("**PIPE LAYING:**") if "Pipe Laying" in activity_list else ""
     laidstartch_raw = st.text_input("STARTING CHAINAGE:", key=f"laidstartch_{team}") if "Pipe Laying" in activity_list else ""
     laidendch_raw = st.text_input("ENDING CHAINAGE:", key=f"laidendch_{team}") if "Pipe Laying" in activity_list else ""
     laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw else ""
