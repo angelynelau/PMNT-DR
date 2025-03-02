@@ -133,7 +133,7 @@ for team in teams:
 
     # FITTINGS
     fittings = {
-        "Stub Tee": ["160mm", "225mm", "280mm", "355mm", "400mm"],
+        "Stub Tee": ["1", "2", "3", "4", "5"],
         "Tee": ["j", "k", "l"],
         "C": ["m", "n", "o"]
     }
@@ -144,3 +144,5 @@ for team in teams:
         number_inputs = {}
         for fitting in selected_fittings:
             selected_sizes[fitting] = st.multiselect(f"Select size for {fitting}:", fittings[fitting], key=f"fittingssize_{team}_{fitting}")
+            for size in selected_sizes:
+                number_inputs[size] = st.number_input(f"Enter quantity for {size}{fitting}:", min_value=0, step=1, key=f"fittingssize_{team}_{fitting}_{size}")
