@@ -53,7 +53,6 @@ if st.button ("Generate Report"):
 
     pmnt_report = ""
     pmnt_report += (
-    f"> {row{'Team'}\n"
-        f"PIPE = {row
+    f"> {row{'Team'}"
     f"DATE = {formatted_date}\n"
-    f"WORK ACTIVITY = {
+    )
