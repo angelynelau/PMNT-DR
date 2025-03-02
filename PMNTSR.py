@@ -47,7 +47,7 @@ if delivery:
     pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED", min_value=0, step=1)
 delroute = st.text_input("ROUTE:")
 delroute = validate_text_input(delroute)
-delch_raw = st.number_input("CHAINAGE:")
+delch_raw = st.number_input("CHAINAGE:", step=1)
 delch = format_chainage(delch_raw) if delch_raw else ""
 
 # LOOP THRU EACH TEAM
