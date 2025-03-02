@@ -24,6 +24,7 @@ team_machinery = {}
 team_equip = {}
 team_manpower = {}
 team_working_hours = {}
+pipe_count = 0
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
