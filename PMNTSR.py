@@ -233,7 +233,10 @@ if st.button("Generate Report"):
         f"Total Working Hours: {working_hours} hrs\n"
         f"{working_time}\n\n"
         f"*MACHINERY:*\n"
-        f"
+        f"*PIPE LAYING TEAM:*\n"
+        f"Supervisor - {manpower_summary['Supervisor']}\n"
+        f"Excavator Operator - {manpower_summary['Excavator Operator']}\n"
+        f"General Workers - {manpower_summary['General Worker']}\n\n"
     )
 
     st.subheader("PMNT REPORT")
