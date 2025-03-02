@@ -21,7 +21,7 @@ data = []
 team_activities = {}
 team_machinery = {}
 team_equip = {}
-team_members = {}
+team_manpower = {}
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
