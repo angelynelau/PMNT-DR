@@ -13,7 +13,7 @@ def format_chainage (value):
 def validate_text_input(input_value):
     return re.sub(r'[A-Za-z\s]','', input_value).upper()
 
-st.set_page_config(page_title="PMNT Site Diary", page_icon="🛠️")
+st.set_page_config(page_title="Site Diary", page_icon="🛠️")
 st.title("Site Diary")
 
 # DATA STORAGE
@@ -246,7 +246,7 @@ if st.button("Generate Report"):
         f"General Workers - {manpower_summary['General Worker']}\n\n"
     )
 
-    st.subheader(" REPORT")
+    st.subheader("l REPORT")
     st.text(pmnt_report)
     st.subheader("JBALB REPORT")
     st.text(jbalb_report)
