@@ -69,6 +69,7 @@ team_mp["Manpower"] = {
 st.markdown("**MATERIALS DELIVERED TO SITE:**")
 delivery = st.checkbox("Pipe", key="delivery_pipe")
 if delivery:
+    del_size = st.selectbox(f"PIPE SIZE:", ["400mm HDPE", "355mm HDPE", "280mm HDPE", "225mm HDPE", "160mm HDPE"])
     pipe_count = st.number_input("TOTAL NUMBER OF LENGTHS DELIVERED", min_value=0, step=1, key="pipe_count")
     delroute = st.text_input("ROUTE:", key="delroute")
     delroute = validate_text_input(delroute)
@@ -244,6 +245,7 @@ if st.button("Generate Report"):
             f"WEATHER = {weather_text}\n"
             f"REMARKS = {row['Remarks']}\n\n"
         )
+    
     # MACHINERY SUMMARY
     machinery_summary = {"Excavator": 0}
     for team in teams:
@@ -277,6 +279,9 @@ if st.button("Generate Report"):
                 count = int(re.search(r'\d+', member).group()) if re.search(r'\d+', member) else 1
                 pipelaying_summary["General Worker"] += count
 
+    # DELIVERY
+    jb_del_text = f"{del_size} - {pipe_count} lengths"
+    
     jbalb_report += (
         f"Date: {formatted_date}\n"
         f"Morning: {weather_am}\n"
@@ -294,6 +299,9 @@ if st.button("Generate Report"):
         f"Supervisor - {pipelaying_summary['Supervisor']}\n"
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
         f"General Workers - {pipelaying_summary['General Worker']}\n\n"
+        
+        f"*ACTIVITY CARRIED OUT:*\n"
+        
     )
 
     st.subheader("PMNT REPORT")
