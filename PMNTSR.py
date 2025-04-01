@@ -129,23 +129,16 @@ for team in teams:
     if selected_fittings:
         for fitting in selected_fittings:
             if fitting not in selected_data:
-                selected_data[fitting] = []  # Initialize an empty list for the fitting's chainages
-            
-            # Input the quantity of fittings
+                selected_data[fitting] = []
             quantity = st.number_input(f"ENTER QUANTITY FOR {fitting}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}")
-            
-            # If the quantity is greater than 0, input chainages
             if quantity > 0:
                 for i in range(quantity):
                     fitting_ch_raw = st.number_input(f"ENTER CHAINAGE FOR {fitting} (Entry {i+1}):", step=1, key=f"chainage_{team}_{fitting}_{i}")
-                    fitting_ch = format_chainage(fitting_ch_raw) if fitting_ch_raw else ""  # Format chainage
-                    
-                    if fitting_ch:  # Ensure chainage is valid before adding
+                    fitting_ch = format_chainage(fitting_ch_raw) if fitting_ch_raw else ""
+                    if fitting_ch:
                         selected_data[fitting].append(fitting_ch)
-        
-        # After collecting all chainages, format them
         for fitting, chainages in selected_data.items():
-            formatted_chainages = ", ".join(chainages)  # Join chainages into a formatted string
+            fitting_output = ", ".join(fitting_chainages)
             fitting_chainages.append(f"{fitting} ({formatted_chainages})")
 
     # ROAD REINSTATEMENT
@@ -238,6 +231,7 @@ if st.button("Generate Report"):
         laid_text = f"{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
         del_text = f"{row['Pipe Size']} - {team_delivery.get(row['Team'], 0)} lengths" if team_delivery.get(row['Team'], 0) else ""
         weather_text = f"{weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
+        fitting_text= f"{fitting_chainages}"
         pmnt_report += (
             f"> {row['Team']} (ROUTE {team_routes.get(row['Team'])})\n"
             f"PIPE = {row['Pipe Size']}\n"
@@ -247,7 +241,7 @@ if st.button("Generate Report"):
             f"MANPOWER = {team_pipelaying.get(row['Team'], {}).get('total people', 0)}\n"
             f"JOINT = {row['Joint(s)']}" + (f" // Stub End(s) = {row['Stub End(s)']}" if 'Stub End(s)' in row and row['Stub End(s)'] else "") + "\n"
             f"LAID = {laid_text}\n"
-            f"FITTING = {row['Fitting(s)']}\n"
+            f"FITTING = {fitting_output}\n"
             f"DELIVERY = {del_text}\n"
             f"WEATHER = {weather_text}\n"
             f"REMARKS = {row['Remarks']}\n\n"
