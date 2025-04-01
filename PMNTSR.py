@@ -297,15 +297,15 @@ if st.button("Generate Report"):
         
         fitting_list = team_fittings.get(team, "").split(", ")
         fitting_details = []
-            for fitting in fitting_list:
-                match = re.match(r"(.+?) \((.+?)\)", fitting)
-                if match:
-                    fittings, chainages = match.groups()
-                    chainage_list = chainages.split(", ")
-                    if len(chainage_list) == 1:
-                        fitting_details.append(f"Installation of {fittings} at {chainages}")
-                    else:
-                        fitting_details.append(f"Installation of fittings at {chainages}")
+        for fitting in fitting_list:
+            match = re.match(r"(.+?) \((.+?)\)", fitting)
+            if match:
+                fittings, chainages = match.groups()
+                chainage_list = chainages.split(", ")
+                if len(chainage_list) == 1:
+                    fitting_details.append(f"Installation of {fittings} at {chainages}")
+                else:
+                    fitting_details.append(f"Installation of fittings at {chainages}")
             
             if fitting_details:
                 for line in fitting_details:
