@@ -45,7 +45,7 @@ working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combin
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # MANPOWER
-st.manpower("**MANPOWER:**")
+st.markdown("**MANPOWER:**")
 mp_list = []
 total_mp = 0
 if st.checkbox(f"Project Manager"):
