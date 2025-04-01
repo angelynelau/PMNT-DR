@@ -284,7 +284,9 @@ if st.button("Generate Report"):
     jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths\n\n" if pipe_count > 0 else ""
 
     # ACTIVITY CARRIED OUT
-    act_text = f">{team} // Route {team_routes.get(team, 'N/A')}\n"
+    act_text = ""
+    for team in teams:
+        act_text = f">{team} // Route {team_routes.get(team, 'N/A')}\n"
 
     jbalb_report += (
             f"Date: {formatted_date}\n"
