@@ -251,7 +251,7 @@ if st.button("Generate Report"):
 
     # MANPOWER SUMMARY
     mp_summary_text = "*MANPOWER:*\n"
-    for role, count in mp_summary.items():
+    for role, count in team_mp["Manpower"]["total manpower"]:
         if count > 0:
             mp_summary_text += f"{role} - {count}\n"
     
