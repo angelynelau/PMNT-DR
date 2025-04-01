@@ -282,7 +282,10 @@ if st.button("Generate Report"):
     
     # DELIVERY
     jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths\n\n" if pipe_count > 0 else ""
-    
+
+    # ACTIVITY CARRIED OUT
+    act_text = f">{team} // Route {team_routes.get(team, 'N/A')}\n"
+
     jbalb_report += (
             f"Date: {formatted_date}\n"
             f"Morning: {weather_am}\n"
@@ -301,7 +304,8 @@ if st.button("Generate Report"):
             f"Excavator Operator - {pipelaying_summary.get('Excavator Operator', 0)}\n"
             f"General Workers - {pipelaying_summary.get('General Worker', 0)}\n\n"
             f"{jb_del_text}"
-            f""
+            f"*ACTIVITY CARRIED OUT:*\n"
+            f"{act_text}"
         )
     st.subheader("PMNT REPORT")
     st.text(pmnt_report)
