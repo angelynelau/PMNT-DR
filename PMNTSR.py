@@ -26,6 +26,7 @@ team_mp = {}
 team_pipelaying = {}
 team_working_hours = {}
 team_delivery = {}
+joints = 0
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D"])
@@ -91,7 +92,6 @@ for team in teams:
     team_activities[team] = ", ".join(activity_list)
 
     # PIPE JOINTING
-    joints = 0
     ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
     if joints > 0:
@@ -112,42 +112,42 @@ for team in teams:
         except ValueError:
             laidch_diff = "Invalid"
 
-# FITTINGS
-fittings = {
-    "SV": ["150mm", "200mm", "250mm", "300mm", "350mm"],
-    "CC": ["150mm", "200mm", "250mm", "300mm", "350mm"],
-    "100mm WO":[],
-    "100mm FH":[],
-    "25mm SAV":[],
-    "80mm DAV":[],  
-    "Tee": ["150mm", "200mm", "250mm", "300mm", "350mm"],
-}
-
-st.markdown("**VALVES & FITTINGS:**")
-selected_fittings = st.multiselect(f"SELECT FITTING(S):", list(fittings.keys()), key=f"fittings_{team}")
-
-selected_data = {}
-if selected_fittings:
-    for fitting in selected_fittings:
-        # If fitting has sizes, allow the user to select sizes
-        if fittings[fitting]:  # Check if fitting has available sizes
-            selected_sizes = st.multiselect(f"SELECT SIZE FOR {fitting}:", fittings[fitting], key=f"fittingssize_{team}_{fitting}")
-        else:  # No sizes available, proceed directly to quantity
-            selected_sizes = [fitting]  # Just use the fitting name as the size
-
-        if selected_sizes:
-            selected_data[fitting] = {}  # Store sizes and quantities
-            for size in selected_sizes:
-                # Enter quantity for each fitting and size
-                quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
-                if quantity > 0:
-                    selected_data[fitting][size] = quantity
-                    
-                    # Now, ask for chainages for each quantity
-                    for i in range(quantity):
-                        chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} {size} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{size}_{i}")
-                        if chainage:  # Ensure chainage is entered
-                            selected_data[fitting][size] = selected_data.get(fitting, {}).get(size, []) + [chainage]
+    # FITTINGS
+    fittings = {
+        "SV": ["150mm", "200mm", "250mm", "300mm", "350mm"],
+        "CC": ["150mm", "200mm", "250mm", "300mm", "350mm"],
+        "100mm WO":[],
+        "100mm FH":[],
+        "25mm SAV":[],
+        "80mm DAV":[],  
+        "Tee": ["150mm", "200mm", "250mm", "300mm", "350mm"],
+    }
+    
+    st.markdown("**VALVES & FITTINGS:**")
+    selected_fittings = st.multiselect(f"SELECT FITTING(S):", list(fittings.keys()), key=f"fittings_{team}")
+    
+    selected_data = {}
+    if selected_fittings:
+        for fitting in selected_fittings:
+            # If fitting has sizes, allow the user to select sizes
+            if fittings[fitting]:  # Check if fitting has available sizes
+                selected_sizes = st.multiselect(f"SELECT SIZE FOR {fitting}:", fittings[fitting], key=f"fittingssize_{team}_{fitting}")
+            else:  # No sizes available, proceed directly to quantity
+                selected_sizes = [fitting]  # Just use the fitting name as the size
+    
+            if selected_sizes:
+                selected_data[fitting] = {}  # Store sizes and quantities
+                for size in selected_sizes:
+                    # Enter quantity for each fitting and size
+                    quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
+                    if quantity > 0:
+                        selected_data[fitting][size] = quantity
+                        
+                        # Now, ask for chainages for each quantity
+                        for i in range(quantity):
+                            chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} {size} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{size}_{i}")
+                            if chainage:  # Ensure chainage is entered
+                                selected_data[fitting][size] = selected_data.get(fitting, {}).get(size, []) + [chainage]
 
     
     # ROAD REINSTATEMENT
