@@ -287,24 +287,23 @@ if st.button("Generate Report"):
     act_text = ""
     for team in teams:
         act_text += f">{team} // Route {team_routes.get(team, 'N/A')}\n"
-        
-        # Pipe Jointing activity
         if "Pipe Jointing" in team_activities.get(team, []):
             joints = st.session_state.get(f"joint_{team}", 0)
-            if joints > 0:
-                act_text += f"- {joints} nos joints \n"
-        
-        # Pipe Laying activity
+        if joints > 0:
+            act_text += f"- {joints} nos joints \n"
+        else:
+            act_text += ""
         if "Pipe Laying" in team_activities.get(team, []):
             laid_text = f"{team_routes.get(team)} - Pipe Laying"
             act_text += f"- Pipe Laying: {laid_text}\n"
-        
-        # Fitting(s) Installation activity
+        else:
+            act_text += ""
         if "Fitting(s) Installation" in team_activities.get(team, []):
             fitting_text = team_fittings.get(team, "")
             if fitting_text:
                 act_text += f"- Fittings Installed: {fitting_text}\n"
-        
+            else:
+                act_text += ""
         # Road Reinstatement activity
         if "Road Reinstatement" in team_activities.get(team, []):
             rr_text = f"{team_routes.get(team)} - Road Reinstatement"
