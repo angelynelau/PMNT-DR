@@ -250,7 +250,7 @@ if st.button("Generate Report"):
                 equipment_summary["Butt Fusion Welding Machine"] += 1
 
     # MANPOWER SUMMARY
-    mp_summary_text =
+    mp_summary_text = ""
     for role in team_mp["Manpower"]["manpower"]:
         mp_summary_text += f"{role}\n"
     
