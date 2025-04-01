@@ -253,15 +253,15 @@ if st.button("Generate Report"):
         f"*MACHINERY:*\n"
         f"Excavator - {machinery_summary['Excavator']}\n\n"
         f"*EQUIPMENT:*\n"
-        f"Supervisor - {equipment_summary['Genset']}\n"
-        f"Excavator Operator - {equipment_summary['Butt Fusion Welding Machine']}\n\n"
+        f"Genset - {equipment_summary['Genset']}\n"
+        f"Butt Fusion Welding Machine - {equipment_summary['Butt Fusion Welding Machine']}\n\n"
         f"*PIPE LAYING TEAM:*\n"
         f"Supervisor - {pipelaying_summary['Supervisor']}\n"
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
         f"General Workers - {pipelaying_summary['General Worker']}\n\n"
     )
 
-    st.subheader("l REPORT")
+    st.subheader("PMNT REPORT")
     st.text(pmnt_report)
     st.subheader("JBALB REPORT")
     st.text(jbalb_report)
