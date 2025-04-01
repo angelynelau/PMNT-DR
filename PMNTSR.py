@@ -285,7 +285,6 @@ if st.button("Generate Report"):
     
     # ACTIVITY CARRIED OUT
     activity_report = "*ACTIVITY CARRIED OUT:*\n"
-    for team in teams:
         activity_text = f"> {team} // Route {team_routes.get(team, 'N/A')}\n"
         joints = 0
         if "Pipe Jointing" in team_activities.get(team, []):
@@ -327,7 +326,7 @@ if st.button("Generate Report"):
             f"Excavator Operator - {pipelaying_summary.get('Excavator Operator', 0)}\n"
             f"General Workers - {pipelaying_summary.get('General Worker', 0)}\n\n"
             f"{jb_del_text}"
-            f"{activity_report}\n"
+            f""
         )
     
     # Show reports
