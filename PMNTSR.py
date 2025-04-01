@@ -296,7 +296,7 @@ if st.button("Generate Report"):
             activity_text += f"- Pipe Laying at {laidstartch} to {laidendch}\n"
         
         fitting_list = team_fittings.get(team, "").split(", ")
-            fitting_details = []
+        fitting_details = []
             for fitting in fitting_list:
                 match = re.match(r"(.+?) \((.+?)\)", fitting)
                 if match:
