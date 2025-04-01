@@ -141,13 +141,22 @@ for team in teams:
                     # Enter quantity for each fitting and size
                     quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
                     if quantity > 0:
+                        # Initialize the fitting and size data if not already initialized
+                        if fitting not in selected_data:
+                            selected_data[fitting] = {}
+            
+                        if size not in selected_data[fitting]:
+                            selected_data[fitting][size] = []
+            
+                        # Store the quantity
                         selected_data[fitting][size] = quantity
-                        
+            
                         # Now, ask for chainages for each quantity
                         for i in range(quantity):
                             chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} {size} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{size}_{i}")
                             if chainage:  # Ensure chainage is entered
-                                selected_data[fitting][size] = selected_data.get(fitting, {}).get(size, []) + [chainage]
+                                # Safely append the chainage to the list
+                                selected_data[fitting][size].append(chainage)
 
     
     # ROAD REINSTATEMENT
