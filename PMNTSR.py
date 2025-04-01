@@ -45,6 +45,22 @@ working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combin
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # MANPOWER
+st.manpower("**MANPOWER:**")
+mp_list = []
+total_mp = 0
+if st.checkbox(f"Project Manager"):
+    mp_list.append("Project Manager - 1")
+    total_mp += 1
+if st.checkbox(f"Project Engineer"):
+    mp_list.append("Project Engineer - 1")
+    total_mp += 1
+if st.checkbox(f"Site Safety Supervisor"):
+    mp_list.append("Site Safety Supervisor - 1")
+    total_mp += 1
+team_mp[team] = {
+    "equipment": mp_list,
+    "total equipment": total_mp
+}
 
 
 # LOOP THRU EACH TEAM
@@ -231,6 +247,12 @@ if st.button("Generate Report"):
                 equipment_summary["Genset"] += 1
             elif "Butt Fusion Welding Machine" in equipment:
                 equipment_summary["Butt Fusion Welding Machine"] += 1
+
+    # MANPOWER SUMMARY
+    mp_summary_text = "*MANPOWER:*\n"
+    for role, count in mp_summary.items():
+        if count > 0:
+            mp_summary_text += f"{role} - {count}\n"
     
     # PIPE LAYING TEAM SUMMARY
     pipelaying_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
@@ -255,6 +277,8 @@ if st.button("Generate Report"):
         f"*EQUIPMENT:*\n"
         f"Genset - {equipment_summary['Genset']}\n"
         f"Butt Fusion Welding Machine - {equipment_summary['Butt Fusion Welding Machine']}\n\n"
+        f"*MANPOWER:*\n"
+        f"{mp_summary_text}\n"
         f"*PIPE LAYING TEAM:*\n"
         f"Supervisor - {pipelaying_summary['Supervisor']}\n"
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
