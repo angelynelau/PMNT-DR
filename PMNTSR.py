@@ -283,7 +283,7 @@ if st.button("Generate Report"):
     # DELIVERY
     jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths\n\n" if pipe_count > 0 else ""
     
-        jbalb_report += (
+    jbalb_report += (
             f"Date: {formatted_date}\n"
             f"Morning: {weather_am}\n"
             f"Afternoon: {weather_pm}\n"
@@ -303,8 +303,6 @@ if st.button("Generate Report"):
             f"{jb_del_text}"
             f""
         )
-    
-    # Show reports
     st.subheader("PMNT REPORT")
     st.text(pmnt_report)
     st.subheader("JBALB REPORT")
