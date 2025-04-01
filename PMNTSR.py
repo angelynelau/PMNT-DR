@@ -229,7 +229,7 @@ if st.button("Generate Report"):
         for equipment in team_equip.get(team, {}).get("equipment",[]):
             if "Genset" in equipment:
                 equipment_summary["Genset"] += 1
-            elif "Butt Fusion Welding Machine" in member:
+            elif "Butt Fusion Welding Machine" in equipment:
                 equipment_summary["Butt Fusion Welding Machine"] += 1
     
     # PIPE LAYING TEAM SUMMARY
