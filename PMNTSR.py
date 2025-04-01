@@ -88,7 +88,7 @@ for team in teams:
         team_routes[team] = route
         
     # ACTIVITY
-    activity_list = st.multiselect("ACTIVITY CARRIED OUT:", ["Pipe Jointing", "Pipe Laying", "Road Reinstatement"], key=f"activity_{team}")
+    activity_list = st.multiselect("ACTIVITY CARRIED OUT:", ["Pipe Jointing", "Pipe Laying", "Fitting(s) Installation", "Road Reinstatement"], key=f"activity_{team}")
     team_activities[team] = ", ".join(activity_list)
 
     # PIPE JOINTING
@@ -113,25 +113,20 @@ for team in teams:
             laidch_diff = "Invalid"
 
     # FITTINGS
-    st.markdown("**VALVES & FITTINGS:**")
+    ("**VALVES & FITTINGS:**") if "Fitting(s) Installation" in activity_list else ""
     selected_fittings = st.multiselect(f"FITTING(S):", ["TEE", "25mm SAV", "80mm DAV", "100mm WO", "100mm FH", "150mm SV", "200mm SV", "250mm SV", "300mm SV", "350mm SV", "150mm CC", "200mm CC", "250mm CC", "300mm CC", "350mm CC"], key=f"fittings_{team}")
-    
     selected_data = {}
     if selected_fittings:
         for fitting in selected_fittings:
-            # Initialize the fitting entry in selected_data if it doesn't exist
             if fitting not in selected_data:
                 selected_data[fitting] = []
-    
-            # Quantity input
             quantity = st.number_input(f"ENTER QUANTITY FOR {fitting}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}")
-    
             if quantity > 0:
-                # Ask for chainages corresponding to the quantity
                 for i in range(quantity):
-                    chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{i}")
-                    if chainage:  # Ensure chainage is entered
-                        selected_data[fitting].append(chainage)  
+                    fitting_ch_raw = st.number_input(f"ENTER CHAINAGE FOR {fitting} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{i}")
+                    fitting_ch = format_chainage(fitting_ch_raw) if fitting_ch_raw else ""
+                    if fitting_ch:
+                        selected_data[fitting].append(fitting_ch)  
                 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
@@ -230,7 +225,7 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {team_pipelaying.get(row['Team'], {}).get('total people', 0)}\n"
-            f"JOINT = {row['Joint(s)']}" + (f" | Stub End(s): {row['Stub End(s)']}" if 'Stub End(s)' in row and row['Stub End(s)'] else "") + "\n"
+            f"JOINT = {row['Joint(s)']}" + (f" // Stub End(s) = {row['Stub End(s)']}" if 'Stub End(s)' in row and row['Stub End(s)'] else "") + "\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
             f"DELIVERY = {del_text}\n"
