@@ -105,8 +105,8 @@ for team in teams:
     # PIPE LAYING
     ("**PIPE LAYING:**") if "Pipe Laying" in activity_list else ""
     laidstartch_raw = st.number_input("STARTING CHAINAGE:", step=1, key=f"laidstartch_{team}") if "Pipe Laying" in activity_list else ""
-    laidendch_raw = st.number_input("ENDING CHAINAGE:", step=1, key=f"laidendch_{team}") if "Pipe Laying" in activity_list else ""
-    laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw else ""
+    laidendch_raw = st.number_input("ENDING CHAINAGE:", step=1, key=f"laidendch_{team}") if "Pipe Laying" in activity_list 
+    laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw 
     laidendch = format_chainage(laidendch_raw) if laidendch_raw else ""
     laidch_diff = ""
     if laidstartch_raw and laidendch_raw:
@@ -280,7 +280,7 @@ if st.button("Generate Report"):
                 pipelaying_summary["General Worker"] += count
 
     # DELIVERY
-    jb_del_text = f"{del_size} - {pipe_count} lengths"
+    jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths" if pipe_count > 0 else ""
     
     jbalb_report += (
         f"Date: {formatted_date}\n"
@@ -299,7 +299,7 @@ if st.button("Generate Report"):
         f"Supervisor - {pipelaying_summary['Supervisor']}\n"
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
         f"General Workers - {pipelaying_summary['General Worker']}\n\n"
-        
+        f"{jb_del_text}"
         f"*ACTIVITY CARRIED OUT:*\n"
         
     )
