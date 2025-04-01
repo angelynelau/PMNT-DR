@@ -222,6 +222,15 @@ if st.button("Generate Report"):
         for machinery in team_machinery.get(team, {}).get("machinery",[]):
             if "Excavator" in machinery:
                 machinery_summary["Excavator"] += 1
+
+    # EQUIPMENT SUMMARY
+    equipment_summary = {"Genset": 0, "Butt Fusion Welding Machine": 0}
+    for team in teams:
+        for equipment in team_equip.get(team, {}).get("equipment",[]):
+            if "Genset" in equipment:
+                equipment_summary["Genset"] += 1
+            elif "Butt Fusion Welding Machine" in member:
+                equipment_summary["Butt Fusion Welding Machine"] += 1
     
     # PIPE LAYING TEAM SUMMARY
     pipelaying_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
@@ -243,6 +252,9 @@ if st.button("Generate Report"):
         f"{working_time}\n\n"
         f"*MACHINERY:*\n"
         f"Excavator - {machinery_summary['Excavator']}\n\n"
+        f"*EQUIPMENT:*\n"
+        f"Supervisor - {equipment_summary['Genset']}\n"
+        f"Excavator Operator - {equipment_summary['Butt Fusion Welding Machine']}\n"
         f"*PIPE LAYING TEAM:*\n"
         f"Supervisor - {pipelaying_summary['Supervisor']}\n"
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
