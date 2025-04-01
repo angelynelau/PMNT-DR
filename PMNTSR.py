@@ -200,7 +200,7 @@ for team in teams:
     team,
     pipe_size,
     joints,
-    stub_end,
+    stub_end_qty,
     laidstartch,
     laidendch,
     laidch_diff,
@@ -230,7 +230,7 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {team_pipelaying.get(row['Team'], {}).get('total people', 0)}\n"
-            f"JOINT = {row['Joint(s)']}{"(row['Joint(s)'])"}\n"
+            f"JOINT = {row['Joint(s)']}"({row['Stub End(s)']})"\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
             f"DELIVERY = {del_text}\n"
