@@ -283,28 +283,31 @@ if st.button("Generate Report"):
     # DELIVERY
     jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths\n\n" if pipe_count > 0 else ""
 
-    # ACTIVITY CARRIED OUT
-    act_text = ""
-    for team in teams:
-        act_text += f">{team} // Route {team_routes.get(team, 'N/A')}\n"
-        if "Pipe Jointing" in team_activities.get(team, []):
-            joints = st.session_state.get(f"joint_{team}", 0)
-            if joints > 0:
-                act_text += f"- {joints} nos joints \n"
-        else:
-            act_text += ""
-        if "Pipe Laying" in team_activities.get(team, []):
-                act_text += f"- Pipe Laying: {laid_text}\n"
-            else:
-                act_text += ""
-        if "Fitting(s) Installation" in team_activities.get(team, []):
-            if fitting_text:
-                act_text += f"- Fittings Installed: {fitting_text}\n"
-            else:
-                act_text += ""
-        if "Road Reinstatement" in team_activities.get(team, []):
-            rr_text = f"{team_routes.get(team)} - Road Reinstatement"
-            act_text += f"- Road Reinstatement: {rr_text}\n"
+act_text = ""
+for team in teams:
+    act_text += f">{team} // Route {team_routes.get(team, 'N/A')}\n"
+    
+    # Pipe Jointing Activity
+    if "Pipe Jointing" in team_activities.get(team, []):
+        joints = st.session_state.get(f"joint_{team}", 0)  # Get the number of joints for the team
+        if joints > 0:
+            act_text += f"- {joints} nos joints \n"
+
+    # Pipe Laying Activity
+    if "Pipe Laying" in team_activities.get(team, []):
+        laid_text = f"{team_routes.get(team)} - {laidstartch} to {laidendch} ({laidendch_raw - laidstartch_raw} m)" if laidstartch and laidendch else ""
+        if laid_text:
+            act_text += f"- Pipe Laying: {laid_text}\n"
+    
+    # Fittings Installation Activity
+    if "Fitting(s) Installation" in team_activities.get(team, []):
+        if fitting_text:
+            act_text += f"- Fittings Installed: {fitting_text}\n"
+    
+    # Road Reinstatement Activity
+    if "Road Reinstatement" in team_activities.get(team, []):
+        rr_text = f"{team_routes.get(team)} - Road Reinstatement"
+        act_text += f"- Road Reinstatement: {rr_text}\n"
             
     jbalb_report += (
             f"Date: {formatted_date}\n"
