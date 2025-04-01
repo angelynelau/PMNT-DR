@@ -135,26 +135,24 @@ for team in teams:
                 selected_sizes = [fitting]  # Just use the fitting name as the size
     
             if selected_sizes:
-                if fitting not in selected_data:  # Initialize if not yet done
-                    selected_data[fitting] = {}
+                if fitting not in selected_data:
+                selected_data[fitting] = {}
             
-                for size in selected_sizes:
-                    quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
-                    if quantity > 0:
-                        # Store the quantity for this fitting and size
-                        if size not in selected_data[fitting]:
-                            selected_data[fitting][size] = quantity
-                        
-                        # Now, ask for chainages for each quantity
-                        for i in range(quantity):
-                            chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} {size} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{size}_{i}")
-                            if chainage:  # Ensure chainage is entered
-                                if fitting not in selected_data:
-                                    selected_data[fitting] = {}
-                                if size not in selected_data[fitting]:
-                                    selected_data[fitting][size] = []
-                                selected_data[fitting][size].append(chainage)
-    
+            for size in selected_sizes:
+                if size not in selected_data[fitting]:
+                    selected_data[fitting][size] = []  # Initialize as empty list if it doesn't exist
+            
+                quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
+                if quantity > 0:
+                    # Store the quantity for this fitting and size
+                    selected_data[fitting][size] = quantity
+            
+                    # Now, ask for chainages for each quantity
+                    for i in range(quantity):
+                        chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} {size} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{size}_{i}")
+                        if chainage:  # Ensure chainage is entered
+                            selected_data[fitting][size].append(chainage)  # Append the chainage after initializing
+                
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
     rrstartch_raw = st.number_input("STARTING CHAINAGE:", step=1, key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
