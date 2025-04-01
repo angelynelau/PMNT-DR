@@ -287,18 +287,13 @@ if st.button("Generate Report"):
     activity_report = "*ACTIVITY CARRIED OUT:*\n"
     for team in teams:
         activity_text = f"> {team} // Route {team_routes.get(team, 'N/A')}\n"
-        
-        # Get the joints if Pipe Jointing activity is present
         joints = 0
         if "Pipe Jointing" in team_activities.get(team, []):
-            joints = st.session_state.get(f"joint_{team}", 0)  # Get the joints input for this team
-        
+            joints = st.session_state.get(f"joint_{team}", 0)
         if joints > 0:
             activity_text += f"- {joints} nos joints\n"
-        
         if "Pipe Laying" in team_activities.get(team, []):
-            activity_text += f"- Pipe Laying at {laidstartch} to {laidendch}\n"
-        
+            activity_text += f"- Pipe Laying at {laidstartch} to {laidendch}\n" 
         fitting_list = team_fittings.get(team, "").split(", ")
         fitting_details = []
         for fitting in fitting_list:
@@ -310,12 +305,9 @@ if st.button("Generate Report"):
                     fitting_details.append(f"Installation of {fittings} at {chainages}")
                 else:
                     fitting_details.append(f"Installation of fittings at {chainages}")
-            
             if fitting_details:
                 for line in fitting_details:
                     activity_text += f"- {line}\n"
-        
-        activity_report += activity_text + "\n"
         
         jbalb_report += (
             f"Date: {formatted_date}\n"
