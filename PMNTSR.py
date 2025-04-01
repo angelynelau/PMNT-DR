@@ -246,7 +246,7 @@ if st.button("Generate Report"):
             f"WEATHER = {weather_text}\n"
             f"REMARKS = {row['Remarks']}\n\n"
         )
-    
+
     # MACHINERY SUMMARY
     machinery_summary = {"Excavator": 0}
     for team in teams:
@@ -335,4 +335,3 @@ if st.button("Generate Report"):
     st.text(pmnt_report)
     st.subheader("JBALB REPORT")
     st.text(jbalb_report)
-
