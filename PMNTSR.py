@@ -93,7 +93,7 @@ for team in teams:
 
     # PIPE JOINTING
     ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
-    joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
+    joints = st.number_input("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else 0
     if joints > 0:
         stub_end = st.checkbox("Stub End", key=f"stub_end_{team}")
         if stub_end:
