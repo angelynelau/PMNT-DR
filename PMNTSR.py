@@ -26,6 +26,7 @@ team_mp = {}
 team_pipelaying = {}
 team_working_hours = {}
 team_delivery = {}
+team_fittings = {}
 joints = 0
 stub_end_qty = 0
 
