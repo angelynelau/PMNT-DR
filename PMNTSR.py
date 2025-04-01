@@ -254,7 +254,7 @@ if st.button("Generate Report"):
         f"Excavator - {machinery_summary['Excavator']}\n\n"
         f"*EQUIPMENT:*\n"
         f"Supervisor - {equipment_summary['Genset']}\n"
-        f"Excavator Operator - {equipment_summary['Butt Fusion Welding Machine']}\n"
+        f"Excavator Operator - {equipment_summary['Butt Fusion Welding Machine']}\n\n"
         f"*PIPE LAYING TEAM:*\n"
         f"Supervisor - {pipelaying_summary['Supervisor']}\n"
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
