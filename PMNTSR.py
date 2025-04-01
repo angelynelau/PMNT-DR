@@ -27,6 +27,7 @@ team_pipelaying = {}
 team_working_hours = {}
 team_delivery = {}
 joints = 0
+stub_end_qty = 0
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D"])
