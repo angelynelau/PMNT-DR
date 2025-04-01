@@ -105,8 +105,8 @@ for team in teams:
     # PIPE LAYING
     ("**PIPE LAYING:**") if "Pipe Laying" in activity_list else ""
     laidstartch_raw = st.number_input("STARTING CHAINAGE:", step=1, key=f"laidstartch_{team}") if "Pipe Laying" in activity_list else ""
-    laidendch_raw = st.number_input("ENDING CHAINAGE:", step=1, key=f"laidendch_{team}") if "Pipe Laying" in activity_list 
-    laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw 
+    laidendch_raw = st.number_input("ENDING CHAINAGE:", step=1, key=f"laidendch_{team}") if "Pipe Laying" in activity_list else ""
+    laidstartch = format_chainage(laidstartch_raw) if laidstartch_raw else ""
     laidendch = format_chainage(laidendch_raw) if laidendch_raw else ""
     laidch_diff = ""
     if laidstartch_raw and laidendch_raw:
