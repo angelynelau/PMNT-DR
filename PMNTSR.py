@@ -223,7 +223,7 @@ if st.button("Generate Report"):
         laid_text = f"{row['Laid Start']} to {row['Laid End']} ({row['Laid Length (m)']})" if row["Laid Start"] or row["Laid End"] or row["Laid Length (m)"] else ""
         del_text = f"{row['Pipe Size']} - {team_delivery.get(row['Team'], 0)} lengths" if team_delivery.get(row['Team'], 0) else ""
         weather_text = f"{weather_am}" if weather_am == weather_pm else f"WEATHER = {weather_am} (am) / {weather_pm} (pm)"
-       pmnt_report += (
+        pmnt_report += (
             f"> {row['Team']} (ROUTE {team_routes.get(row['Team'])})\n"
             f"PIPE = {row['Pipe Size']}\n"
             f"DATE = {formatted_date}\n"
@@ -237,7 +237,6 @@ if st.button("Generate Report"):
             f"WEATHER = {weather_text}\n"
             f"REMARKS = {row['Remarks']}\n\n"
         )
-
     # MACHINERY SUMMARY
     machinery_summary = {"Excavator": 0}
     for team in teams:
