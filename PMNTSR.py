@@ -200,6 +200,7 @@ for team in teams:
     team,
     pipe_size,
     joints,
+    stub_end,
     laidstartch,
     laidendch,
     laidch_diff,
@@ -208,7 +209,7 @@ for team in teams:
     ])
 
 # CONVERT TO DATAFRAME
-df = pd.DataFrame(data, columns= ["Team", "Pipe Size", "Joint(s)", "Laid Start", "Laid End", "Laid Length (m)", "Fitting(s)", "Remarks"])
+df = pd.DataFrame(data, columns= ["Team", "Pipe Size", "Joint(s)", "Stub End(s)", "Laid Start", "Laid End", "Laid Length (m)", "Fitting(s)", "Remarks"])
 
 # DISPLAY TABLE
 edited_df = st.data_editor(df, use_container_width=True, disabled=True)
@@ -229,7 +230,7 @@ if st.button("Generate Report"):
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
             f"MANPOWER = {team_pipelaying.get(row['Team'], {}).get('total people', 0)}\n"
-            f"JOINT = {row['Joint(s)']}\n"
+            f"JOINT = {row['Joint(s)']}{"(row['Joint(s)'])"}\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
             f"DELIVERY = {del_text}\n"
