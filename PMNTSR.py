@@ -331,8 +331,7 @@ if st.button("Generate Report"):
         f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
         f"General Workers - {pipelaying_summary['General Worker']}\n\n"
         f"{jb_del_text}"
-        f"*ACTIVITY CARRIED OUT:*\n"
-        f"{activity_text}\n"
+        f"{activity_report}\n"
         
     )
 
