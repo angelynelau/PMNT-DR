@@ -287,7 +287,10 @@ if st.button("Generate Report"):
     act_text = ""
     for team in teams:
         act_text += f">{team} // Route {team_routes.get(team, 'N/A')}\n"
-
+        if "Pipe Jointing" in team_activities.get(team,[]):
+            joints = st.session.get(f"joint_{team}", 0)
+        if joints > 0:
+            act_text += f"- {joints} nos joints \n"
     jbalb_report += (
             f"Date: {formatted_date}\n"
             f"Morning: {weather_am}\n"
