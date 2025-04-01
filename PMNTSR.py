@@ -28,6 +28,7 @@ team_working_hours = {}
 team_delivery = {}
 team_fittings = {}
 joints = 0
+pipe_count = 0
 stub_end_qty = 0
 
 # TEAM SELECTION
