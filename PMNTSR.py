@@ -136,7 +136,7 @@ for team in teams:
     
             if selected_sizes:
                 if fitting not in selected_data:
-                selected_data[fitting] = {}
+                    selected_data[fitting] = {}
             
             for size in selected_sizes:
                 if size not in selected_data[fitting]:
