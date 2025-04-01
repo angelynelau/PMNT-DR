@@ -58,9 +58,9 @@ if st.checkbox(f"Project Engineer"):
 if st.checkbox(f"Site Safety Supervisor"):
     mp_list.append("Site Safety Supervisor - 1")
     total_mp += 1
-team_mp[team] = {
-    "equipment": mp_list,
-    "total equipment": total_mp
+team_mp["Manpower"] = {
+    "manpower": mp_list,
+    "total manpower": total_mp
 }
 
 
