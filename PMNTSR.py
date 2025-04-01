@@ -97,7 +97,7 @@ for team in teams:
 
     # PIPE JOINTING
     ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
-    joints = st.number_input("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else 0
+    joints = st.number_input("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
     if joints > 0:
         stub_end = st.checkbox("Stub End", key=f"stub_end_{team}")
         if stub_end:
@@ -287,17 +287,28 @@ if st.button("Generate Report"):
     act_text = ""
     for team in teams:
         act_text += f">{team} // Route {team_routes.get(team, 'N/A')}\n"
-        if "Pipe Jointing" in team_activities.get(team,[]):
+        
+        # Pipe Jointing activity
+        if "Pipe Jointing" in team_activities.get(team, []):
             joints = st.session_state.get(f"joint_{team}", 0)
-        if joints > 0:
-            act_text += f"- {joints} nos joints \n"
-        else:
-            act_text += ""
+            if joints > 0:
+                act_text += f"- {joints} nos joints \n"
+        
+        # Pipe Laying activity
         if "Pipe Laying" in team_activities.get(team, []):
             laid_text = f"{team_routes.get(team)} - Pipe Laying"
             act_text += f"- Pipe Laying: {laid_text}\n"
-         else:
-            act_text += ""
+        
+        # Fitting(s) Installation activity
+        if "Fitting(s) Installation" in team_activities.get(team, []):
+            fitting_text = team_fittings.get(team, "")
+            if fitting_text:
+                act_text += f"- Fittings Installed: {fitting_text}\n"
+        
+        # Road Reinstatement activity
+        if "Road Reinstatement" in team_activities.get(team, []):
+            rr_text = f"{team_routes.get(team)} - Road Reinstatement"
+            act_text += f"- Road Reinstatement: {rr_text}\n"
             
     jbalb_report += (
             f"Date: {formatted_date}\n"
