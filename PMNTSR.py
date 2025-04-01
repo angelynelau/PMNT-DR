@@ -294,12 +294,10 @@ if st.button("Generate Report"):
         else:
             act_text += ""
         if "Pipe Laying" in team_activities.get(team, []):
-            laid_text = f"{team_routes.get(team)} - Pipe Laying"
             act_text += f"- Pipe Laying: {laid_text}\n"
         else:
             act_text += ""
         if "Fitting(s) Installation" in team_activities.get(team, []):
-            fitting_text = team_fittings.get(team, "")
             if fitting_text:
                 act_text += f"- Fittings Installed: {fitting_text}\n"
             else:
