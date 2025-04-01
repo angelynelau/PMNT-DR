@@ -117,7 +117,7 @@ for team in teams:
     ("**VALVES & FITTINGS:**") if "Fitting(s) Installation" in activity_list else ""
     selected_fittings = st.multiselect(f"FITTING(S):", ["TEE", "25mm SAV", "80mm DAV", "100mm WO", "100mm FH", "150mm SV", "200mm SV", "250mm SV", "300mm SV", "350mm SV", "150mm CC", "200mm CC", "250mm CC", "300mm CC", "350mm CC"], key=f"fittings_{team}")
     selected_data = {}
-        fitting_chainages = []
+    fitting_chainages = []
         if selected_fittings:
             for fitting in selected_fittings:
                 if fitting not in selected_data:
@@ -130,12 +130,9 @@ for team in teams:
                         if fitting_ch:  # Ensure chainage is valid
                             selected_data[fitting].append(fitting_ch)
             for fitting, chainages in selected_data.items():
-                formatted_chainages = ", ".join(selected_fittings)
+                formatted_chainages = ", ".join(fitting_chainages)
                 fitting_chainages.append(f"{fitting} ({formatted_chainages})")
-            
-            # Join the formatted fittings into a single string
-            formatted_fittings = ", ".join(fitting_chainages)
-                
+
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
     rrstartch_raw = st.number_input("STARTING CHAINAGE:", step=1, key=f"rrstartch_{team}") if "Road Reinstatement" in activity_list else ""
