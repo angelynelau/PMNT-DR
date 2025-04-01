@@ -281,7 +281,37 @@ if st.button("Generate Report"):
                 pipelaying_summary["General Worker"] += count
 
     # DELIVERY
-    jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths" if pipe_count > 0 else ""
+    jb_del_text = f"*MATERIALS DELIVERED TO SITE:* \n {del_size} - {pipe_count} lengths\n\n" if pipe_count > 0 else ""
+
+    # ACTIVITY CARRIED OUT
+    activity_report = "*ACTIVITY CARRIED OUT:*\n"
+    for team in teams:
+        activity_text = f"> {team} // Route {team_routes.get(team, 'N/A')}\n"
+        
+        joints = team_activities.get(team, {}).get("joints", 0)
+        if joints > 0:
+            activity_text += f"- {joints} nos joints\n"
+        
+        if "Pipe Laying" in team_activities.get(team, []):
+            activity_text += f"- Pipe Laying at {laidstartch} to {laidendch}\n"
+        
+        fitting_list = team_fittings.get(team, "").split(", ")
+            fitting_details = []
+            for fitting in fitting_list:
+                match = re.match(r"(.+?) \((.+?)\)", fitting)
+                if match:
+                    fittings, chainages = match.groups()
+                    chainage_list = chainages.split(", ")
+                    if len(chainage_list) == 1:
+                        fitting_details.append(f"Installation of {fittings} at {chainages}")
+                    else:
+                        fitting_details.append(f"Installation of fittings at {chainages}")
+            
+            if fitting_details:
+                for line in fitting_details:
+                    activity_text += f"- {line}\n"
+        
+        activity_report += activity_text + "\n"
     
     jbalb_report += (
         f"Date: {formatted_date}\n"
@@ -302,6 +332,7 @@ if st.button("Generate Report"):
         f"General Workers - {pipelaying_summary['General Worker']}\n\n"
         f"{jb_del_text}"
         f"*ACTIVITY CARRIED OUT:*\n"
+        f"{activity_text}\n"
         
     )
 
