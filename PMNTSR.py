@@ -286,7 +286,7 @@ if st.button("Generate Report"):
     # ACTIVITY CARRIED OUT
     act_text = ""
     for team in teams:
-        act_text = f">{team} // Route {team_routes.get(team, 'N/A')}\n"
+        act_text += f">{team} // Route {team_routes.get(team, 'N/A')}\n"
 
     jbalb_report += (
             f"Date: {formatted_date}\n"
@@ -309,6 +309,7 @@ if st.button("Generate Report"):
             f"*ACTIVITY CARRIED OUT:*\n"
             f"{act_text}"
         )
+    
     st.subheader("PMNT REPORT")
     st.text(pmnt_report)
     st.subheader("JBALB REPORT")
