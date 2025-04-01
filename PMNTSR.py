@@ -117,17 +117,24 @@ for team in teams:
     ("**VALVES & FITTINGS:**") if "Fitting(s) Installation" in activity_list else ""
     selected_fittings = st.multiselect(f"FITTING(S):", ["TEE", "25mm SAV", "80mm DAV", "100mm WO", "100mm FH", "150mm SV", "200mm SV", "250mm SV", "300mm SV", "350mm SV", "150mm CC", "200mm CC", "250mm CC", "300mm CC", "350mm CC"], key=f"fittings_{team}")
     selected_data = {}
-    if selected_fittings:
-        for fitting in selected_fittings:
-            if fitting not in selected_data:
-                selected_data[fitting] = []
-            quantity = st.number_input(f"ENTER QUANTITY FOR {fitting}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}")
-            if quantity > 0:
-                for i in range(quantity):
-                    fitting_ch_raw = st.number_input(f"ENTER CHAINAGE FOR {fitting} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{i}")
-                    fitting_ch = format_chainage(fitting_ch_raw) if fitting_ch_raw else ""
-                    if fitting_ch:
-                        selected_data[fitting].append(fitting_ch)  
+        fitting_chainages = []
+        if selected_fittings:
+            for fitting in selected_fittings:
+                if fitting not in selected_data:
+                    selected_data[fitting] = []  
+                quantity = st.number_input(f"ENTER QUANTITY FOR {fitting}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}")
+                if quantity > 0:
+                    for i in range(quantity):
+                        fitting_ch_raw = st.number_input(f"ENTER CHAINAGE FOR {fitting} (Entry {i+1}):", step=1, key=f"chainage_{team}_{fitting}_{i}")
+                        fitting_ch = format_chainage(fitting_ch_raw) if fitting_ch_raw else "" 
+                        if fitting_ch:  # Ensure chainage is valid
+                            selected_data[fitting].append(fitting_ch)
+            for fitting, chainages in selected_data.items():
+                formatted_chainages = ", ".join(selected_fittings)
+                fitting_chainages.append(f"{fitting} ({formatted_chainages})")
+            
+            # Join the formatted fittings into a single string
+            formatted_fittings = ", ".join(fitting_chainages)
                 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
