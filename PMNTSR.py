@@ -145,9 +145,10 @@ for team in teams:
                 quantity = st.number_input(f"ENTER QUANTITY FOR {fitting} {size}:", min_value=0, step=1, key=f"fittingsnos_{team}_{fitting}_{size}")
                 if quantity > 0:
                     # Store the quantity for this fitting and size
-                    selected_data[fitting][size] = quantity
-            
-                    # Now, ask for chainages for each quantity
+                    if size not in selected_data[fitting]:
+                        selected_data[fitting][size] = []  # Ensure it's a list
+                    
+                    # Now append chainage for each entry
                     for i in range(quantity):
                         chainage = st.text_input(f"ENTER CHAINAGE FOR {fitting} {size} (Entry {i+1}):", key=f"chainage_{team}_{fitting}_{size}_{i}")
                         if chainage:  # Ensure chainage is entered
