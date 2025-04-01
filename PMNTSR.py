@@ -291,8 +291,8 @@ if st.button("Generate Report"):
             joints = st.session_state.get(f"joint_{team}", 0)
             if joints > 0:
                 act_text += f"- {joints} nos joints \n"
-            else:
-                act_text += ""
+        else:
+            act_text += ""
         if "Pipe Laying" in team_activities.get(team, []):
                 act_text += f"- Pipe Laying: {laid_text}\n"
             else:
@@ -302,7 +302,6 @@ if st.button("Generate Report"):
                 act_text += f"- Fittings Installed: {fitting_text}\n"
             else:
                 act_text += ""
-        # Road Reinstatement activity
         if "Road Reinstatement" in team_activities.get(team, []):
             rr_text = f"{team_routes.get(team)} - Road Reinstatement"
             act_text += f"- Road Reinstatement: {rr_text}\n"
