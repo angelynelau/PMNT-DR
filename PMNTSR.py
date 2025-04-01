@@ -121,11 +121,8 @@ for team in teams:
          "250mm SV", "300mm SV", "350mm SV", "150mm CC", "200mm CC", "250mm CC", "300mm CC", "350mm CC"], 
         key=f"fittings_{team}"
     )
-    
     selected_data = {}
     fitting_chainages = []
-    
-    # If any fitting is selected, handle their quantities and chainages
     if selected_fittings:
         for fitting in selected_fittings:
             if fitting not in selected_data:
@@ -139,7 +136,7 @@ for team in teams:
                         selected_data[fitting].append(fitting_ch)
         for fitting, chainages in selected_data.items():
             fitting_chainages.append(f"{fitting} ({', '.join(chainages)})")
-    fitting_output = ", ".join(fitting_chainages)
+        fitting_output = ", ".join(fitting_chainages)
 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
