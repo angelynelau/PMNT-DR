@@ -139,7 +139,7 @@ for team in teams:
                         selected_data[fitting].append(fitting_ch)
         for fitting, chainages in selected_data.items():
             fitting_output = ", ".join(fitting_chainages)
-            fitting_chainages.append(f"{fitting} ({formatted_chainages})")
+            fitting_chainages.append(f"{fitting} ({formatted_chainage})")
 
     # ROAD REINSTATEMENT
     ("**ROAD REINSTATEMENT:**") if "Road Reinstatement" in activity_list else ""
