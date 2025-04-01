@@ -29,7 +29,7 @@ team_delivery = {}
 pipe_count = 0
 
 # TEAM SELECTION
-teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D", "TEAM E"])
+teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D"])
 
 # DATE SELECTION
 date_selected = st.date_input("DATE:", datetime.today())
@@ -46,7 +46,7 @@ working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combin
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
 
 # MANPOWER
-st.markdown("**MANPOWER:**")
+st.markdown("MANPOWER:")
 mp_list = []
 total_mp = 0
 if st.checkbox(f"Project Manager"):
@@ -63,6 +63,13 @@ team_mp["Manpower"] = {
     "total manpower": total_mp
 }
 
+# MATERIALS DELIVERED TO SITE
+st.markdown("**MATERIALS DELIVERED TO SITE:**")
+delivery = st.checkbox("Pipe", key="delivery_pipe")
+if delivery:
+    pipe_count = st.number_input("TOTAL NUMBER OF LENGTHS DELIVERED", min_value=0, step=1, key="pipe_count")
+    delroute = st.text_input("ROUTE:", key="delroute")
+    delroute = validate_text_input(delroute)
 
 # LOOP THRU EACH TEAM
 for team in teams:
@@ -87,6 +94,10 @@ for team in teams:
     # PIPE JOINTING
     ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
+    if joints > 0:
+        stub_end = st.checkbox("Stub End", key=f"stub_end_{team}")
+        if stub_end:
+            stub_end_qty = st.number_input("Enter number of Stub End(s):", min_value=1, step=1, key=f"stub_end_qty_{team}")
 
     # PIPE LAYING
     ("**PIPE LAYING:**") if "Pipe Laying" in activity_list else ""
@@ -162,9 +173,13 @@ for team in teams:
 
     # FITTINGS
     fittings = {
-        "Stub Tee": ["a", "b", "c", "d", "e"],
-        "Tee": ["j", "k", "l"],
-        "C": ["m", "n", "o"]
+        "SV": ["150mm", "200mm", "250mm", "300mm", "350mm"],
+        "CC": ["150mm", "200mm", "250mm", "300mm", "350mm"],
+        "100mm WO",
+        "100mm FH",
+        "25mm SAV",
+        "80mm DAV",
+        "Tee": ["150mm", "200mm", "250mm", "300mm", "350mm"],
     }
     st.markdown("**VALVES & FITTINGS:**")
     selected_fittings = st.multiselect(f"SELECT FITTING(S):",list(fittings.keys()), key=f"fittings_{team}")
@@ -179,17 +194,8 @@ for team in teams:
                     if quantity > 0:
                         selected_data[fitting][size] = quantity
 
-    # DELIVERY
-    st.markdown("**MATERIALS DELIVERED TO SITE:**")
-    delivery = st.checkbox("Pipe", key=f"delivery_{team}")
-    if delivery:
-        pipe_count = st.number_input(f"TOTAL NUMBER DELIVERED for {team}", min_value=0, step=1, key=f"pipe_count_{team}")
-        delroute = st.text_input(f"ROUTE for {team}:", key=f"delroute_{team}")
-        delroute = validate_text_input(delroute)
-        team_delivery[team] = pipe_count
-    
     # REMARKS
-    remarks = st.text_input("REMARKS:", key=f"remarks{team}")
+    remarks = st.text_input("**REMARKS:**", key=f"remarks{team}")
 
     # APPEND DATE
     data.append([
