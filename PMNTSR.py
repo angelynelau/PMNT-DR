@@ -26,8 +26,6 @@ team_mp = {}
 team_pipelaying = {}
 team_working_hours = {}
 team_delivery = {}
-pipe_count = 0
-joints = 0
 
 # TEAM SELECTION
 teams = st.multiselect("TEAM(S):", ["TEAM A", "TEAM B", "TEAM C", "TEAM D"])
@@ -93,6 +91,7 @@ for team in teams:
     team_activities[team] = ", ".join(activity_list)
 
     # PIPE JOINTING
+    joints = 0
     ("**PIPE JOINTING:**") if "Pipe Jointing" in activity_list else ""
     joints = st.number_input ("JOINT(S):", step=1, key=f"joint_{team}") if "Pipe Jointing" in activity_list else ""
     if joints > 0:
