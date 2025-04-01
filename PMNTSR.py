@@ -120,8 +120,8 @@ for team in teams:
         "FITTING(S):", 
         ["TEE", "25mm SAV", "80mm DAV", "100mm WO", "100mm FH", "150mm SV", "200mm SV", 
          "250mm SV", "300mm SV", "350mm SV", "150mm CC", "200mm CC", "250mm CC", "300mm CC", "350mm CC"], 
-        key=f"fittings_{team}" if "Fitting(s) Installation" in activity_list else "" 
-    )
+        key=f"fittings_{team}" 
+    ) if "Fitting(s) Installation" in activity_list else "" 
     selected_data = {}
     fitting_chainages = []
     if selected_fittings:
