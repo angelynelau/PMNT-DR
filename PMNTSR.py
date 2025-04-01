@@ -22,7 +22,7 @@ team_routes = {}
 team_activities = {}
 team_machinery = {}
 team_equip = {}
-team_manpower = {}
+team_pipelaying = {}
 team_working_hours = {}
 team_delivery = {}
 pipe_count = 0
@@ -43,6 +43,9 @@ start_time = st.time_input("START TIME:", time(8,0))
 end_time = st.time_input("END TIME:", time(17,0))
 working_hours = ((datetime.combine(datetime.today(), end_time) - datetime.combine(datetime.today(), start_time)).seconds / 3600) - 1
 working_time = f"{start_time.strftime('%H%M')}-{end_time.strftime('%H%M')} hrs"
+
+# MANPOWER
+
 
 # LOOP THRU EACH TEAM
 for team in teams:
@@ -121,7 +124,7 @@ for team in teams:
         "total equipment": total_equip
     }
 
-    # MANPOWER
+    # PIPE LAYING TEAM
     st.markdown("**PIPE LAYING TEAM:**")
     team_members = []
     total_people = 0
@@ -135,7 +138,7 @@ for team in teams:
         workers = st.number_input(f"General Worker", min_value=1, step=1, key=f"workers_{team}")
         team_members.append(f"General Worker - {workers}")
         total_people += workers
-    team_manpower[team] = {
+    team_pipelaying[team] = {
         "members": team_members,
         "total people": total_people
     }
@@ -204,7 +207,7 @@ if st.button("Generate Report"):
             f"DATE = {formatted_date}\n"
             f"WORK ACTIVITY = {team_activities.get(row['Team'])}\n"
             f"HOURS WORKING = {team_working_hours.get(row['Team'])}\n"
-            f"MANPOWER = {team_manpower.get(row['Team'], {}).get('total people', 0)}\n"
+            f"MANPOWER = {team_pipelaying.get(row['Team'], {}).get('total people', 0)}\n"
             f"JOINT = {row['Joint(s)']}\n"
             f"LAID = {laid_text}\n"
             f"FITTING = {row['Fitting(s)']}\n"
@@ -220,17 +223,17 @@ if st.button("Generate Report"):
             if "Excavator" in machinery:
                 machinery_summary["Excavator"] += 1
     
-    # MANPOWER SUMMARY
-    manpower_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
+    # PIPE LAYING TEAM SUMMARY
+    pipelaying_summary = {"Supervisor": 0, "Excavator Operator": 0, "General Worker": 0}
     for team in teams:
-        for member in team_manpower.get(team, {}).get("members", []):
+        for member in team_pipelaying.get(team, {}).get("members", []):
             if "Supervisor" in member:
-                manpower_summary["Supervisor"] += 1
+                pipelaying_summary["Supervisor"] += 1
             elif "Excavator Operator" in member:
-                manpower_summary["Excavator Operator"] += 1
+                pipelaying_summary["Excavator Operator"] += 1
             elif "General Worker" in member:
                 count = int(re.search(r'\d+', member).group()) if re.search(r'\d+', member) else 1
-                manpower_summary["General Worker"] += count
+                pipelaying_summary["General Worker"] += count
 
     jbalb_report += (
         f"Date: {formatted_date}\n"
@@ -241,9 +244,9 @@ if st.button("Generate Report"):
         f"*MACHINERY:*\n"
         f"Excavator - {machinery_summary['Excavator']}\n\n"
         f"*PIPE LAYING TEAM:*\n"
-        f"Supervisor - {manpower_summary['Supervisor']}\n"
-        f"Excavator Operator - {manpower_summary['Excavator Operator']}\n"
-        f"General Workers - {manpower_summary['General Worker']}\n\n"
+        f"Supervisor - {pipelaying_summary['Supervisor']}\n"
+        f"Excavator Operator - {pipelaying_summary['Excavator Operator']}\n"
+        f"General Workers - {pipelaying_summary['General Worker']}\n\n"
     )
 
     st.subheader("l REPORT")
