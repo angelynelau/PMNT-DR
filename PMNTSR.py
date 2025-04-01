@@ -175,10 +175,10 @@ for team in teams:
     fittings = {
         "SV": ["150mm", "200mm", "250mm", "300mm", "350mm"],
         "CC": ["150mm", "200mm", "250mm", "300mm", "350mm"],
-        "100mm WO",
-        "100mm FH",
-        "25mm SAV",
-        "80mm DAV",
+        "100mm WO":[],
+        "100mm FH":[],
+        "25mm SAV":[],
+        "80mm DAV":[],
         "Tee": ["150mm", "200mm", "250mm", "300mm", "350mm"],
     }
     st.markdown("**VALVES & FITTINGS:**")
